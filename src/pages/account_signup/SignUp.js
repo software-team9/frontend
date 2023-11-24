@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Button from "../../components/button/Button";
 import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./SignUp.module.css";
+import TopNav from "../../components/topnav/TopNav";
 
 const SignUp = () => {
   const [gender, setGender] = useState(null);
-  const [termsChecked, setTermsChecked] = useState(false); // 약관 동의 상태
   const [terms, setTerms] = useState({
     service: false,
     privacy: false,
@@ -13,57 +13,39 @@ const SignUp = () => {
     all: false,
   });
 
+  // 개별 약관의 변경을 처리하고, 모든 약관이 선택되었는지 확인합니다.
   const handleTermChange = (event) => {
     const { name, checked } = event.target;
     setTerms({ ...terms, [name]: checked });
   };
 
-  const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    if (name === "all") {
-      setTerms({
-        service: checked,
-        privacy: checked,
-        marketing: checked,
-        all: checked,
-      });
-    } else {
-      setTerms({
-        ...terms,
-        [name]: checked,
-        all: false,
-      });
-    }
+  // 모든 약관에 대한 동의를 처리합니다.
+  const handleAllTermsChange = (checked) => {
+    setTerms({
+      service: checked,
+      privacy: checked,
+      marketing: checked,
+      all: checked,
+    });
   };
 
-  const handleGenderSelect = (selectedGender) => {
-    setGender(selectedGender);
-  };
-
-  const handleTermsCheck = () => {
-    setTermsChecked(!termsChecked);
-  };
-
-  // Check if all individual terms are checked
-  const checkAllTerms = () => {
-    if (terms.service && terms.privacy && terms.marketing) {
-      setTerms({ ...terms, all: true });
-    }
-  };
-
-  // Effect hook to synchronize the 'all' checkbox with the individual checkboxes
+  // 개별 약관 체크박스의 상태가 변경될 때마다 전체 동의 체크박스 상태를 업데이트합니다.
   useEffect(() => {
     const allChecked = terms.service && terms.privacy && terms.marketing;
     setTerms((prevTerms) => ({ ...prevTerms, all: allChecked }));
   }, [terms.service, terms.privacy, terms.marketing]);
 
+  const handleGenderSelect = (gender) => setGender(gender);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
+        <TopNav />
         <span className={styles.backButton}>〈</span>
         <h1>회원가입</h1>
       </div>
       <form className={styles.signUpForm}>
+        {/* 핸드폰 번호 입력란과 '보기' 버튼 */}
         <div className={styles.phoneInputContainer}>
           <input
             type="tel"
@@ -71,14 +53,31 @@ const SignUp = () => {
             className={styles.phoneInput}
             required
           />
-          <Button text="보기" size="mid" />
+          <div className={styles.viewButtonContainer}>
+            <Button text="인증" size="mid" />
+          </div>
         </div>
-        <input type="password" placeholder="비밀번호" required />
-        <input type="password" placeholder="비밀번호 확인" required />
-        <input type="date" required />
+
+        {/* 비밀번호 입력란 */}
+        <input
+          type="password"
+          placeholder="비밀번호"
+          required
+          className={styles.passwordInput}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호 확인"
+          required
+          className={styles.passwordInput}
+        />
+
+        {/* 날짜 입력란 */}
+        <input type="date" required className={styles.dateInput} />
+
+        {/* 성별 선택 버튼 */}
         <div className={styles.genderSelect}>
           <button
-            type="button"
             className={
               gender === "male" ? styles.genderSelected : styles.genderButton
             }
@@ -87,7 +86,6 @@ const SignUp = () => {
             남
           </button>
           <button
-            type="button"
             className={
               gender === "female" ? styles.genderSelected : styles.genderButton
             }
@@ -96,19 +94,18 @@ const SignUp = () => {
             여
           </button>
         </div>
+
+        {/* 약관 동의 체크박스 */}
         <div className={styles.termsContainer}>
           <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
               name="all"
               checked={terms.all}
-              onChange={handleTermChange}
+              onChange={(e) => handleAllTermsChange(e.target.checked)}
             />
             약관 전체 동의
           </label>
-        </div>
-        {/* Individual terms */}
-        <div className={styles.individualTerms}>
           <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
@@ -118,27 +115,27 @@ const SignUp = () => {
             />
             [필수] 서비스 이용 약관
           </label>
-          <label className={terms.privacy ? styles.checkboxChecked : ""}>
+          <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
               name="privacy"
               checked={terms.privacy}
-              onChange={handleCheckboxChange}
-              onClick={checkAllTerms}
+              onChange={handleTermChange}
             />
             [필수] 개인정보 처리방침
           </label>
-          <label className={terms.marketing ? styles.checkboxChecked : ""}>
+          <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
               name="marketing"
               checked={terms.marketing}
-              onChange={handleCheckboxChange}
-              onClick={checkAllTerms}
+              onChange={handleTermChange}
             />
             [선택] 홍보성 메시지 수신
           </label>
         </div>
+
+        {/* 가입하기 버튼 */}
         <Button text="가입하기" size="long" />
       </form>
       <BottomNav />

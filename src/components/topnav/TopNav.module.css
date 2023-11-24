@@ -1,0 +1,43 @@
+/* 
+뒤로가기 유무
+로고
+*/
+body {
+  padding-top: 60px; /* 상단 네비게이션 바의 높이만큼 여백 추가 */
+}
+
+.topNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* 전체 너비 */
+  height: 60px; /* 높이 */
+  background-color: #fff; /* 배경색 하얀색 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid #ccc; /* 사각형의 밑변에 선 */
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.logoContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* 오른쪽에 더미 요소를 추가하기 위한 스타일 */
+.dummy {
+  padding: 10px; /* 뒤로 가기 버튼과 동일한 패딩을 적용 */
+  opacity: 0; /* 보이지 않게 설정 */
+}
