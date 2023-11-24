@@ -1,0 +1,60 @@
+/* long_button 스타일 */
+.long_button {
+  width: 100%; /* 화면 넓이 비율 */
+  margin: 4px 0;
+  height: 40px; /* 높이 40px */
+  background-color: #d32323; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 없음 */
+  border-radius: 8px; /* 라운딩 처리 */
+  font-size: 16px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  text-align: center; /* 글자 가로 정렬 */
+  line-height: 40px; /* 글자 세로 정렬 */
+  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  outline: none; /* 클릭 시 발생하는 아웃라인 제거 */
+  transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+}
+
+/* 중간 크기 버튼 스타일 */
+.mid_button {
+  width: 60%;
+  margin: 4px 0;
+  height: 40px; /* 높이 40px */
+  background-color: #d32323; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 없음 */
+  border-radius: 8px; /* 라운딩 처리 */
+  font-size: 16px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  text-align: center; /* 글자 가로 정렬 */
+  line-height: 40px; /* 글자 세로 정렬 */
+  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  outline: none; /* 클릭 시 발생하는 아웃라인 제거 */
+  transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+}
+
+/* 짧은 크기 버튼 스타일 */
+.short_button {
+  /* 나머지 스타일은 long_button과 동일하고 너비만 조정합니다 */
+  width: 40%;
+  margin: 4px 0;
+  height: 40px; /* 높이 40px */
+  background-color: #d32323; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 없음 */
+  border-radius: 8px; /* 라운딩 처리 */
+  font-size: 16px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  text-align: center; /* 글자 가로 정렬 */
+  line-height: 40px; /* 글자 세로 정렬 */
+  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  outline: none; /* 클릭 시 발생하는 아웃라인 제거 */
+  transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+}
+
+.long_button:hover,
+.mid_button:hover,
+.short_button:hover {
+  background-color: #b71c1c; /* 호버 시 배경색 변경 */
+}
