@@ -1,11 +1,13 @@
 import React from "react";
-import styles from "./MapPage.module.css";
+import GoogleMapsAPI from "../../components/googlemaps/GoogleMapsAPI";
+import KakaoMapsAPI from "../../components/kakaomaps/KakaoMapsAPI"; // Adjust the path based on your file structure
+
+import styles from "./MapPage.module.css"; // Import your styles
 
 const MapPage = () => {
   return (
-    <div>
-      <h1>Map Page</h1>
-      {/* 페이지의 내용 */}
+    <div className={styles.mapContainer}>
+      <KakaoMapsAPI />
     </div>
   );
 };

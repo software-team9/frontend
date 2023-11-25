@@ -1,0 +1,12 @@
+/* MapPage.module.css */
+
+.mapContainer {
+  width: 100%; /* You can adjust this to your desired width */
+  height: 100%; /* You can adjust this to your desired height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Add more styles as needed */
+}
+
+/* You can add more styles for other elements if needed */

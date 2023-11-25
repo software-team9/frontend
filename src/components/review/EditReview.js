@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styles from "./WriteReview.module.css";
 import useReviewHook from "../../hooks/useReviewHook";
-import { useLocation } from "react-router-dom";
 
-const userID = 123453289;
-
-const WriteReview = () => {
+const EditReviewPage = () => {
   const { reviews, addReview, getReviewsByUserId } = useReviewHook();
-  const [userReviews, setUserReviews] = useState([]);
   const [selectedReview, setSelectedReview] = useState(null);
   const [editData, setEditData] = useState({
     storeName: "",
@@ -16,34 +11,17 @@ const WriteReview = () => {
     imageUrl: "",
   });
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const reviewIdFromUrl = queryParams.get("reviewId");
-
   useEffect(() => {
-    setUserReviews(getReviewsByUserId(String(userID))); // Converting userID to string
-  }, [reviews]);
-
-  useEffect(() => {
-    if (userReviews.length > 0) {
-      if (reviewIdFromUrl) {
-        const reviewToEdit = userReviews.find(
-          (review) => review.id === reviewIdFromUrl
-        );
-        if (reviewToEdit) {
-          setSelectedReview(reviewToEdit);
-          setEditData({ ...reviewToEdit });
-        }
-      } else if (!selectedReview) {
-        setSelectedReview(userReviews[0]);
-        setEditData({ ...userReviews[0] });
-      }
+    // 초기에 선택된 리뷰가 없다면 첫 번째 리뷰를 선택
+    if (reviews.length > 0 && !selectedReview) {
+      setSelectedReview(reviews[0]);
+      setEditData({ ...reviews[0] });
     }
-  }, [userReviews, reviewIdFromUrl]);
+  }, [reviews, selectedReview]);
 
   const handleSelectReview = (e) => {
     const reviewId = e.target.value;
-    const review = userReviews.find((r) => r.id === reviewId);
+    const review = reviews.find((r) => r.id === reviewId);
     setSelectedReview(review);
     setEditData({ ...review });
   };
@@ -62,7 +40,7 @@ const WriteReview = () => {
     <div>
       <h2>Edit Review</h2>
       <select onChange={handleSelectReview} value={selectedReview?.id || ""}>
-        {userReviews.map((review) => (
+        {reviews.map((review) => (
           <option key={review.id} value={review.id}>
             {review.storeName}
           </option>
@@ -115,4 +93,4 @@ const WriteReview = () => {
   );
 };
 
-export default WriteReview;
+export default EditReviewPage;

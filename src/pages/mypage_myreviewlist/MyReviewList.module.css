@@ -1,43 +1,29 @@
-/* MyReviewList.module.css */
-.reviewListContainer {
-  padding: 20px;
-  background-color: #f5f5f5; /* 배경색 */
+.reviewList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .reviewItem {
-  background-color: #fff;
-  padding: 16px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #f9f9f9; /* 가상의 박스 배경색 */
+  cursor: pointer; /* 클릭 가능한 것으로 표시 */
 }
 
 .reviewImage {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-  margin-bottom: 8px;
-}
-
-.storeInfo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  width: 60px; /* 이미지 사이즈 조정 */
+  height: 60px; /* 이미지 사이즈 조정 */
+  margin-right: 20px; /* 이미지와 가게 이름 사이의 여백 */
+  object-fit: cover;
 }
 
 .storeName {
   font-weight: bold;
+  color: #d32323;
+  flex-grow: 1; /* 이름이 나머지 공간을 채우도록 함 */
 }
 
-.rating {
-  background-color: #ffd700; /* 별점 배경색 */
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.reviewText {
-  font-size: 14px;
-  line-height: 1.5;
-}
+/* 추가 스타일 */

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "r_124123",
+    "userId": "123453289",
+    "storeId": "s_324ojj",
+    "imageUrl": "www.aaa.com",
+    "storeName": "리그오브레스토랑",
+    "rating": 4.7,
+    "text": "리그오브레스토랑",
+    "time": "2023-11-24 13:34:31",
+    "ranking": "S"
+  },
+  {
+    "id": "r_124121",
+    "userId": "123453289",
+    "storeId": "s_324oj1",
+    "imageUrl": "www.aaa.com",
+    "storeName": "리그오브레스토랑1",
+    "rating": 1.7,
+    "text": "리그오브레스토랑1",
+    "time": "2023-11-24 13:34:31",
+    "ranking": "C"
+  },
+  {
+    "id": "r_124122",
+    "userId": "123453289",
+    "storeId": "s_324oj2",
+    "imageUrl": "www.aaa.com",
+    "storeName": "리그오브레스토랑2",
+    "rating": 4.7,
+    "text": "리그오브레스토랑2",
+    "time": "2023-11-24 13:34:31",
+    "ranking": "D"
+  },
+  {
+    "id": "r_124456",
+    "userId": "666356789",
+    "storeId": "s_561jij",
+    "imageUrl": "www.aaa.com",
+    "storeName": "레스토랑",
+    "rating": 2.7,
+    "text": "레스토랑",
+    "time": "2023-11-24 13:34:31",
+    "ranking": "A"
+  },
+  {
+    "id": "r_124983",
+    "userId": "972356789",
+    "storeId": "s_901aij",
+    "imageUrl": "www.aaa.com",
+    "storeName": "리그레스토랑",
+    "rating": 1.1,
+    "text": "리그레스토랑",
+    "time": "2023-11-24 13:34:31",
+    "ranking": "A"
+  },
+  {
+    "id": "r_194123",
+    "userId": "452786789",
+    "storeId": "s_924jkl",
+    "imageUrl": "www.aaa.com",
+    "storeName": "리그토랑",
+    "rating": 3.7,
+    "text": "리그토랑",
+    "time": "2023-11-24 13:34:31",
+    "ranking": "B"
+  }
+]
