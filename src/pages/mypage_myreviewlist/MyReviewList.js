@@ -6,13 +6,13 @@ import useReviewHook from "../../hooks/useReviewHook";
 
 const userID = "123453289";
 
-const MyReviewList = () => {
+const MyReviewList = ({userData}) => {
   const navigate = useNavigate();
   const { reviews, getReviewsByUserId } = useReviewHook();
   const [userReviews, setUserReviews] = useState([]);
 
-  useEffect(() => {
-    const user_reviews = getReviewsByUserId(userID);
+  useEffect((userData) => {
+    const user_reviews = getReviewsByUserId(userID); // 추후 벡엔드 연결시 userData로 수정
     setUserReviews(user_reviews);
   }, [reviews]);
 

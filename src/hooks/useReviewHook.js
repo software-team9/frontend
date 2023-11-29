@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import reviewsData from "./ReviewList";
 
 const useReviewHook = () => {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(reviewsData);
 
   // // 서버에서 데이터를 가져오는 비동기 요청을 수행하는 함수
   // const init = async () => {
@@ -14,15 +14,6 @@ const useReviewHook = () => {
   //     console.error("Failed to fetch reviews:", error);
   //   }
   // };
-
-  // 서버 대신 로컬 JSON 파일에서 데이터를 가져오는 함수
-  const init = () => {
-    setReviews(reviewsData);
-  };
-
-  useEffect(() => {
-    init(); // 컴포넌트 마운트 시 데이터 초기화
-  }, []);
 
   // 리뷰 추가
   const addReview = (newReview) => {

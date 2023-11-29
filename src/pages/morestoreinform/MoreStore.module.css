@@ -67,5 +67,29 @@
 }
 
 .reviewItem {
-  /* 리뷰 아이템 스타일링 */
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.reviewUser {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reviewRating {
+  color: #fbbc05;
+  margin-right: 5px;
+}
+
+.reviewText {
+  margin-bottom: 5px;
+}
+
+.reviewTime {
+  font-size: 12px;
+  color: #777;
+}
+

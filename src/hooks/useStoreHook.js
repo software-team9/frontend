@@ -1,16 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import storeData from "./StoreList.json";
 
 const useStoreHook = () => {
-  const [stores, setStores] = useState([]);
-
-  const init = useCallback(() => {
-    setStores(storeData);
-  }, []);
-
-  useEffect(() => {
-    init();
-  }, [init]);
+  const [stores, setStores] = useState(storeData);
 
   // 모든 가게 정보 가져오기
   const getAllStores = () => {

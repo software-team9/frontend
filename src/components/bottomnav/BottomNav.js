@@ -17,7 +17,7 @@ const BottomNav = () => {
       <button onClick={() => navigateTo("/map")}>
         <img src="/public/map.svg" alt="Map" />
       </button>
-      <button onClick={() => navigateTo("/home")}>
+      <button onClick={() => navigateTo("/")}>
         <img src="/public/home.svg" alt="Home" />
       </button>
       <button onClick={() => navigateTo("/mypage")}>

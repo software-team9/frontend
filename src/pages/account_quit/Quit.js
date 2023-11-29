@@ -1,11 +1,67 @@
 // Quit.js
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Quit.module.css";
 import Button from "../../components/button/Button";
 import TopNav from "../../components/topnav/TopNav";
 import BottomNav from "../../components/bottomnav/BottomNav";
+import { useNavigate } from 'react-router-dom';
 
-const Quit = () => {
+const Quit = ({userData, logoutHandler}) => {
+  const [pw, setPw] = useState(null);
+  const [pw_r, setPw_r] = useState(null);
+  const navigate = useNavigate();
+
+  const handlePasswordChange = (e) => setPw(e.target.value);
+  const handlePassword_RChange = (e) => setPw_r(e.target.value);
+
+  const handleQuit = (userData, logoutHandler) => {
+    if (pw === pw_r) {
+      // fetch('URL', {
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     UserId: userData,
+      //     password: pw
+      //   }),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // })
+      // .then(response => {
+      //   if(response.meessage === 'OK') {
+      //     deleteByUserId();
+      //     logoutHandler();
+      //     navigate('/');
+      //   }
+      //   else {
+      //     alert("벡엔드쪽 문제 발생");
+      //   }
+      // })
+
+      logoutHandler();
+      navigate('/');
+    }
+    else {
+      alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    }
+
+  }
+
+  const deleteByUserId = () => {
+    fetch('URL', {
+      method: 'POST',
+      body: JSON.stringify({
+        UserID: userData
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response=> {
+      console.log(response.message);
+    }) 
+  }
+
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -18,7 +74,7 @@ const Quit = () => {
         제품 개선에 중요자료로 활용하겠습니다.
       </p>
       <br />
-      <form className={styles.quitForm}>
+      <div className={styles.quitForm}>
         <label>
           <input type="checkbox" /> 기록 삭제 목적
         </label>
@@ -45,15 +101,24 @@ const Quit = () => {
         <input
           type="password"
           placeholder="사용중인 비밀번호"
+          value={pw}
+          onChange={handlePasswordChange}
+          required
           className={styles.passwordInput}
         />
         <input
           type="password"
           placeholder="비밀번호 확인"
+          value={pw_r}
+          onChange={handlePassword_RChange}
+          required
           className={styles.passwordInput}
         />
-        <Button text="탈퇴하기" size="long" />
-      </form>
+        <Button 
+          text="탈퇴하기" 
+          size="long" 
+          onClick={() => handleQuit(userData, logoutHandler)}/>
+      </div>
       <BottomNav />
     </div>
   );

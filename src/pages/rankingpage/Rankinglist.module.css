@@ -44,3 +44,29 @@
 .reviewText {
   margin-top: 5px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pageNumber,
+.activePage {
+  border: none;
+  background-color: #fff;
+  color: #D32323;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pageNumber:hover {
+  background-color: #fff;
+}
+
+.activePage {
+  background-color: #D32323;
+  color: #fff;
+}

@@ -3,15 +3,32 @@ import Button from "../../components/button/Button";
 import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./SignUp.module.css";
 import TopNav from "../../components/topnav/TopNav";
+import { useNavigate} from 'react-router-dom';
 
 const SignUp = () => {
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [name, setName] = useState(null);
+  const [pw, setPw] = useState(null);
+  const [pw_r, setPw_r] = useState(null);
+  const [birthday, setBirthday] = useState(null);
   const [gender, setGender] = useState(null);
+  const [isDuplicate, setIsDuplicate] = useState(0); // 0 duplicate 체크 하지 않음, 1 중복임, 2 중복아님
   const [terms, setTerms] = useState({
     service: false,
     privacy: false,
     marketing: false,
     all: false,
   });
+  const navigate = useNavigate();
+
+  const handlePhoneNumberChange = (e) => setPhoneNumber(e.target.value);
+  const handleNameChange = (e) => setName(e.target.value);
+  const handlePasswordChange = (e) => setPw(e.target.value);
+  const handlePassword_RChange = (e) => setPw_r(e.target.value);
+  const handleBirthdayChange = (e) => setBirthday(e.target.value);
+  const handleGenderChange = (e) => {
+    setGender(e);
+  };
 
   // 개별 약관의 변경을 처리하고, 모든 약관이 선택되었는지 확인합니다.
   const handleTermChange = (event) => {
@@ -29,6 +46,76 @@ const SignUp = () => {
     });
   };
 
+  const handleDuplicateCheckButtonClick = () => {
+    
+    // Call the checkDuplicateId function when the button is clicked
+    // fetch('URL', {
+    //   method: 'POST',
+    //   headers : {
+    //     "Content-Type" : "application/json; charset=utf-8"
+    //   },
+    //   body: JSON.stringify({
+    //     phoneNumber : phoneNumber
+    //   }),
+    // })
+    // .then(response => {
+    //   if (response.message === 'OK') {
+    //     setIsDuplicate(2);
+    //   }
+    //   else if (response.message === 'Duplicated') {
+    //     setIsDuplicate(1);
+    //   }
+    //   else {
+    //     alert('대충 오류');
+    //   }
+    // })
+
+    setIsDuplicate(2); // 테스트용 중복 체크 통과
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    if (phoneNumber && name && pw && pw_r && birthday && gender && terms.service && terms.privacy ) {
+      if (isDuplicate === 2) {
+        if (pw === pw_r) {
+          // fetch('URL', {
+          //   method: 'POST',
+          //   body: JSON.stringify({
+          //     phoneNumber,
+          //     name,
+          //     password: pw,
+          //     birthday,
+          //     gender
+          //   }),
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //   },
+          // })
+          // .then(response => {
+          //   if(response.message === 'OK') {
+          //     navigate('/login');
+          //   } else {
+          //     alert ('벡엔드 쪽 오류 발생');
+          //   }
+          // })
+         
+          console.log("대충 로그인 성공") // 테스트
+          navigate('/login');
+        } 
+        else {
+          alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        } 
+      }
+      else {
+        alert('전화번호 중복을 확인해주세요.');
+      }
+    }
+    else {
+      alert('모든 필수 항목을 채워주세요.');
+    }
+  };
+
+
   // 개별 약관 체크박스의 상태가 변경될 때마다 전체 동의 체크박스 상태를 업데이트합니다.
   useEffect(() => {
     const allChecked = terms.service && terms.privacy && terms.marketing;
@@ -44,36 +131,63 @@ const SignUp = () => {
         <span className={styles.backButton}>〈</span>
         <h1>회원가입</h1>
       </div>
-      <form className={styles.signUpForm}>
+      <div className={styles.duplicateCheckForm}>
         {/* 핸드폰 번호 입력란과 '보기' 버튼 */}
         <div className={styles.phoneInputContainer}>
           <input
             type="tel"
             placeholder="휴대폰번호"
             className={styles.phoneInput}
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
             required
           />
           <div className={styles.viewButtonContainer}>
-            <Button text="인증" size="mid" />
+            <Button 
+              text="인증" 
+              size="mid"
+              type="button"
+              className= "duplicateCheckButton"
+              onClick={() => handleDuplicateCheckButtonClick(phoneNumber)}
+              />
           </div>
         </div>
+        </div>
+        <div className={styles.signUpForm}>
 
+        <input
+          type="name"
+          placeholder="이름"
+          value={name}
+          onChange={handleNameChange}
+          required
+          className={styles.nameInput}
+        />
         {/* 비밀번호 입력란 */}
         <input
           type="password"
           placeholder="비밀번호"
+          value={pw}
+          onChange={handlePasswordChange}
           required
           className={styles.passwordInput}
         />
         <input
-          type="password"
+          type="password_re"
           placeholder="비밀번호 확인"
+          value={pw_r}
+          onChange={handlePassword_RChange}
           required
           className={styles.passwordInput}
         />
 
         {/* 날짜 입력란 */}
-        <input type="date" required className={styles.dateInput} />
+        <input 
+          type="date" 
+          required 
+          className={styles.dateInput}
+          value={birthday}
+          onChange={handleBirthdayChange} />
 
         {/* 성별 선택 버튼 */}
         <div className={styles.genderSelect}>
@@ -134,10 +248,9 @@ const SignUp = () => {
             [선택] 홍보성 메시지 수신
           </label>
         </div>
-
         {/* 가입하기 버튼 */}
-        <Button text="가입하기" size="long" />
-      </form>
+        <Button text="가입하기" size="long" onClick={handleSignUp}/>
+      </div>
       <BottomNav />
     </div>
   );

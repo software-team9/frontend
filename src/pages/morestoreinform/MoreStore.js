@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./MoreStore.module.css";
 import useReviewHook from "../../hooks/useReviewHook";
 import useStoreHook from "../../hooks/useStoreHook";
 
 const MoreStore = () => {
-  const { storeId } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const storeId = queryParams.get('storeId');
   const navigate = useNavigate();
   const { getReviewsByStoreId } = useReviewHook();
-  const { stores, getStoreById } = useStoreHook();
-  const [store, setStore] = useState(null);
+  const { stores } = useStoreHook(); 
   const [storeReviews, setStoreReviews] = useState([]);
-  const [maxReviewCount, setMaxReviewCount] = useState(5);
+  const maxReviewCount = 5;
+  const [store, setStore] = useState(null);
 
-  console.log(storeId);
 
   useEffect(() => {
-    const storeInfo = getStoreById(String(storeId));
-    if (storeInfo) {
-      setStore(storeInfo[0]);
+    if (stores.length > 0) {
+      const foundStore = stores.find(s => s.storeId === storeId);
+      setStore(foundStore);
     }
-  }, [stores]);
+  }, [stores, storeId]);
 
   useEffect(() => {
-    // 해당 storeId에 맞는 리뷰 데이터를 가져옵니다.
     const reviews = getReviewsByStoreId(storeId).slice(0, maxReviewCount);
     setStoreReviews(reviews);
-  }, [storeId, maxReviewCount, getReviewsByStoreId]);
+  }, []);
 
   const handleMoreReviews = () => {
     navigate(`/morereview?storeId=${storeId}`);
@@ -92,11 +92,15 @@ const MoreStore = () => {
 
         {/* 가게 리뷰 목록 */}
         {storeReviews.map((review) => (
-          <div key={review.id} className={styles.reviewItem}>
-            <p className={styles.reviewText}>{review.text}</p>
-            {/* 여기에 리뷰 내용을 추가로 표시할 수 있습니다. */}
-          </div>
-        ))}
+  <div key={review.id} className={styles.reviewItem}>
+    <p className={styles.reviewUser}>{review.userId}</p>
+    <div className={styles.reviewRating}>
+      {'★'.repeat(Math.round(review.rating))} {/* 평점을 별로 표시 */}
+    </div>
+    <p className={styles.reviewText}>{review.text}</p>
+    <p className={styles.reviewTime}>{review.time}</p>
+  </div>
+))}
       </div>
     </div>
   );

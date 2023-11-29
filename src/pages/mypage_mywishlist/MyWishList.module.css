@@ -1,0 +1,15 @@
+/* MyWishList.module.css */
+.wishlistContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .storeItem {
+    width: 80%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  

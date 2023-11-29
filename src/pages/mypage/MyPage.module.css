@@ -38,6 +38,13 @@
     border-radius: 50%; /* Make it circular */
   }
   
+  /* Apply 'contain' property to the image */
+  .profileImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
   .menuLinks {
     display: flex !important;
     flex-direction: column !important;
