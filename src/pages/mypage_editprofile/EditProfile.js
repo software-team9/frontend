@@ -1,7 +1,6 @@
 // Inquiry.js
 import React, { useState } from "react";
 import Button from "../../components/button/Button";
-import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./PasswordCheck.module.css";
 import TopNav from "../../components/topnav/TopNav";
 import { useNavigate } from 'react-router-dom';
@@ -125,7 +124,6 @@ const EditProfile = ({userData, setpasswordCheckFalse}) => {
           onClick={() => handleConfirm(userData, setpasswordCheckFalse)}
         />
       </div>
-      <BottomNav />
     </div>
   );
 };

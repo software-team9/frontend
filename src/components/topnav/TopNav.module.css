@@ -10,15 +10,16 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* 전체 너비 */
+  width: 375px; /* 전체 너비 */
   height: 50px; /* 높이 */
   background-color: #fff; /* 배경색 하얀색 */
   position: fixed;
   top: 0;
-  left: 0;
+  /* left: 0; */
   border-bottom: 1px solid #ccc; /* 사각형의 밑변에 선 */
   box-sizing: border-box;
   z-index: 1000;
+  margin: 0 auto;
 }
 
 .backButton {

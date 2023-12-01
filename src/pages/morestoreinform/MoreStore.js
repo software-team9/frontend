@@ -24,8 +24,10 @@ const MoreStore = () => {
   }, [stores, storeId]);
 
   useEffect(() => {
-    const reviews = getReviewsByStoreId(storeId).slice(0, maxReviewCount);
-    setStoreReviews(reviews);
+    if (storeId) {
+      const reviews = getReviewsByStoreId(storeId).slice(0, maxReviewCount);
+      setStoreReviews(reviews);
+    }
   }, []);
 
   const handleMoreReviews = () => {
@@ -81,26 +83,35 @@ const MoreStore = () => {
       <div className={styles.reviewSection}>
         <h2 className={styles.sectionTitle}>
           Reviews
-          <button
-            onClick={handleMoreReviews}
-            className={styles.addReviewButton}
-          >
-            +
-          </button>
+          {/* 리뷰가 있을 때만 "+" 버튼을 보여줍니다. */}
+          {storeReviews.length > 0 && (
+            <button
+              onClick={handleMoreReviews}
+              className={styles.addReviewButton}
+            >
+              +
+            </button>
+          )}
         </h2>
         <div className={styles.redLine}></div>
 
-        {/* 가게 리뷰 목록 */}
-        {storeReviews.map((review) => (
-  <div key={review.id} className={styles.reviewItem}>
-    <p className={styles.reviewUser}>{review.userId}</p>
-    <div className={styles.reviewRating}>
-      {'★'.repeat(Math.round(review.rating))} {/* 평점을 별로 표시 */}
-    </div>
-    <p className={styles.reviewText}>{review.text}</p>
-    <p className={styles.reviewTime}>{review.time}</p>
-  </div>
-))}
+        {/* 가게 리뷰 목록 또는 메시지 */}
+        {storeReviews.length > 0 ? (
+          storeReviews.map((review) => (
+            <div key={review.id} className={styles.reviewItem}>
+              <p className={styles.reviewUser}>{review.userId}</p>
+              <div className={styles.reviewRating}>
+                {'★'.repeat(Math.round(review.rating))} {/* 평점을 별로 표시 */}
+              </div>
+              <p className={styles.reviewText}>{review.text}</p>
+              <p className={styles.reviewTime}>{review.time}</p>
+            </div>
+          ))
+        ) : (
+          <div className={styles.emptyMessage}>
+            가게에 추가된 리뷰가 없어요 ㅠㅠ
+          </div>
+        )}
       </div>
     </div>
   );

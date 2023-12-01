@@ -1,84 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import styles from "./Rankinglist.module.css";
-// import useStoreHook from "../../hooks/useStoreHook";
-
-// const STORES_PER_PAGE = 10;
-
-// const Ranking = () => {
-//   const navigate = useNavigate();
-//   const { getStoreListByCondition } = useStoreHook();
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [totalPages, setTotalPages] = useState(0);
-//   const [currentStores, setCurrentStores] = useState([]);
-//   const [city, setCity] = useState();
-
-//   useEffect((city) => {
-//     const stores = getStoreListByCondition(city);
-//     setTotalPages(Math.ceil(stores.length / STORES_PER_PAGE));
-//     const startIndex = (currentPage - 1) * STORES_PER_PAGE;
-//     const selectedStores = stores.slice(startIndex, startIndex + STORES_PER_PAGE);
-//     setCurrentStores(selectedStores);
-//   }, [currentPage]);
-
-//   const handleStoreClick = (storeId) => {
-//     navigate(`/morestore?storeId=${storeId}`);
-//   };
-
-//   const handlePageClick = (page) => {
-//     setCurrentPage(page);
-//   };
-
-//   return (
-//     <div className={styles.rankingContainer}>
-
-
-
-
-
-
-      
-//     </div>
-//   );
-// };
-
-// export default Ranking;
-
-
-// {/* {currentReviews.map((review, index) => (
-//         <div
-//           key={review.id}
-//           className={styles.reviewItem}
-//           onClick={() => handleStoreClick(review.storeId)}
-//         >
-//           <div className={styles.rank}>{index + 1 + (currentPage - 1) * REVIEWS_PER_PAGE}</div>
-//           <img
-//             src={review.imageUrl}
-//             alt="Store"
-//             className={styles.storeImage}
-//           />
-//           <div className={styles.storeInfo}>
-//             <h2 className={styles.storeName}>{review.storeName}</h2>
-//             <div className={styles.rating}>{`Rating: ${review.rating}`}</div>
-//             <p className={styles.reviewText}>{review.text}</p>
-//           </div>
-//         </div>
-//       ))}
-//       <div className={styles.pagination}>
-//         {Array.from({ length: totalPages }, (_, index) => index + 1).map(page => (
-//           <button
-//             key={page}
-//             className={currentPage === page ? styles.activePage : styles.pageNumber}
-//             onClick={() => handlePageClick(page)}
-//           >
-//             {page}
-//           </button>
-//         ))}
-//       </div> */}
-
-
-
-// Import necessary dependencies
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -89,8 +8,7 @@ import {
 } from "@mui/material";
 import styles from "./Rankinglist.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
-import Button from "../../components/button/Button";
-import BottomNav from "../../components/bottomnav/BottomNav";
+import RankingContainer from './RankingContainer';
 
 const STORES_PER_PAGE = 10;
 
@@ -353,11 +271,6 @@ const Ranking = () => {
           </div>
           </div>
     )}
-
-
-     
-
-      <BottomNav />
     </div>
   );
 };

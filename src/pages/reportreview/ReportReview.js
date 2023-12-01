@@ -1,7 +1,6 @@
 // ReviewReport.js
 import React, { useState } from "react";
 import Button from "../../components/button/Button";
-import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./ReportReview.module.css"; // Using ReviewReport styles
 import TopNav from "../../components/topnav/TopNav";
 import InputLabel from "@mui/material/InputLabel";
@@ -92,7 +91,6 @@ const ReviewReport = ({userData}, {reviewId}) => {
           onClick={() => handleReport(userData, reviewId)}
           />
       </div>
-      <BottomNav />
     </div>
   );
 };

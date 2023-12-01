@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import styles from "./MyPage.module.css";
 // import ProfileImage from "./ProfileImage"; // 프로필 이미지 컴포넌트를 사용한다고 가정
 import { Link } from "react-router-dom";
-import BottomNav from "../../components/bottomnav/BottomNav";
-import TopNav from "../../components/topnav/TopNav";
 import image from "./123.png";
 
 const MyPage = ({userData}) => {
@@ -28,7 +26,6 @@ const MyPage = ({userData}) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <TopNav />
       </div>
       <div className={styles.profileSection}>
         <div className={styles.userInfo}>
@@ -76,9 +73,6 @@ const MyPage = ({userData}) => {
   <div className={styles.rectangle16}></div>
   로그아웃
 </Link>
-
-
-      <BottomNav />
     </div>
   );
 };

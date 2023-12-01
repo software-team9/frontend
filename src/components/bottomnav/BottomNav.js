@@ -20,11 +20,11 @@ const BottomNav = () => {
       <button onClick={() => navigateTo("/")}>
         <img src="/public/home.svg" alt="Home" />
       </button>
+      <button onClick={() => navigateTo("/mypage/wishlist")}>
+        <img src="/public/setting.svg" alt="WishList" />
+      </button>
       <button onClick={() => navigateTo("/mypage")}>
         <img src="/public/people.svg" alt="Mypage" />
-      </button>
-      <button onClick={() => navigateTo("/setting")}>
-        <img src="/public/setting.svg" alt="Setting" />
       </button>
     </div>
   );

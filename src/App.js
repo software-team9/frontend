@@ -26,23 +26,6 @@ import BottomNav from "./components/bottomnav/BottomNav";
 import TopNav from "./components/topnav/TopNav";
 
 function App() {
-  const [reviewImage, setReviewImage] = useState(null);
-
-
-  const handleReviewImageChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setReviewImage(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
   const [isLogin, setIsLogin] = useState(true);
   // const [isLogin, setIsLogin] = useState(false); // 실제로 쓸땐 이거 사용
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
@@ -61,14 +44,6 @@ function App() {
   }
   const setpasswordCheckFalse = () => {
     setIsPasswordChecked(false);
-  }
-
-  const setreceiptCheckTrue = () => {
-    setIsReceiptChecked(true);
-  }
-
-  const setreceiptCheckFalse = () => {
-    setIsReceiptChecked(false);
   }
 
   return (
@@ -232,16 +207,10 @@ function App() {
             path="/writereview" 
             element={
               isLogin ? (
-                isReceiptChecked ? (
-                  <WriteReview
-                  setReceiptCheckFalse = {setreceiptCheckFalse}
-                  reviewImage
-                  />
+                window.sessionStorage.getItem('ReceiptCheck') ? (
+                  <WriteReview/>
                 ) : (
-                  <ReceiptRecognition
-                  setReceiptCheckTrue={setreceiptCheckTrue}
-                  setReviewImage={setReviewImage}
-                  />
+                  <ReceiptRecognition/>
                 )
               ) : (
                 <LoginPage

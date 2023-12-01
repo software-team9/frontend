@@ -1,7 +1,6 @@
 // Inquiry.js
 import React, { useState } from "react";
 import Button from "../../components/button/Button";
-import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./Inquiry.module.css";
 import TopNav from "../../components/topnav/TopNav";
 import { useNavigate } from 'react-router-dom';
@@ -71,7 +70,6 @@ const Inquiry = ({userData}) => {
 
         <Button type="submit" text="확인" size="long" onClick={handleInquirySubmit} />
       </div>
-      <BottomNav />
     </div>
   );
 };

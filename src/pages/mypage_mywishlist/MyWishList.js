@@ -1,38 +1,69 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; 
-import useWishListHook from "../../hooks/useUserDataHook";
 import useStoreHook from "../../hooks/useStoreHook";
 import styles from "./MyWishList.module.css";
 
+import HeadName from "../../components/head/Head";
+
 const MyWishList = () => {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const userId = queryParams.get("userId");
   const navigate = useNavigate();
-
-  const { getWishListByUserId } = useWishListHook();
-  const { getStoreById } = useStoreHook();
-  const [wishListStores, setWishListStores] = useState([]);
+  const { getWishListByUserId } = useStoreHook();
+  const [stores, setStores] = useState([]);
 
   useEffect(() => {
-    const wishList = getWishListByUserId(userId);
-    const stores = wishList.map(storeId => getStoreById(storeId));
-    setWishListStores(stores);
-  }, [userId, getWishListByUserId, getStoreById]);
+    const fetchWishList = async () => {
+      const userId = window.sessionStorage.getItem('token');
+      if (userId) { // userId가 유효한 값인지 확인
+        try {
+          const wishList = await getWishListByUserId(userId);
+          setStores(wishList || []); // wishList가 없을 경우 빈 배열을 설정
+        } catch (error) {
+          console.error("There was a problem fetching the wish list:", error);
+          setStores([]); // 에러 발생 시 빈 배열을 설정하여 오류 방지
+        }
+      } else {
+        console.error("No user ID found in session storage.");
+        setStores([]); // userId가 없을 경우 빈 배열을 설정
+      }
+    };
+  
+    fetchWishList();
+  }, []);
 
   const handleStoreClick = (storeId) => {
-    navigate(`/morestore?storeId=${storeId}`); 
+    navigate(`/store/${storeId}`);
   };
 
   return (
-    <div className={styles.wishlistContainer}>
-      {wishListStores.map((store, index) => (
-        <div key={index} className={styles.storeItem} onClick={() => handleStoreClick(store.storeId)}>
-          <h2>{store.storeName}</h2>
-          <p>{store.description}</p>
-          {/* 기타 필요한 정보 추가 */}
+    <div className={styles.rankingContainer}>
+      <HeadName title="내 위시리스트" />
+
+      {stores.length > 0 ? (
+        <table className={styles.tableContainer}>
+          <tbody>
+            {stores.map((store, index) => (
+              <tr 
+                key={store.id} 
+                className={styles.storeItem} 
+                onClick={() => handleStoreClick(store.id)}>
+                <td>
+                  <img src={store.img} alt={`${store.name} 이미지`} style={{ width: '100px', height: '100px' }} />
+                </td>
+                <td>
+                  <p className={styles.storeName}>{store.name}</p>
+                  <p>{store.adress}</p>
+                  <p>{store.city}</p>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className={styles.emptyMessage}>
+          위시리스트에 추가된 가게가 없어요 ㅠㅠ
         </div>
-      ))}
+      )}
     </div>
   );
 };

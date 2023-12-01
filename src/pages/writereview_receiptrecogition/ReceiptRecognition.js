@@ -3,7 +3,10 @@ import TopNav from '../../components/topnav/TopNav';
 import styles from "./ReceiptRecognition.module.css";
 import { useNavigate } from 'react-router-dom';
 
-const ReceiptRecognition = ({setReceiptCheckTrue, setReviewImage}) => {
+import HeadName from "../../components/head/Head";
+
+
+const ReceiptRecognition = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
@@ -21,7 +24,7 @@ const ReceiptRecognition = ({setReceiptCheckTrue, setReviewImage}) => {
     }
   };
 
-  const checkReceiptImage = (setReceiptCheckTrue) => {
+  const checkReceiptImage = () => {
     // fetch('http://localhost:8080/reviews/receipt/', {
     //   method: "POST",
     //   headers : {
@@ -41,8 +44,8 @@ const ReceiptRecognition = ({setReceiptCheckTrue, setReviewImage}) => {
     //   }
     // })
 
-    setReceiptCheckTrue();
-    setReviewImage(image);
+    window.sessionStorage.setItem('ReceiptCheck', true);
+    window.sessionStorage.setItem('ReviewImage', image);
     navigate('/writereview');
   }
 
@@ -76,7 +79,7 @@ const ReceiptRecognition = ({setReceiptCheckTrue, setReviewImage}) => {
       <div className={styles.headers}>
         <TopNav />
       </div>
-      <h1 className={styles.Title}>영수증 인식</h1>
+      <HeadName title="영수증 인식" />
       <div className={styles.separator}></div> 
       <p className={styles.Text}>
         영수증 전체가 잘 보일 수 있게 찍어주세요. <br/>
@@ -95,7 +98,7 @@ const ReceiptRecognition = ({setReceiptCheckTrue, setReviewImage}) => {
         </label>
         <button 
           style={secondaryButtonStyle} 
-          onClick={() => checkReceiptImage(setReceiptCheckTrue)}>
+          onClick={() => checkReceiptImage()}>
           확인
         </button>
       </div>
@@ -106,8 +109,7 @@ const ReceiptRecognition = ({setReceiptCheckTrue, setReviewImage}) => {
         onChange={handleImageChange}
         required
       />
-      
-      
+
     </div>
   );
 };

@@ -7,16 +7,6 @@
   padding: 10px;
 }
 
-.reviewItem {
-  display: flex;
-  align-items: center;
-  width: 80%;
-  min-height: 8%;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
 .rank {
   font-size: 20px;
   margin-right: 10px;
@@ -36,6 +26,14 @@
 .storeName {
   font-weight: bold;
 }
+
+.storeItem {
+  display: flex;
+  align-items: center;
+  text-align: center; /* Adjust as needed for text alignment */
+  margin: 10px 0; /* Adjust as needed for spacing between items */
+}
+
 
 .rating {
   margin-top: 5px;
@@ -87,7 +85,16 @@
   margin-right: 30px;
   margin-left: 30px;
   font-size: 1.5em;
+}
 
+.reviewItem {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  min-height: 8%;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
 
@@ -100,13 +107,6 @@
   justify-content: center;
 }
 
-
-.storeItem {
-  display: flex;
-  align-items: center;
-  text-align: center; /* Adjust as needed for text alignment */
-  margin: 10px 0; /* Adjust as needed for spacing between items */
-}
 
 .rankBox {
   background-color: #eaeaea; /* Adjust as needed for the background color */
@@ -138,8 +138,6 @@
   flex-grow: 1; /* Takes remaining space, pushing the image to the end */
   white-space: nowrap; /* Do not wrap text to the next line */
   max-width: 200px; /* Adjust as needed for the maximum width */
-
-
 }
 
 

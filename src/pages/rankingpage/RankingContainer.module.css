@@ -1,0 +1,38 @@
+.container {
+    width: 90%;
+    max-width: 375px;
+    margin: 0 auto; /* 중앙 정렬 */
+    overflow-x: auto; /* 필요시 수평 스크롤바를 표시 */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse; /* 셀 사이의 간격 없애기 */
+  }
+  
+  .storeItem {
+    /* 기존 Ranking.module.css 내용 그대로 사용 */
+  }
+  
+  .rankBox {
+    /* 기존 Ranking.module.css 내용 그대로 사용 */
+  }
+  
+  .rankNumber {
+    /* 기존 Ranking.module.css 내용 그대로 사용 */
+  }
+  
+  .storeName {
+    /* 기존 Ranking.module.css 내용 그대로 사용, 주소가 너무 길 경우 처리를 위해 추가 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .storeAddress {
+    /* 주소가 너무 길 경우 처리를 위해 추가 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

@@ -6,9 +6,11 @@ import TopNav from "../../components/topnav/TopNav";
 import Button from "../../components/button/Button";
 import { useNavigate } from 'react-router-dom';
 
+import HeadName from "../../components/head/Head";
+
 const userID = 123453289;
 
-const WriteReview = ({reviewImage, setReceiptCheckFalse}) => {
+const WriteReview = () => {
   const { reviews, addReview, getReviewsByUserId } = useReviewHook();
   const [userReviews, setUserReviews] = useState([]);
   const [selectedReview, setSelectedReview] = useState(null);
@@ -17,6 +19,7 @@ const WriteReview = ({reviewImage, setReceiptCheckFalse}) => {
   const [address, setAddress] = useState();
   const [reviewContent, setReviewContent] = useState("");
   const navigate = useNavigate();
+  const [reviewImage, setReviewImage] = useState("");
 
   const handleStoreNameChange = (e) => {
     setStoreName(e.target.value);
@@ -46,33 +49,40 @@ const WriteReview = ({reviewImage, setReceiptCheckFalse}) => {
 
 
   const handleWriteReview = () => {
+    const userId = 168;
     // const userId = sessionStorage.getItem('token');
-    // fetch('URL', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     UserId: userId,
-    //     reviewContent,
-    //     rating,
-    //     storeName,
-    //     address,
-    //     reviewImage
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    // .then(response => {
-    //   console.log(response.message);
-    //   navigate('/');
-    // })
+    fetch('http://15.165.26.32:8080/reviews/', {
+      method: 'POST',
+      body: JSON.stringify({
+        memberId: userId,
+        storeName: storeName,
+        address: address,
+        content: reviewContent,
+        ratingPoint: rating,
+        img: reviewImage
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      console.log(response.message);
+      navigate('/');
+    })
 
-    navigate('/')
+    window.sessionStorage.setItem('ReceiptCheck', false);
   }
 
   return (
     <div className={styles.container}>
-      <TopNav />
-      <h1>리뷰 작성</h1>
+      <TopNav /> 
+      <HeadName title="리뷰작성" /> /writereview
+
+      /writereview 
+
+      state  영수증 인식을 불러오고
+      /
+      ReceiptRecognition.js
       <div className={styles.separator}></div> 
       <h2>가게 정보</h2>
       <div>
@@ -120,7 +130,7 @@ const WriteReview = ({reviewImage, setReceiptCheckFalse}) => {
         <div>
           {reviewImage && (
             <div style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px', marginTop: '10px' }}>
-              <img src={reviewImage} alt="Uploaded" style={{ maxWidth: '100%' }} />
+              <img src={""} alt="Uploaded" style={{ maxWidth: '100%' }} />
             </div>
           )}
         </div>

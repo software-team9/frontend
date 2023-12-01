@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styles from "./PasswordCheck.module.css";
 import Button from "../../components/button/Button";
 import TopNav from "../../components/topnav/TopNav";
-import BottomNav from "../../components/bottomnav/BottomNav";
 import { useNavigate } from 'react-router-dom';
 
 const PasswordCheck = ({setpasswordCheckTrue}) => {
@@ -61,7 +60,6 @@ const PasswordCheck = ({setpasswordCheckTrue}) => {
           size="long" 
           onClick={() => handlePassword(setpasswordCheckTrue)}/>
       </div>
-      <BottomNav />
     </div>
   );
 };

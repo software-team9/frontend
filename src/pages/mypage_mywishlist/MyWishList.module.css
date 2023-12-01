@@ -1,15 +1,48 @@
-/* MyWishList.module.css */
-.wishlistContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .storeItem {
-    width: 80%;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
+
+.tableContainer {
+  width: 100%; /* Adjust as needed */
+  margin: 0 auto; /* Center the table container horizontally */
+  border-collapse: collapse; /* Remove border spacing between cells */
+  text-align: center; /* Center the content within the table cells */
+  display: flex;
+  justify-content: center;
+}
+
+.storeImage {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+.storeInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.storeName {
+  flex-grow: 1; /* Takes remaining space, pushing the image to the end */
+  text-align: left; /* Adjust as needed for text alignment */
+  padding-left: 10px; /* Adjust as needed for spacing */
+
+  flex-grow: 1; /* Takes remaining space, pushing the image to the end */
+  white-space: nowrap; /* Do not wrap text to the next line */
+  max-width: 200px; /* Adjust as needed for the maximum width */
+}
+
+.storeItem {
+  display: flex;
+  align-items: center;
+  text-align: center; /* Adjust as needed for text alignment */
+  margin: 10px 0; /* Adjust as needed for spacing between items */
+}
+
+.emptyMessage {
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 1.2rem;
+  color: #555;
+  background: #f7f7f7;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  margin: 20px;
+}

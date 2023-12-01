@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styles from "./Quit.module.css";
 import Button from "../../components/button/Button";
 import TopNav from "../../components/topnav/TopNav";
-import BottomNav from "../../components/bottomnav/BottomNav";
 import { useNavigate } from 'react-router-dom';
 
 const Quit = ({userData, logoutHandler}) => {
@@ -121,7 +120,6 @@ const Quit = ({userData, logoutHandler}) => {
           size="long" 
           onClick={() => handleQuit(userData, logoutHandler)}/>
       </div>
-      <BottomNav />
     </div>
   );
 };

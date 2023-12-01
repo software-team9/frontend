@@ -64,6 +64,12 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
+  color: #D32323;
+}
+
+.addReviewButton:hover {
+  background-color: #D32323; /* 마우스 오버 시 배경 색상 */
+  color: white; /* 마우스 오버 시 텍스트 색상 */
 }
 
 .reviewItem {
@@ -93,3 +99,13 @@
   color: #777;
 }
 
+.emptyMessage {
+  text-align: center;
+  padding: 20px;
+  font-size: 1rem;
+  color: #555;
+  margin: 10px 0;
+  background: #f9f9f9;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+}
