@@ -12,7 +12,7 @@ const MoreStore = () => {
   const { getReviewsByStoreId } = useReviewHook();
   const { stores } = useStoreHook(); 
   const [storeReviews, setStoreReviews] = useState([]);
-  const maxReviewCount = 5;
+  const maxReviewCount = 3;
   const [store, setStore] = useState(null);
 
 

@@ -10,10 +10,14 @@
   font-size: 16px; /* 글자 크기 */
   font-weight: bold; /* 글자 굵기 */
   text-align: center; /* 글자 가로 정렬 */
-  line-height: 40px; /* 글자 세로 정렬 */
+  line-height: center; /* 글자 세로 정렬 */
   cursor: pointer; /* 마우스 오버시 커서 변경 */
   outline: none; /* 클릭 시 발생하는 아웃라인 제거 */
   transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+  /* display: flex;
+  align-items: center;
+  text-align: center; Center the text horizontally */
+  
 }
 
 /* 중간 크기 버튼 스타일 */

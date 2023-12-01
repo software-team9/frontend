@@ -70,3 +70,84 @@
   background-color: #D32323;
   color: #fff;
 }
+
+
+.rankingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  justify-content: center; /* Add this line */
+}
+
+.selectedView {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-right: 30px;
+  margin-left: 30px;
+  font-size: 1.5em;
+
+}
+
+
+.tableContainer {
+  width: 100%; /* Adjust as needed */
+  margin: 0 auto; /* Center the table container horizontally */
+  border-collapse: collapse; /* Remove border spacing between cells */
+  text-align: center; /* Center the content within the table cells */
+  display: flex;
+  justify-content: center;
+}
+
+
+.storeItem {
+  display: flex;
+  align-items: center;
+  text-align: center; /* Adjust as needed for text alignment */
+  margin: 10px 0; /* Adjust as needed for spacing between items */
+}
+
+.rankBox {
+  background-color: #eaeaea; /* Adjust as needed for the background color */
+  padding: 5px; /* Adjust as needed for spacing */
+  border-radius: 5px; /* Adjust as needed for rounded corners */
+  width: 30px; /* Adjust the width for a square */
+  height: 30px; /* Adjust the height for a square */
+  display: flex;
+  align-items: center; /* Center vertically within the flex container */
+  justify-content: center;
+  margin-right: 5px; /* Adjust as needed for spacing between rankBox and img */
+}
+
+.rankNumber {
+  font-weight: bold;
+}
+
+.storeItem img {
+  margin-right: 5px; /* Adjust as needed for spacing between rankBox and img */
+  padding: 5px; /* Adjust as needed for spacing */
+  border-radius: 5px; /* Adjust as needed for rounded corners */
+}
+
+.storeName {
+  flex-grow: 1; /* Takes remaining space, pushing the image to the end */
+  text-align: left; /* Adjust as needed for text alignment */
+  padding-left: 10px; /* Adjust as needed for spacing */
+
+  flex-grow: 1; /* Takes remaining space, pushing the image to the end */
+  white-space: nowrap; /* Do not wrap text to the next line */
+  max-width: 200px; /* Adjust as needed for the maximum width */
+
+
+}
+
+
+/* Ranking.module.css */
+
+.hallOfFameOption {
+  margin-bottom: 20px; /* Add some margin to create space */
+}
+.viewOptionsContainer {
+  margin-bottom: 20px;
+}

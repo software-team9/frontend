@@ -26,9 +26,9 @@ const ReviewReport = ({userData}, {reviewId}) => {
   const handleReport = (userData, reviewId) => {
     // fetch('URL', {
     //   method: 'POST',
-    //   body: JSON.stringify({
-    //     UserId: userData, 
+    //   body: JSON.stringify({ 
     //     ReviewId: reviewId,
+    //     UserId: userData,
     //     category,
     //     content
     //   }),
@@ -42,6 +42,8 @@ const ReviewReport = ({userData}, {reviewId}) => {
     // })
     navigate('/')
   }
+
+  
 
 
   return (
@@ -68,12 +70,11 @@ const ReviewReport = ({userData}, {reviewId}) => {
             onChange={handleCategory}
             label="category"
           >
-            <MenuItem value="">
-              <em>없음</em>
-            </MenuItem>
-            <MenuItem value={1}>비속어</MenuItem>
-            <MenuItem value={2}>사실과무관</MenuItem>
-            <MenuItem value={3}>기타</MenuItem>
+            <MenuItem value={'UNRELATED_CONTENT'}>가게와 관련없는 내용</MenuItem>
+            <MenuItem value={'OBSCENE_LANGUAGE'}>음란성/욕설</MenuItem>
+            <MenuItem value={'PRIVACY_RISK'}>개인정보 유출 위험</MenuItem>
+            <MenuItem value={'INAPPROPRIATE_AD'}>부적절한 홍보 또는 광고</MenuItem>
+            <MenuItem value={'OTHER'}>기타</MenuItem>
           </Select>
         </FormControl>
       </div>

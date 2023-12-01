@@ -73,7 +73,7 @@ const Quit = ({userData, logoutHandler}) => {
         계정을 삭제하시려는 이유를 말씀해주세요.
         제품 개선에 중요자료로 활용하겠습니다.
       </p>
-      <br />
+      {/* <br /> */}
       <div className={styles.quitForm}>
         <label>
           <input type="checkbox" /> 기록 삭제 목적
@@ -97,6 +97,8 @@ const Quit = ({userData, logoutHandler}) => {
         <label>
           <input type="checkbox" /> 기타
         </label>
+        </div>
+        <div>
         <div className={styles.warningTextarea}>계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록이 삭제됩니다. 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.</div>
         <input
           type="password"

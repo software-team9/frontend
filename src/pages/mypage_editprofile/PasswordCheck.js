@@ -6,17 +6,18 @@ import TopNav from "../../components/topnav/TopNav";
 import BottomNav from "../../components/bottomnav/BottomNav";
 import { useNavigate } from 'react-router-dom';
 
-const PasswordCheck = ({userData, passwordCheckHandler}) => {
+const PasswordCheck = ({setpasswordCheckTrue}) => {
   const [pw, setPw] = useState(null);
   const navigate = useNavigate();
 
   const handlePasswordChange = (e) => setPw(e.target.value);
 
-  const handlePassword = (userData, logoutHandler) => {
+  const handlePassword = (setpasswordCheckTrue) => {
+    const userId = sessionStorage.getItem('token');
     // fetch('URL', {
     //     method: 'POST',
     //     body: JSON.stringify({
-    //       UserId: userData,
+    //       UserId: userId,
     //       password: pw
     //     }),
     //     headers: {
@@ -33,7 +34,7 @@ const PasswordCheck = ({userData, passwordCheckHandler}) => {
     //     }
     //   })
 
-      passwordCheckHandler();
+      setpasswordCheckTrue();
       navigate('/mypage/editprofile');
 
   }
@@ -58,7 +59,7 @@ const PasswordCheck = ({userData, passwordCheckHandler}) => {
         <Button 
           text="확인" 
           size="long" 
-          onClick={() => handlePassword(userData, passwordCheckHandler)}/>
+          onClick={() => handlePassword(setpasswordCheckTrue)}/>
       </div>
       <BottomNav />
     </div>

@@ -94,8 +94,25 @@
     /* Additional styles for "1:1 문의하기" */
   }
   
-  .withdrawal {
-    /* Additional styles for "회원탈퇴" */
+  .withdrawal,
+  .logout {
+    display: flex;
+    flex-direction: row; /* 가로 정렬을 위한 설정 추가 */
+    align-items: center; /* 세로 중앙 정렬 */
+    color: #666; /* 회색글씨 색상 */
+    font-size: 0.9rem; /* 글자 크기 조정 */
+    text-align: center; /* 가운데 정렬 */
+    cursor: pointer; /* 마우스 포인터를 손가락 모양으로 변경 */
+    transition: color 0.3s; /* 색상 변경에 애니메이션 효과 추가 */
   }
   
+  .withdrawal:hover,
+  .logout:hover {
+    color: #D32323; /* 호버 시 색상 변경 */
+  }
   
+  /* Optional: Add margin between the icon and text */
+  .withdrawal .rectangle16,
+  .logout .rectangle16 {
+    margin-right: 5px;
+  }

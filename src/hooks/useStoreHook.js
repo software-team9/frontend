@@ -9,6 +9,33 @@ const useStoreHook = () => {
     return stores;
   };
 
+  const getStoreListByCondition = (city) => {
+    // fetch (`http://localhost:8080/stores/condition?city=${city}`, {
+    //   method : 'GET', 
+    //   headers : {
+    //     "Content-Type" : "application/json"
+    //   },
+    //   body : JSON.stringify({
+    //     "storeId": "s_324ojj",
+    //     "imageUrl": "www.aaa.com",
+    //     "storeName": "리그오브레스토랑",
+    //     "avr_rating": 4.7,
+    //     "text": "리그오브레스토랑",
+    //     "made_time": "2023-11-24 13:34:31",
+    //     "highest_ranking": "S",
+    //     "address": "경기 수원시 영통구 월드컵로 206",
+    //     "opening_time": "09:00",
+    //     "closing_time": "21:00",
+    //     "Business Number": "9324234-2148",
+    //     "category": "Chinese food"
+    //   })
+    // })
+
+    return storeData
+  }
+
+  // 홈화면에 사용할 특정 가게 
+
   // 특정 가게 ID에 해당하는 가게 정보 가져오기
   const getStoreById = (storeId) => {
     return stores.find((store) => store.storeId === storeId);
@@ -40,6 +67,7 @@ const useStoreHook = () => {
     updateStore,
     addStore,
     deleteStore,
+    getStoreListByCondition
   };
 };
 

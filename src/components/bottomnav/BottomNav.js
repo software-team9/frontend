@@ -11,7 +11,7 @@ const BottomNav = () => {
 
   return (
     <div className={styles.button_nav}>
-      <button onClick={() => navigateTo("/review")}>
+      <button onClick={() => navigateTo("/writereview")}>
         <img src="src/components/bottomnav/icon/rate_review.svg" alt="Review" />
       </button>
       <button onClick={() => navigateTo("/map")}>

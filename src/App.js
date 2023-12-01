@@ -25,29 +25,48 @@ import BottomNav from "./components/bottomnav/BottomNav";
 import TopNav from "./components/topnav/TopNav";
 
 function App() {
+  const [reviewImage, setReviewImage] = useState(null);
+
+  const handleReviewImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setReviewImage(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   const [isLogin, setIsLogin] = useState(true);
   // const [isLogin, setIsLogin] = useState(false); // 실제로 쓸땐 이거 사용
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [isReceiptChecked, setIsReceiptChecked] = useState(false);
 
   const loginHandler = () => {
     setIsLogin(true);
-  };
-
-  const setUserInfo = (object) => {
-    setUserData(object);
   };
 
   const logoutHandler = () => {
     setIsLogin(false);
   };
 
-  const passwordCheckHandler = () => {
+  const setpasswordCheckTrue = () => {
     setIsPasswordChecked(true);
   }
   const setpasswordCheckFalse = () => {
     setIsPasswordChecked(false);
+  }
+
+  const setreceiptCheckTrue = () => {
+    setIsReceiptChecked(true);
+  }
+
+  const setreceiptCheckFalse = () => {
+    setIsReceiptChecked(false);
   }
 
   return (
@@ -59,7 +78,6 @@ function App() {
             path="/login" 
             element={<LoginPage 
                         loginHandler={loginHandler}
-                        setUserInfo={setUserInfo}
                       />
                     } 
           />
@@ -68,32 +86,27 @@ function App() {
             element={
               isLogin ? (
                 <Quit
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
             />
 
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/" element={<Ranking />} />
           <Route path="/map" element={<MapPage />} />
           <Route 
             path="/morereview" 
             element={
               isLogin ? (
                 <MoreReview
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -103,13 +116,10 @@ function App() {
             element={
               isLogin ? (
                 <MoreStore
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -120,12 +130,10 @@ function App() {
               isLogin ? (
                 <MyPage
                   logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -137,20 +145,15 @@ function App() {
                 isPasswordChecked ? (
                   <EditProfile
                   setpasswordCheckFalse = {setpasswordCheckFalse}
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
                 ) : (
                   <PasswordCheck
-                  passwordCheckHandler={passwordCheckHandler}
-                  logoutHandler={logoutHandler}
-                  userData={userData}
+                  setpasswordCheckTrue={setpasswordCheckTrue}
                   />
                 )
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -160,12 +163,10 @@ function App() {
             element={
               isLogin ? (
                 <Inquiry
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -175,13 +176,10 @@ function App() {
             element={
               isLogin ? (
                 <MyInquiryList
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -191,13 +189,10 @@ function App() {
             element={
               isLogin ? (
                 <MyReviewList
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -207,13 +202,10 @@ function App() {
             element={
               isLogin ? (
                 <MyWishList
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
@@ -223,50 +215,40 @@ function App() {
             element={
               isLogin ? (
                 <ReportReview
-                  logoutHandler={logoutHandler}
-                  userData={userData}
                   />
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
             />
           <Route path="/setting" element={<SettingPage />} />
+          
+
           <Route 
-            path="/writereview/receiptrecognition" 
+            path="/writereview" 
             element={
               isLogin ? (
-                <ReceiptRecognition
-                  logoutHandler={logoutHandler}
-                  userData={userData}
+                isReceiptChecked ? (
+                  <WriteReview
+                  setReceiptCheckFalse = {setreceiptCheckFalse}
+                  reviewImage
                   />
+                ) : (
+                  <ReceiptRecognition
+                  setReceiptCheckTrue={setreceiptCheckTrue}
+                  setReviewImage={setReviewImage}
+                  />
+                )
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
                   />
               )
             }
             />
-          <Route 
-            path="/writereview/writereview" 
-            element={
-              isLogin ? (
-                <WriteReview
-                  logoutHandler={logoutHandler}
-                  userData={userData}
-                  />
-              ) : (
-                <LoginPage
-                  loginHandler={loginHandler}
-                  setUserInfo={setUserInfo}
-                  />
-              )
-            }
-            />
+
             
         </Routes>
         <BottomNav />
