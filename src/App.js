@@ -21,11 +21,13 @@ import SettingPage from "./pages/settingpage/SettingPage";
 import ReceiptRecognition from "./pages/writereview_receiptrecogition/ReceiptRecognition";
 import WriteReview from "./pages/writereview_writereview/WriteReview";
 
+import LogoutComponent from "./components/logout/LogoutComponent";
 import BottomNav from "./components/bottomnav/BottomNav";
 import TopNav from "./components/topnav/TopNav";
 
 function App() {
   const [reviewImage, setReviewImage] = useState(null);
+
 
   const handleReviewImageChange = (e) => {
     const file = e.target.files[0];
@@ -248,6 +250,11 @@ function App() {
               )
             }
             />
+
+          <Route
+            path="/logout"
+            element={<LogoutComponent onLogout={logoutHandler} />}
+          />
 
             
         </Routes>
