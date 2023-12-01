@@ -3,7 +3,7 @@
 로고
 */
 body {
-  padding-top: 60px; /* 상단 네비게이션 바의 높이만큼 여백 추가 */
+  padding-top: 50px; /* 상단 네비게이션 바의 높이만큼 여백 추가 */
 }
 
 .topNav {
@@ -11,7 +11,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%; /* 전체 너비 */
-  height: 60px; /* 높이 */
+  height: 50px; /* 높이 */
   background-color: #fff; /* 배경색 하얀색 */
   position: fixed;
   top: 0;

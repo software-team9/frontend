@@ -114,7 +114,7 @@ const MapPage = () => {
   const handleStoreClick = (storeId) => {
     navigate(`/morestore?storeId=${storeId}`);
   };
- 
+
 
 
 

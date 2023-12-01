@@ -149,6 +149,7 @@ const SignUp = () => {
               type="button"
               className= "duplicateCheckButton"
               onClick={() => handleDuplicateCheckButtonClick(phoneNumber)}
+      
               />
           </div>
         </div>

@@ -4,8 +4,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 전체 뷰포트 높이 */
+    /* height: 100vh; 전체 뷰포트 높이 */
     padding: 20px; /* 약간의 패딩 */
+    width:375px;
   }
   
   .profileSection {
