@@ -5,26 +5,25 @@ import styles from "./MyPage.module.css";
 import { Link } from "react-router-dom";
 import BottomNav from "../../components/bottomnav/BottomNav";
 import TopNav from "../../components/topnav/TopNav";
+import image from "./123.png";
 
 const MyPage = ({userData}) => {
-  const [image, setImage] = useState('./UserImageExample.png/');
+  // const [image, setImage] = useState('./123.png/');
   
-  const handleinitial = (e) => {
-    setImage('./UserImageExample.png');
-  }
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
 
-    if (file) {
-      const reader = new FileReader();
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
 
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
+  //   if (file) {
+  //     const reader = new FileReader();
 
-      reader.readAsDataURL(file);
-    }
-  };
+  //     reader.onloadend = () => {
+  //       setImage(reader.result);
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   return (
     <div className={styles.container}>
