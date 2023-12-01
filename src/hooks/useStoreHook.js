@@ -34,6 +34,18 @@ const useStoreHook = () => {
     return storeData
   }
 
+  const getXYByKeyword = (address) => {
+    fetch (`https://dapi.kakao.com/v2/local/search/query.${address}&category_group_code.FD6`, {
+      method : 'GET',
+      headers: {
+        "Authorization" : `KakaoAK 48f52f09b5313cba31a0459b42baaa2b`
+      },
+    })
+    .then(response => {
+      return Response.json();
+    })
+  }
+
   // 홈화면에 사용할 특정 가게 
 
   // 특정 가게 ID에 해당하는 가게 정보 가져오기

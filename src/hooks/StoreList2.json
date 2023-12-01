@@ -1,0 +1,16 @@
+[
+  {
+      "id": 6,
+      "name": "샹그릴라 레스토랑",
+      "address": "경기도 수원시 영통구 원천동 아주로 46",
+      "city": "수원",
+      "img": "https://t1.daumcdn.net/localfiy/72EA67D991F147AF82546F92B53C697E"
+  },
+  {
+      "id": 8,
+      "name": "본수원갈비",
+      "address": "경기도 수원시 매탄동 153-58번지",
+      "city": "수원",
+      "img": "https://t1.kakaocdn.net/mystore/4E654F81E87A4258A1EBB96846B72C6F"
+  }
+]
