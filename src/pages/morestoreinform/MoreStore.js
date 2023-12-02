@@ -4,6 +4,8 @@ import styles from "./MoreStore.module.css";
 import useReviewHook from "../../hooks/useReviewHook";
 import useStoreHook from "../../hooks/useStoreHook";
 
+import storeImage from "./image.jpg"
+
 const MoreStore = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -43,6 +45,12 @@ const MoreStore = () => {
             className={styles.storeImageSection}
             style={{ backgroundImage: `url(${store.imageUrl})` }}
           >
+          </div>
+          {/* 가게 사진 */}
+          <div
+            className={styles.storeImageSection}
+            style={{ backgroundImage: `url(${storeImage})` }}
+          >
             {/* 이미지를 inline 스타일로 설정합니다. */}
           </div>
 
@@ -54,26 +62,13 @@ const MoreStore = () => {
 
           {/* 가게 상세정보 */}
           <div className={styles.storeDetailSection}>
-            <div className={styles.detailItem}>
-              <strong>Average Rating:</strong> {store.avr_rating}
-            </div>
-            <div className={styles.detailItem}>
-              <strong>Highest Ranking:</strong> {store.highest_ranking}
-            </div>
+
             <div className={styles.detailItem}>
               <strong>Address:</strong> {store.address}
             </div>
-            <div className={styles.detailItem}>
-              <strong>Opening Time:</strong> {store.opening_time}
-            </div>
-            <div className={styles.detailItem}>
-              <strong>Closing Time:</strong> {store.closing_time}
-            </div>
+
             <div className={styles.detailItem}>
               <strong>Business Number:</strong> {store["Business Number"]}
-            </div>
-            <div className={styles.detailItem}>
-              <strong>Category:</strong> {store.category}
             </div>
           </div>
         </>

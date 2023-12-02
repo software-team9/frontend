@@ -154,13 +154,12 @@ const Ranking = () => {
                     <td className={styles.rankBox}>
                       <p className={styles.rankNumber}>{index + 1}</p>
                     </td>
-                    <td>
+                    <td className={styles.storeImage}>
                       <img src={store.image} alt={"가게"} />
                     </td>
                     <td>
-                      <p className={styles.storeName}>
-                        {store.storeName} ✩ {store.avr_rating}
-                      </p>
+                      <p className={styles.storeName}>{store.storeName}</p>
+                      <p className={styles.storeRating}>✩ {store.avr_rating}</p>
                       <p className={styles.storeAdress}>{store.address}</p>
                     </td>
                   </tr>
@@ -232,7 +231,6 @@ const Ranking = () => {
             </Select>
           </FormControl>
           <div>
-            {/* Ranked items list */}
             <table className={styles.tableContainer}>
               <tbody>
                 {currentStores.map((store, index) => (
@@ -241,19 +239,16 @@ const Ranking = () => {
                     className={styles.storeItem}
                     onClick={() => handleStoreClick(store.storeId)}
                   >
-                    {/* Display rank, image, and detailed information in a table row */}
-
                     <td className={styles.rankBox}>
                       <p className={styles.rankNumber}>{index + 1}</p>
                     </td>
-                    <td>
+                    <td className={styles.storeImage}>
                       <img src={store.image} alt={"가게"} />
                     </td>
                     <td>
-                      <p className={styles.storeName}>
-                        {store.storeName} ✩ {store.avr_rating}
-                      </p>
-                      <p className={styles.storeName}>{store.address}</p>
+                      <p className={styles.storeName}>{store.storeName}</p>
+                      <p className={styles.storeRating}>✩ {store.avr_rating}</p>
+                      <p className={styles.storeAdress}>{store.address}</p>
                     </td>
                   </tr>
                 ))}

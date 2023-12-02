@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; 
+import { useLocation, useNavigate } from "react-router-dom";
 import useStoreHook from "../../hooks/useStoreHook";
 import styles from "./MyWishList.module.css";
 
@@ -9,14 +9,15 @@ const MyWishList = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { getWishListByUserId } = useStoreHook();
-  const [stores, setStores] = useState([]);
+  const [stores, setStores] = useState([  ]);
 
   useEffect(() => {
     const fetchWishList = async () => {
-      const userId = window.sessionStorage.getItem('token');
+      const userId = 168;
       if (userId) { // userId가 유효한 값인지 확인
         try {
           const wishList = await getWishListByUserId(userId);
+          console.log(wishList);
           setStores(wishList || []); // wishList가 없을 경우 빈 배열을 설정
         } catch (error) {
           console.error("There was a problem fetching the wish list:", error);
@@ -27,7 +28,7 @@ const MyWishList = () => {
         setStores([]); // userId가 없을 경우 빈 배열을 설정
       }
     };
-  
+
     fetchWishList();
   }, []);
 
@@ -43,17 +44,21 @@ const MyWishList = () => {
         <table className={styles.tableContainer}>
           <tbody>
             {stores.map((store, index) => (
-              <tr 
-                key={store.id} 
-                className={styles.storeItem} 
-                onClick={() => handleStoreClick(store.id)}>
+              <tr
+                key={store.id}
+                className={styles.storeItem}
+                onClick={() => handleStoreClick(store.id)}
+              >
                 <td>
-                  <img src={store.img} alt={`${store.name} 이미지`} style={{ width: '100px', height: '100px' }} />
+                  <img className={styles.storeImage}
+                    src={store.img}
+                    alt={`이미지`}
+                  />
                 </td>
                 <td>
                   <p className={styles.storeName}>{store.name}</p>
-                  <p>{store.adress}</p>
-                  <p>{store.city}</p>
+                  <p className={styles.storeCity}>{store.city}</p>
+                  <p className={styles.storeAdress}>{store.adress}</p>
                 </td>
               </tr>
             ))}

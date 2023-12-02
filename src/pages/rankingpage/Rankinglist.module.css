@@ -1,45 +1,29 @@
 /* Ranking.module.css */
-.rankingContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 10px;
+.activePage {
+  background-color: #d32323;
+  color: #fff;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 5px 10px;
+  transition: background-color 0.3s;
 }
 
-.rank {
-  font-size: 20px;
-  margin-right: 10px;
+.hallOfFameOption {
+  margin-bottom: 20px; /* Add some margin to create space */
 }
 
-.storeImage {
-  width: 80px;
-  height: 80px;
-  margin-right: 10px;
+.pageNumber {
+  background-color: #fff;
+  border: none;
+  color: #d32323;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 5px 10px;
+  transition: background-color 0.3s;
 }
 
-.storeInfo {
-  display: flex;
-  flex-direction: column;
-}
-
-.storeName {
-  font-weight: bold;
-}
-
-.storeItem {
-  display: flex;
-  align-items: center;
-  text-align: center; /* Adjust as needed for text alignment */
-  margin: 10px 0; /* Adjust as needed for spacing between items */
-}
-
-.rating {
-  margin-top: 5px;
-}
-
-.reviewText {
-  margin-top: 5px;
+.pageNumber:hover {
+  background-color: #fff;
 }
 
 .pagination {
@@ -48,110 +32,117 @@
   margin-top: 20px;
 }
 
-.pageNumber,
-.activePage {
-  border: none;
-  background-color: #fff;
-  color: #d32323;
-  padding: 5px 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.pageNumber:hover {
-  background-color: #fff;
-}
-
-.activePage {
-  background-color: #d32323;
-  color: #fff;
-}
-
-.rankingContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  justify-content: center; /* Add this line */
-}
-
-.selectedView {
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
-  margin-right: 30px;
-  margin-left: 30px;
-  font-size: 1.5em;
-}
-
-.reviewItem {
-  display: flex;
-  align-items: center;
-  width: 80%;
-  min-height: 8%;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-.tableContainer {
-  width: 100%; /* Adjust as needed */
-  margin: 0 auto; /* Center the table container horizontally */
-  border-collapse: collapse; /* Remove border spacing between cells */
-  text-align: center; /* Center the content within the table cells */
-  display: flex;
-  justify-content: center;
-}
-
 .rankBox {
-  background-color: #eaeaea; /* Adjust as needed for the background color */
-  padding: 5px; /* Adjust as needed for spacing */
-  border-radius: 5px; /* Adjust as needed for rounded corners */
-  width: 30px; /* Adjust the width for a square */
-  height: 30px; /* Adjust the height for a square */
+  align-items: center;
+  background-color: #eaeaea;
+  border-radius: 5px;
   display: flex;
-  align-items: center; /* Center vertically within the flex container */
+  height: 30px;
   justify-content: center;
-  margin-right: 5px; /* Adjust as needed for spacing between rankBox and img */
+  padding: 5px;
+  width: 30px;
+  margin-left: 9px;
 }
 
 .rankNumber {
   font-weight: bold;
 }
 
-.storeItem img {
-  margin-right: 5px; /* Adjust as needed for spacing between rankBox and img */
-  padding: 5px; /* Adjust as needed for spacing */
-  border-radius: 5px; /* Adjust as needed for rounded corners */
+.rankingContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3px;
+  width: 100%;
 }
 
-.storeName {
-  flex-grow: 1; /* Takes remaining space, pushing the image to the end */
-  text-align: left; /* Adjust as needed for text alignment */
-  padding-left: 10px; /* Adjust as needed for spacing */
+.reviewItem {
+  align-items: center;
+  border: 1px solid #ddd;
+  display: flex;
+  margin-bottom: 10px;
+  min-height: 8%;
+  padding: 10px;
+  width: 80%;
+}
 
-  flex-grow: 1; /* Takes remaining space, pushing the image to the end */
-  white-space: nowrap; /* Do not wrap text to the next line */
-  max-width: 200px; /* Adjust as needed for the maximum width */
+.selectedView {
+  cursor: pointer;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: 30px;
+  margin-right: 30px;
+  text-decoration: underline;
 }
 
 .storeAdress {
   color: #000;
-  font-feature-settings: "clig" off, "liga" off;
   font-family: Inter;
+  font-feature-settings: "clig" off, "liga" off;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
-  line-height: 13px; /* 162.5% */
   letter-spacing: 0.5px;
+  line-height: 15px;
+  max-width: 180px;
+  word-wrap: break-word;
+  text-align: left;
+  margin-left: 9px;
 }
 
-/* Ranking.module.css */
-
-.hallOfFameOption {
-  margin-bottom: 20px; /* Add some margin to create space */
+.storeImage {
+  height: 80px;
+  width: 80px;
+  margin-left: 9px;
 }
+
+.storeInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.storeItem {
+  align-items: center;
+  display: flex;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.storeName {
+  flex-grow: 1;
+  font-weight: bold;
+  max-width: 200px;
+  text-align: left;
+  white-space: nowrap;
+  margin-left: 9px;
+}
+
+.storeRating {
+  color: #d32323;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1px;
+  max-width: 180px;
+  word-wrap: break-word;
+  text-align: left;
+  margin-left: 9px;
+}
+
+.tableContainer {
+  border-collapse: collapse;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
 .viewOptionsContainer {
   margin-bottom: 20px;
 }
