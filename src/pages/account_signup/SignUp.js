@@ -3,7 +3,7 @@ import Button from "../../components/button/Button";
 import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./SignUp.module.css";
 import TopNav from "../../components/topnav/TopNav";
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState(null);
@@ -46,84 +46,100 @@ const SignUp = () => {
     });
   };
 
-  const handleDuplicateCheckButtonClick = () => {
-
-
-    
+  const handleDuplicateCheckButtonClick = (phoneNumber) => {
     // Call the checkDuplicateId function when the button is clicked
-    // fetch('URL', {
-    //   method: 'POST',
-    //   headers : {
-    //     "Content-Type" : "application/json; charset=utf-8"
-    //   },
-    //   body: JSON.stringify({
-    //     phoneNumber : phoneNumber
-    //   }),
-    // })
-    // .then(response => {
-    //   if (response.message === 'OK') {
-    //     setIsDuplicate(2);
-    //   }
-    //   else if (response.message === 'Duplicated') {
-    //     setIsDuplicate(1);
-    //   }
-    //   else {
-    //     alert('대충 오류');
-    //   }
-    // })
-
-    setIsDuplicate(2); // 테스트용 중복 체크 통과
+    fetch(`http://15.165.26.32:8080/members/dupCheck/${phoneNumber}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          setIsDuplicate(1);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        } else {
+          setIsDuplicate(2);
+        }
+      })
+      .catch((error) => {
+        console.error("Fetch error", error);
+      });
   };
 
   const handleSignUp = (e) => {
+    fetch("http://15.165.26.32:8080/join", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        // "Access-Control-Allow-Origin": `http://localhost:3000`,
+        // 'Access-Control-Allow-Credentials':"true",
+      },
+      body: JSON.stringify({
+        name,
+        phoneNumber,
+        password: pw,
+        gender,
+        birthday,
+      }),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      } else {
+        console.log("Login Success");
+        navigate("/login");
+      }
+    });
 
-    fetch('http://15.165.26.32:8080/')
-
-
-
-
-
-    // e.preventDefault();
-    // if (phoneNumber && name && pw && pw_r && birthday && gender && terms.service && terms.privacy ) {
-    //   if (isDuplicate === 2) {
-    //     if (pw === pw_r) {
-    //       // fetch('URL', {
-    //       //   method: 'POST',
-    //       //   body: JSON.stringify({
-    //       //     phoneNumber,
-    //       //     name,
-    //       //     password: pw,
-    //       //     birthday,
-    //       //     gender
-    //       //   }),
-    //       //   headers: {
-    //       //     'Content-Type': 'application/json',
-    //       //   },
-    //       // })
-    //       // .then(response => {
-    //       //   if(response.message === 'OK') {
-    //       //     navigate('/login');
-    //       //   } else {
-    //       //     alert ('벡엔드 쪽 오류 발생');
-    //       //   }
-    //       // })
-         
-    //       console.log("대충 로그인 성공") // 테스트
-    //       navigate('/login');
-    //     } 
-    //     else {
-    //       alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-    //     } 
-    //   }
-    //   else {
-    //     alert('전화번호 중복을 확인해주세요.');
-    //   }
-    // }
-    // else {
-    //   alert('모든 필수 항목을 채워주세요.');
-    // }
+    e.preventDefault();
+    if (
+      phoneNumber &&
+      name &&
+      pw &&
+      pw_r &&
+      birthday &&
+      gender &&
+      terms.service &&
+      terms.privacy
+    ) {
+      if (isDuplicate === 2) {
+        if (pw === pw_r) {
+          fetch("http://15.165.26.32:8080/join", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              // "Access-Control-Allow-Origin": `http://localhost:3000`,
+              // 'Access-Control-Allow-Credentials':"true",
+            },
+            body: JSON.stringify({
+              name,
+              phoneNumber,
+              password: pw,
+              gender,
+              birthday,
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              } else {
+                console.log("Login Success");
+                navigate("/login");
+              }
+            })
+            .catch((error) => {
+              console.error("Fetch error", error);
+            });
+        } else {
+          alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        }
+      } else {
+        alert("전화번호 중복을 확인해주세요.");
+      }
+    } else {
+      alert("모든 필수 항목을 채워주세요.");
+    }
   };
-
 
   // 개별 약관 체크박스의 상태가 변경될 때마다 전체 동의 체크박스 상태를 업데이트합니다.
   useEffect(() => {
@@ -136,35 +152,27 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <TopNav />
         <span className={styles.backButton}>〈</span>
         <h1>회원가입</h1>
       </div>
+
       <div className={styles.duplicateCheckForm}>
-        {/* 핸드폰 번호 입력란과 '보기' 버튼 */}
         <div className={styles.phoneInputContainer}>
           <input
             type="tel"
             placeholder="휴대폰번호"
             className={styles.phoneInput}
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            required
+            // value and onChange handlers here
           />
-          <div className={styles.viewButtonContainer}>
-            <Button 
-              text="인증" 
-              size="mid"
-              type="button"
-              className= "duplicateCheckButton"
-              onClick={() => handleDuplicateCheckButtonClick(phoneNumber)}
-      
-              />
-          </div>
+          <button
+            className={styles.duplicateCheckButton}
+            onClick={handleDuplicateCheckButtonClick(phoneNumber)}
+          >
+            인증
+          </button>
         </div>
-        </div>
-        <div className={styles.signUpForm}>
-
+      </div>
+      <div className={styles.signUpForm}>
         <input
           type="name"
           placeholder="이름"
@@ -192,12 +200,13 @@ const SignUp = () => {
         />
 
         {/* 날짜 입력란 */}
-        <input 
-          type="date" 
-          required 
+        <input
+          type="date"
+          required
           className={styles.dateInput}
           value={birthday}
-          onChange={handleBirthdayChange} />
+          onChange={handleBirthdayChange}
+        />
 
         {/* 성별 선택 버튼 */}
         <div className={styles.genderSelect}>
@@ -259,9 +268,8 @@ const SignUp = () => {
           </label>
         </div>
         {/* 가입하기 버튼 */}
-        <Button text="가입하기" size="long" onClick={handleSignUp}/>
+        <Button text="가입하기" size="long" onClick={handleSignUp} />
       </div>
-      <BottomNav />
     </div>
   );
 };

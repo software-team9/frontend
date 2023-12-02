@@ -1,0 +1,16 @@
+[
+    {
+      "id": "s_324oj1",
+      "name": "Restaurant A",
+      "adress": "123 Main St",
+      "city": "City A",
+      "img": "image1.jpg"
+    },
+    {
+      "id": 19,
+      "name": "Cafe B",
+      "adress": "456 Oak St",
+      "city": "City B",
+      "img": "image2.jpg"
+    }
+  ]

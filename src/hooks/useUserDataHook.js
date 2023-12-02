@@ -46,7 +46,7 @@ const useUserDataHook = () => {
     return review ? review.reviewList : [];
   };
 
-  const handleLogin = (id, pw) => {
+  const handleLogin = ({loginHandler},id, pw) => {
 
 
     // axios.post(`http://15.165.26.32:8080/login`, {
@@ -65,22 +65,21 @@ const useUserDataHook = () => {
       method : "POST",
       headers : {
         "Content-Type" : "application/json; charset=utf-8",
-        "Access-Control-Allow-Origin": `http://localhost:3000`,
-        'Access-Control-Allow-Credentials':"true",
+        // "Access-Control-Allow-Origin": `http://localhost:3000`,
+        // 'Access-Control-Allow-Credentials':"true",
       },
       body: JSON.stringify({
         phoneNumber : id,
         password : pw
       }),
-      credentials: 'include',
-      mode: 'cors',
     }) 
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      else if (response.ok) {
+      else {
         window.sessionStorage.setItem('IsLogin', true);
+        loginHandler();
         navigate('/');
       }
     })

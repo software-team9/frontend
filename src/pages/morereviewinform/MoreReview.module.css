@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #d32323;
+
 }
 
 .storeName {
@@ -99,19 +101,15 @@
 .pageNumber,
 .activePage {
   border: none;
-  background-color: #fff;
-  color: #d32323;
+  background-color: #d32323;
+  color: #fff;
   padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.pageNumber:hover {
-  background-color: #fff;
-}
-
 .activePage {
-  background-color: #d32323;
-  color: #fff;
+  background-color: #fff;
+  color: #D32323;
 }

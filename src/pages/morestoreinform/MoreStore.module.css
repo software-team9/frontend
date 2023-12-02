@@ -1,3 +1,9 @@
+.AddressContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .container {
   max-width: 375px;
   margin: auto;
@@ -20,19 +26,38 @@
 }
 
 .storeName {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  text-align: left; 
+  flex-grow: 1; 
+
+}
+
+.StoreNameContainer {
+  display: flex;
+  justify-content: space-between; /* 이름과 아이콘 사이의 공간을 최대로 설정 */
+  align-items: center; /* 수직 중앙 정렬 */
+  width: 100%; /* 컨테이너 전체 너비 사용 */
+  padding: 0 12px; /* 좌우 패딩 */
 }
 
 .storeAddress {
   font-size: 1rem;
 }
 
+.rankingSection{
+  padding: 16px;
+  position: relative;
+  background-color: #D32323;
+  color: white;
+}
+
 .reviewSection {
   padding: 16px;
-  background-color: white;
   position: relative;
+  background-color: #D32323;
+  color: white;
 }
 
 .sectionTitle {
@@ -84,16 +109,13 @@
   right: 16px;
   background: none;
   border: none;
-  color: #d32323;
+  color: #f9f9f9;
   cursor: pointer;
   font-size: 2rem;
   padding: 0;
+  margin-top: 10px;
 }
 
-.addReviewButton:hover {
-  color: #f9f9f9;
-  border-radius: 4px;
-}
 
 .emptyMessage {
   text-align: center;
@@ -104,4 +126,23 @@
   background: #f9f9f9;
   border: 1px dashed #ccc;
   border-radius: 4px;
+}
+
+.element {
+  border-top: 3px solid white;
+  width: 475px;
+  margin-left: -100px;
+  margin-bottom: 10px;
+}
+
+.wishIcon {
+  cursor: pointer; /* 클릭 가능 표시 */
+  font-size: 24px; /* 아이콘 크기 */
+  line-height: 1; /* 라인 높이 설정 */
+  margin-left: 10px; /* 아이콘 좌측 마진 */
+  transition: color 0.3s; /* 색상 변경 애니메이션 */
+}
+
+.wishIcon.checked {
+  color: #d32323; /* 찜하기 상태일 때 색상 */
 }

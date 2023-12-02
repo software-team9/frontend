@@ -23,7 +23,7 @@ async function getWishListByUserId(userId) {
   };
 
   const getStoreListByCondition = (city) => {
-    // fetch (`http://15.165.26.32:8080/stores/condition?city=${city}`, {
+    // fetch (`http://15.165.26.32:8080/stores/rank/${city}?page=0&size=5`, {
     //   method : 'GET',
     //   headers : {
     //     "Content-Type" : "application/json"
@@ -32,9 +32,14 @@ async function getWishListByUserId(userId) {
       
     // })
     // .then((response) => {
-    //   return Response.json();
+    //   if(!response.ok) {
+    //     throw new Error('Network error!');
+    //   }
+    //   return response.json();
     // })
-
+    // .then((data) => {
+    //   return data;
+    // })
     return storeData;
   };
 

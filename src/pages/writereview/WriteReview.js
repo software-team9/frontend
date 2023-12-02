@@ -10,8 +10,8 @@ import HeadName from "../../components/head/Head";
 
 const WriteReview = () => {
   const [rating, setRating] = useState(0)
-  const [storeName, setStoreName] = useState();
-  const [address, setAddress] = useState();
+  const [storeName, setStoreName] = useState(sessionStorage.getItem('ReceiptStoreName'));
+  const [address, setAddress] = useState(sessionStorage.getItem('ReceiptAddress'));
   const [reviewContent, setReviewContent] = useState("");
   const navigate = useNavigate();
   const [reviewImage, setReviewImage] = useState(sessionStorage.getItem('ReviewImage'));
@@ -39,39 +39,36 @@ const WriteReview = () => {
 
 
   const handleWriteReview = () => {
-    const userId = sessionStorage.getItem('token');
-    fetch('http://15.165.26.32:8080/reviews/', {
-      method: 'POST',
-      body: JSON.stringify({
-        memberId: userId,
-        storeName: storeName,
-        address: address,
-        content: reviewContent,
-        ratingPoint: rating,
-        img: reviewImage
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      console.log(response.message);
-      navigate('/');
-    })
-    sessionStorage.setItem('ReceiptCheck', false);
-    // updateReceiptCheck(false)
+    // fetch('http://15.165.26.32:8080/reviews/', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     storeName: storeName,
+    //     address: address,
+    //     content: reviewContent,
+    //     ratingPoint: rating,
+    //     img: reviewImage
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   return response.json();
+    // })
+    // .then(data => {
+    //   navigate('/')
+    // })
+
+    // test
     navigate('/')
   }
 
   return (
     <div className={styles.container}>
-      <HeadName title="리뷰작성" /> /writereview
-
-      /writereview 
-
-      state  영수증 인식을 불러오고
-      /
-      ReceiptRecognition.js
+      <HeadName title="리뷰작성" />
       <div className={styles.separator}></div> 
       <h2>가게 정보</h2>
       <div>
@@ -96,20 +93,20 @@ const WriteReview = () => {
         </div>
         <h2>리뷰 내용</h2>
         <div>
-        <label htmlFor="ReviewContent"></label>
-          <textarea 
-            className={styles.textarea}
-            id="ReviewContent"
-            placeholder="리뷰 내용을 입력하세요"
-            value={reviewContent || ''}
-            onChange={handleReviewContentChange}
-            required
-          />
+        <textarea
+          type="ReviewContent"
+          placeholder="리뷰 내용을 입력하세요"
+          value={reviewContent || ''}
+          onChange={handleReviewContentChange}
+          required
+          className={styles.textarea}
+        />
         </div>
         <div>
           <input
             type="number"
             name="rating"
+            placeholder="별점"
             value={rating || ''}
             onChange={handleRatingChange}
             min="0"

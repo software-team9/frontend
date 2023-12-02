@@ -17,6 +17,7 @@ const { kakao } = window;
 
 
 const MapPage = () => {
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const navigate = useNavigate();
   const [city, setCity] = useState("서울");
   const [state, setState] = useState()
@@ -67,6 +68,27 @@ const MapPage = () => {
     // ...
   };
 
+  const getStoreListForMap = (city) => {
+    // fetch (`http://15.165.26.32:8080/stores/map/${city}`, {
+    //   method : 'GET',
+    //   headers : {
+    //     "Content-Type" : "application/json"
+    //   }, 
+    // })
+    // .then((response) => {
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   return response.json();
+    // })
+    // .then((data) => {
+    //   return data;
+    // })
+    
+
+    return storeData;
+  };
+
   const getXYByKeyword = async (address) => {
     try {
       const response = await fetch(`https://dapi.kakao.com/v2/local/search/address.json?query=${address}`, {
@@ -91,13 +113,28 @@ const MapPage = () => {
   };
 
   
+
+  
   const fetchPositions = debounce(async () => {
     try {
       const transformedData = [];
   
-      for (const store of storeData) {
+      for (const store of getStoreListForMap(city)) {
         const latlng = await getXYByKeyword(store.address);
-        transformedData.push({ id: store.id, title: store.name, latlng: latlng });
+        transformedData.push({ 
+          id: store.id, 
+          title: store.name, 
+          latlng: latlng,
+          content: (
+            <div>
+              <p>
+                <strong>{store.name}</strong>
+              </p>
+              <p>{store.address}</p>
+              <button onClick={() => handleStoreClick(store.id)}>View Details</button>
+            </div>
+          ) 
+        });
       }
   
       setPositions(transformedData);
@@ -115,15 +152,17 @@ const MapPage = () => {
     navigate(`/morestore?storeId=${storeId}`);
   };
 
+  const toggleSelectedMarker = (marker) => {
+    setSelectedMarker((prevMarker) => (prevMarker === marker ? null : marker));
+  };
+  
 
 
 
 
   return (
     <div className={styles.Container}>
-      <h1 className={styles.Title}>지도</h1>
-      <div className={styles.separator}></div>
-      <div>
+      <div className={styles.FormControl}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="city-label">지역</InputLabel>
             <Select
@@ -175,7 +214,7 @@ const MapPage = () => {
           center={cityCoordinates[city]}
           style={{
             width: "100%",
-            height: "450px",
+            height: "100%",
           }}
           level={4} // 지도의 확대 레벨
           onCenterChanged={(map) => setState({
@@ -187,7 +226,39 @@ const MapPage = () => {
           })}
         >
 
-        {positions.map((position, index) => (
+{positions.map((position, index) => (
+    <MapMarker
+      onClick={() => toggleSelectedMarker(position)}
+      key={`${position.title}-${position.latlng}`}
+      position={position.latlng}
+      image={{
+        src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+        size: { width: 24, height: 35 },
+      }}
+      title={position.title}
+    />
+  ))}
+
+  {selectedMarker && (
+    <MapMarker
+      onClick={() => toggleSelectedMarker(null)}
+      position={selectedMarker.latlng}
+      image={{
+        src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+        size: { width: 24, height: 35 },
+      }}
+      title={selectedMarker.title}
+    >
+      <div style={{ padding: '10px', maxWidth: '200px' }}>
+        {selectedMarker.content}
+        {/* <button onClick={() => toggleSelectedMarker(null)}>Close</button> */}
+      </div>
+    </MapMarker>
+  )}
+</Map>
+
+
+        {/* {positions.map((position, index) => (
           <MapMarker
             onClick={() => handleStoreClick(position.id)}
             key={`${position.title}-${position.latlng}`}
@@ -200,11 +271,15 @@ const MapPage = () => {
               }, // 마커이미지의 크기입니다
             }}
             title={position.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          />
-        ))}
+            >
+          <div style={{ padding: '10px', maxWidth: '200px' }}>{position.content}</div>
+
+          </MapMarker>
+
+        ))} */}
 
 
-        </Map>
+
 
         
 
@@ -221,7 +296,11 @@ const MapPage = () => {
         ))}
       </ul>
     </div> */}
+
+    {/* <div className={styles.BottomNav}/> */}
     </div>
+
+    
   );
 };
 

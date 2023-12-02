@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useReviewHook from "../../hooks/useReviewHook";
 import styles from "./MoreReview.module.css";
+import useStoreHook from "../../hooks/useStoreHook";
+import ReviewCard from "../../components/reviewcard/ReviewCard";
 
 const REVIEWS_PER_PAGE = 10;
 
@@ -14,17 +16,22 @@ const MoreReview = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentReviews, setCurrentReviews] = useState([]);
+  const [store, setStore] = useState(null);
+  const [season, setSeason] = useState("2023-Winter")
 
   useEffect(() => {
-    const storeReviews = getReviewsByStoreId(storeId);
-    setTotalPages(Math.ceil(storeReviews.length / REVIEWS_PER_PAGE));
-    const startIndex = (currentPage - 1) * REVIEWS_PER_PAGE;
-    const selectedReviews = storeReviews.slice(
-      startIndex,
-      startIndex + REVIEWS_PER_PAGE
-    );
-    setCurrentReviews(selectedReviews);
-  }, [currentPage]);
+    const fetchStoreReviews = async () => {
+      try {
+        const storeReviews = await getReviewsByStoreId(storeId, season, currentPage, REVIEWS_PER_PAGE);
+        setTotalPages(Math.ceil(storeReviews.length / REVIEWS_PER_PAGE));
+        setCurrentReviews(storeReviews);
+      } catch (error) {
+        console.error('Error fetching store reviews:', error);
+      }
+    };
+
+    fetchStoreReviews();
+  }, [storeId, currentPage]);
 
   const handlePageClick = (page) => {
     setCurrentPage(page);
@@ -32,27 +39,15 @@ const MoreReview = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.storeName}>
-        {currentReviews.length > 0 ? currentReviews[0].storeName : ""}
-      </h1>
+      <section className={styles.reviewSection}></section>
       {currentReviews.map((review) => (
-        <div key={review.id} className={styles.reviewCard}>
-          <div className={styles.reviewHeader}>
-            <img
-              src={review.userProfileImage}
-              alt="User"
-              className={styles.userImage}
-            />
-            <div className={styles.reviewUserInfo}>
-              <span className={styles.userId}>{review.userId}</span>
-            </div>
-          </div>
-          <img
-            src={review.imageUrl}
-            alt="Review"
-            className={styles.reviewImage}
+        <div>
+          <ReviewCard
+            imageSrc={review.imageUrl}
+            userId={review.userId}
+            rating={review.rating}
+            reviewText={review.text}
           />
-          <p className={styles.reviewText}>{review.text}</p>
         </div>
       ))}
       <div className={styles.pagination}>

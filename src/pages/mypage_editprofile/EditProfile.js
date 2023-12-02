@@ -37,7 +37,6 @@ const EditProfile = ({userData, setpasswordCheckFalse}) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <TopNav />
         <Head title="회원정보 수정"/>
       </div>
         <div className={styles.signUpForm}>

@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import styles from "./Rankinglist.module.css";
+import styles from "./Ranking.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
+import RankingCard from "./RankingCard";
 
+import img from "./image.jpg";
 const STORES_PER_PAGE = 10;
+const storedata = {
+  rank: "1",
+  name: "리그오브레스토랑",
+  rating: 4.1,
+  adress: "경기 수원시 영통구 월드컵로 206",
+  imageSrc: img,
+};
 
 const Ranking = () => {
   const navigate = useNavigate();
@@ -128,7 +137,7 @@ const Ranking = () => {
               {/* Add your city options */}
             </Select>
           </FormControl>
-
+{/* 
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="category-label">카테고리</InputLabel>
             <Select
@@ -138,28 +147,32 @@ const Ranking = () => {
               onChange={handleCategoryChange}
               label="Category"
             >
-              {/* Add your category options */}
+       
             </Select>
-          </FormControl>
+          </FormControl> */}
           <div>
+            <RankingCard
+              rank={storedata.rank}
+              imageSrc={storedata.imageSrc}
+              name={storedata.name}
+              rating={storedata.rating}
+              address={storedata.adress}
+            />
             <table className={styles.tableContainer}>
               <tbody>
                 {currentStores.map((store, index) => (
                   <tr
                     key={store.storeId}
-                    className={styles.storeItem}
                     onClick={() => handleStoreClick(store.storeId)}
                   >
-                    <td className={styles.rankBox}>
-                      <p className={styles.rankNumber}>{index + 1}</p>
-                    </td>
-                    <td className={styles.storeImage}>
-                      <img src={store.image} alt={"가게"} />
-                    </td>
                     <td>
-                      <p className={styles.storeName}>{store.storeName}</p>
-                      <p className={styles.storeRating}>✩ {store.avr_rating}</p>
-                      <p className={styles.storeAdress}>{store.address}</p>
+                      <RankingCard
+                        rank={index + 1}
+                        imageSrc={store.image}
+                        name={store.storeName}
+                        rating={store.avr_rating}
+                        address={store.address}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -230,6 +243,15 @@ const Ranking = () => {
             </Select>
           </FormControl>
           <div>
+            {/* 
+              ---- 테스트 데이터 ----
+              <RankingCard
+              rank={storedata.rank}
+              imageSrc={storedata.imageSrc}
+              name={storedata.name}
+              rating={storedata.rating}
+              address={storedata.adress}
+            /> */}
             <table className={styles.tableContainer}>
               <tbody>
                 {currentStores.map((store, index) => (
@@ -238,16 +260,14 @@ const Ranking = () => {
                     className={styles.storeItem}
                     onClick={() => handleStoreClick(store.storeId)}
                   >
-                    <td className={styles.rankBox}>
-                      <p className={styles.rankNumber}>{index + 1}</p>
-                    </td>
-                    <td className={styles.storeImage}>
-                      <img src={store.image} alt={"가게"} />
-                    </td>
                     <td>
-                      <p className={styles.storeName}>{store.storeName}</p>
-                      <p className={styles.storeRating}>✩ {store.avr_rating}</p>
-                      <p className={styles.storeAdress}>{store.address}</p>
+                      <RankingCard
+                        rank={index + 1}
+                        imageSrc={store.image}
+                        name={store.storeName}
+                        rating={store.avr_rating}
+                        address={store.address}
+                      />
                     </td>
                   </tr>
                 ))}

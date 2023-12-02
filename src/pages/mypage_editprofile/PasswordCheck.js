@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styles from "./PasswordCheck.module.css";
-import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
-import Head from "../../components/head/Head";
 
 const PasswordCheck = ({ setpasswordCheckTrue }) => {
   const [pw, setPw] = useState(null);
@@ -10,7 +8,8 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
 
   const handlePasswordChange = (e) => setPw(e.target.value);
 
-  const handlePassword = (setpasswordCheckTrue) => {
+  const handlePassword = (e) => {
+    e.preventDefault(); // 기본 제출 동작 방지
     const userId = sessionStorage.getItem("token");
     setpasswordCheckTrue();
     navigate("/mypage/editprofile");
@@ -18,21 +17,27 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
 
   return (
     <div className={styles.container}>
-      <Head title="비밀번호 확인" />
-      <div>
-        <input
-          type="password"
-          placeholder="사용중인 비밀번호"
-          value={pw}
-          onChange={handlePasswordChange}
-          required
-          className={styles.passwordInput}
-        />
-        <Button
-          text="확인"
-          size="long"
-          onClick={() => handlePassword(setpasswordCheckTrue)}
-        />
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h1 className={styles.cardTitle}>비밀번호 확인</h1>
+          <p className={styles.cardDescription}>계속하려면 비밀번호를 입력하세요</p>
+        </div>
+        <div className={styles.cardContent}>
+          <form onSubmit={handlePassword}>
+            <input
+              id="password"
+              type="password"
+              placeholder="비밀번호"
+              value={pw}
+              onChange={handlePasswordChange}
+              required
+              className={styles.passwordInput}
+            />
+            <button type="submit" className={styles.button}>
+              확인
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

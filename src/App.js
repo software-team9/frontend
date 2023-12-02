@@ -38,8 +38,9 @@ function App() {
   //   })
   // )
   const [reviewImage, setReviewImage] = useState(null);
+  
 
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(sessionStorage.getItem('IsLogin'));
   // const [isLogin, setIsLogin] = useState(false); // 실제로 쓸땐 이거 사용
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
 
@@ -276,7 +277,7 @@ useEffect (() => {
 
           <Route
             path="/logout"
-            element={<LogoutComponent onLogout={logoutHandler} />}
+            element={<LogoutComponent logoutHandler={logoutHandler} />}
           />
 
             

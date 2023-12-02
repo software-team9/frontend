@@ -1,0 +1,8 @@
+.rectangle {
+    width: 300px;
+    height: 500px;
+    background-color: white; /* 배경색 지정 */
+    border-radius: 5px; /* 20px의 라운드 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 (선택 사항) */
+    margin: 0 auto
+}

@@ -43,10 +43,28 @@ const useReviewHook = () => {
   };
 
   // 특정 가게 ID에 해당하는 리뷰 필터링
-  const getReviewsByStoreId = (storeId) => {
-    return reviews.filter((review) => review.storeId === storeId);
-  };
+  const getReviewsByStoreId = async (storeId, season, page, size) => {
+    try {
+      const response = await fetch(`http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=${page}&size=${size}`, {
+        method: "GET",
+        headers: {
+          "Content-Type" : "application/json; charset=utf-8",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching store reviews:', error);
+      return [];
+    }
 
+  };
+  
   // 모든 리뷰 반환
   const getAllReviews = () => {
     return reviews;

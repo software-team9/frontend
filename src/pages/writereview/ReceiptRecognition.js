@@ -8,6 +8,8 @@ import HeadName from "../../components/head/Head";
 const ReceiptRecognition = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
+
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -23,31 +25,33 @@ const ReceiptRecognition = () => {
   };
 
   const checkReceiptImage = () => {
-    fetch('http://15.165.26.32:8080/reviews/receipt', {
-      method: "POST",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify({
-        image
-      }),
-    })
-    .then(response => {
-      if(response.ok) {
-        // setReceiptCheckTrue();
-        sessionStorage.setItem('ReviewImage', image);
-        navigate('writereview/writereview');
-      }
-      else {
-        alert('Error Occured');
-      }
-    })
+    // fetch('http://15.165.26.32:8080/reviews/receipt', {
+    //   method: "POST",
+    //   headers : {
+    //     "Content-Type" : "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     image
+    //   }),
+    // })
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   return response.json();
+    // })
+    // .then(data => {
+    //   // Only access storeName when response is successful
+    //   sessionStorage.setItem('ReceiptStoreName', data.storeName);
+    //   sessionStorage.setItem('ReceiptAddress', data.address);
+    // })
+    // .catch(error => console.error('Error:', error));
 
 
-    // sessionStorage.setItem('ReceiptCheck', true);
 
-    // sessionStorage.setItem('ReviewImage', image);
-    // navigate('/writereview/writereview');
+    // test
+    sessionStorage.setItem('ReviewImage', image);
+    navigate('/writereview/writereview');
   }
 
   const uploadButtonStyle = {
@@ -77,23 +81,21 @@ const ReceiptRecognition = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.headers}>
-        <TopNav />
-      </div>
       <HeadName title="영수증 인식" />
       <div className={styles.separator}></div> 
       <p className={styles.Text}>
         영수증 전체가 잘 보일 수 있게 찍어주세요. <br/>
-        전화번호, 사업자 번호, 주소가 <br/>
-        잘 보여야 돼요!
+        가게명, 주소가 잘 보여야 돼요!<br/>        
       </p>
+      <div>
       {image && (
-        <div style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px', marginTop: '10px' }}>
+        <div style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px', marginTop: '10px'}}>
           <img src={image} alt="Uploaded" style={{ maxWidth: '100%' }} />
         </div>
       )}
+      </div>
       <br/>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className={styles.Button}>
         <label htmlFor="upload-button" style={uploadButtonStyle}>
           이미지 선택
         </label>
@@ -105,6 +107,13 @@ const ReceiptRecognition = () => {
         </button>
         </div>
       </div>
+      <input
+        type="file"
+        id="upload-button"
+        style={{ display: 'none' }}
+        onChange={handleImageChange}
+        required
+      />
 
     </div>
   );

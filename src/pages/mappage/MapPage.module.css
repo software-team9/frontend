@@ -1,5 +1,11 @@
 /* MapPage.module.css */
-
+.Container {
+  height: 100vh
+}
+/* .FormControl {
+  padding-top: 0px;
+  top: 50px;
+} */
 .mapContainer {
   width: 100%; /* You can adjust this to your desired width */
   height: 100%; /* You can adjust this to your desired height */
@@ -9,4 +15,8 @@
   /* Add more styles as needed */
 }
 
+/* .BottomNav {
+  height: 60px;
+  bottom: 0px;
+} */
 /* You can add more styles for other elements if needed */

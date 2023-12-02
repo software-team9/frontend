@@ -4,7 +4,7 @@ import styles from "./Login.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import useUserDataHook from "../../hooks/useUserDataHook";
 
-const Login = () => {
+const Login = ({loginHandler}) => {
   const [id, setId] = useState(""); // State for phone number
   const [pw, setPw] = useState(""); // State for password
   const { handleLogin } = useUserDataHook();
@@ -19,7 +19,8 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    handleLogin(id, pw); // Call the login function from the hook
+    // loginHandler();
+    handleLogin({loginHandler}, id, pw); // 로그인 처리
   };
 
   return (
@@ -48,7 +49,7 @@ const Login = () => {
           size="long"
           type="submit"
           className="loginButton"
-          onClick = {() => handleSubmit(id, pw)}
+          onClick={() => handleSubmit(id, pw)}
         />
         <Link to="/signup">
           <Button text="휴대폰번호로 회원가입" size="long" />

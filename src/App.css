@@ -2,7 +2,7 @@
   text-align: center;
   width:375px;
   margin: 0 auto;
-  background-color: grey;
+  /* background-color: grey; */
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-y: scroll;
