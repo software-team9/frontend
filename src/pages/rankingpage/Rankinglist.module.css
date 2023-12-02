@@ -34,7 +34,6 @@
   margin: 10px 0; /* Adjust as needed for spacing between items */
 }
 
-
 .rating {
   margin-top: 5px;
 }
@@ -53,7 +52,7 @@
 .activePage {
   border: none;
   background-color: #fff;
-  color: #D32323;
+  color: #d32323;
   padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
@@ -65,10 +64,9 @@
 }
 
 .activePage {
-  background-color: #D32323;
+  background-color: #d32323;
   color: #fff;
 }
-
 
 .rankingContainer {
   display: flex;
@@ -97,7 +95,6 @@
   padding: 10px;
 }
 
-
 .tableContainer {
   width: 100%; /* Adjust as needed */
   margin: 0 auto; /* Center the table container horizontally */
@@ -106,7 +103,6 @@
   display: flex;
   justify-content: center;
 }
-
 
 .rankBox {
   background-color: #eaeaea; /* Adjust as needed for the background color */
@@ -140,6 +136,16 @@
   max-width: 200px; /* Adjust as needed for the maximum width */
 }
 
+.storeAdress {
+  color: #000;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 13px; /* 162.5% */
+  letter-spacing: 0.5px;
+}
 
 /* Ranking.module.css */
 

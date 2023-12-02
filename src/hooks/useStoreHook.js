@@ -43,25 +43,16 @@ async function getWishListByUserId(userId) {
   };
 
   const getStoreListByCondition = (city) => {
-    // fetch (`http://localhost:8080/stores/condition?city=${city}`, {
+    // fetch (`http://15.165.26.32:8080/stores/condition?city=${city}`, {
     //   method : 'GET',
     //   headers : {
     //     "Content-Type" : "application/json"
     //   },
-    //   body : JSON.stringify({
-    //     "storeId": "s_324ojj",
-    //     "imageUrl": "www.aaa.com",
-    //     "storeName": "리그오브레스토랑",
-    //     "avr_rating": 4.7,
-    //     "text": "리그오브레스토랑",
-    //     "made_time": "2023-11-24 13:34:31",
-    //     "highest_ranking": "S",
-    //     "address": "경기 수원시 영통구 월드컵로 206",
-    //     "opening_time": "09:00",
-    //     "closing_time": "21:00",
-    //     "Business Number": "9324234-2148",
-    //     "category": "Chinese food"
-    //   })
+    //   credentials : 'include'
+      
+    // })
+    // .then((response) => {
+    //   return Response.json();
     // })
 
     return storeData;

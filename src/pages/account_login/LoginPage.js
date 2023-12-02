@@ -28,7 +28,7 @@ const Login = () => {
         <h1 className={styles.logoText}>로고</h1>
       </div>
       <div className={styles.loginMessage}>로그인하세요</div>
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
+      <div className={styles.loginForm} onSubmit={handleSubmit}>
         <input
           name="tel"
           placeholder="휴대폰번호"
@@ -53,7 +53,7 @@ const Login = () => {
         <Link to="/signup">
           <Button text="휴대폰번호로 회원가입" size="long" />
         </Link>
-      </form>
+      </div>
     </div>
   );
 };

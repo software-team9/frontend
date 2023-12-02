@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
+
 import LoginPage from "./pages/account_login/LoginPage";
 import Quit from "./pages/account_quit/Quit";
 import SignUp from "./pages/account_signup/SignUp";
@@ -24,12 +25,25 @@ import WriteReview from "./pages/writereview_writereview/WriteReview";
 import LogoutComponent from "./components/logout/LogoutComponent";
 import BottomNav from "./components/bottomnav/BottomNav";
 import TopNav from "./components/topnav/TopNav";
+// import createProxyMiddleware from "http-proxy-middleware"
+
+import axios from 'axios';
 
 function App() {
+  // App.use(
+  //   '/api',
+  //   createProxyMiddleware({
+  //     target: "http://15.165.26.32:8080",
+  //     changeOrigin:true
+  //   })
+  // )
+  const [reviewImage, setReviewImage] = useState(null);
+
+  const { ReceiptCheck, setReceiptCheck } = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   // const [isLogin, setIsLogin] = useState(false); // 실제로 쓸땐 이거 사용
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
-  const [isReceiptChecked, setIsReceiptChecked] = useState(false);
+
 
   const loginHandler = () => {
     setIsLogin(true);
@@ -39,12 +53,43 @@ function App() {
     setIsLogin(false);
   };
 
+  const setReceiptCheckTrue = () => {
+    setReceiptCheck(true);
+  }
+
+  const setReceiptCheckFalse = () => {
+    setReceiptCheck(false);
+  }
+
   const setpasswordCheckTrue = () => {
     setIsPasswordChecked(true);
   }
   const setpasswordCheckFalse = () => {
     setIsPasswordChecked(false);
   }
+// // src/App.js
+// useEffect(() => {
+//   async function fetchdata() {
+//     const API_URL = '/users';
+//     const { data } = await axios.get(API_URL);
+//     console.log(data);
+//   }
+//   fetchdata();
+
+//   async function fetchDogs() {
+//     const API_URL = '/api/breeds/image/random';
+//     const { data } = await axios.get(API_URL);
+//     console.log(data);
+//   }
+//   fetchDogs();
+
+//   async function fetchTrends() {
+//     const API_URL = '/trends/trendingsearches/daily/rss?geo=KR';
+//     const { data } = await axios.get(API_URL);
+//     console.log(data);
+//   }
+//   fetchTrends();
+// }, []);
 
   return (
     <BrowserRouter>
@@ -207,10 +252,14 @@ function App() {
             path="/writereview" 
             element={
               isLogin ? (
-                window.sessionStorage.getItem('ReceiptCheck') ? (
-                  <WriteReview/>
+                ReceiptCheck ? (
+                  <WriteReview
+                    setReceiptCheck={setReceiptCheck}
+                  />
                 ) : (
-                  <ReceiptRecognition/>
+                  <ReceiptRecognition
+                    setReceiptCheck={setReceiptCheck}
+                  />
                 )
               ) : (
                 <LoginPage

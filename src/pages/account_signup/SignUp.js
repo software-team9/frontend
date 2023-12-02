@@ -47,6 +47,8 @@ const SignUp = () => {
   };
 
   const handleDuplicateCheckButtonClick = () => {
+
+
     
     // Call the checkDuplicateId function when the button is clicked
     // fetch('URL', {
@@ -74,45 +76,52 @@ const SignUp = () => {
   };
 
   const handleSignUp = (e) => {
-    e.preventDefault();
-    if (phoneNumber && name && pw && pw_r && birthday && gender && terms.service && terms.privacy ) {
-      if (isDuplicate === 2) {
-        if (pw === pw_r) {
-          // fetch('URL', {
-          //   method: 'POST',
-          //   body: JSON.stringify({
-          //     phoneNumber,
-          //     name,
-          //     password: pw,
-          //     birthday,
-          //     gender
-          //   }),
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //   },
-          // })
-          // .then(response => {
-          //   if(response.message === 'OK') {
-          //     navigate('/login');
-          //   } else {
-          //     alert ('벡엔드 쪽 오류 발생');
-          //   }
-          // })
+
+    fetch('http://15.165.26.32:8080/')
+
+
+
+
+
+    // e.preventDefault();
+    // if (phoneNumber && name && pw && pw_r && birthday && gender && terms.service && terms.privacy ) {
+    //   if (isDuplicate === 2) {
+    //     if (pw === pw_r) {
+    //       // fetch('URL', {
+    //       //   method: 'POST',
+    //       //   body: JSON.stringify({
+    //       //     phoneNumber,
+    //       //     name,
+    //       //     password: pw,
+    //       //     birthday,
+    //       //     gender
+    //       //   }),
+    //       //   headers: {
+    //       //     'Content-Type': 'application/json',
+    //       //   },
+    //       // })
+    //       // .then(response => {
+    //       //   if(response.message === 'OK') {
+    //       //     navigate('/login');
+    //       //   } else {
+    //       //     alert ('벡엔드 쪽 오류 발생');
+    //       //   }
+    //       // })
          
-          console.log("대충 로그인 성공") // 테스트
-          navigate('/login');
-        } 
-        else {
-          alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-        } 
-      }
-      else {
-        alert('전화번호 중복을 확인해주세요.');
-      }
-    }
-    else {
-      alert('모든 필수 항목을 채워주세요.');
-    }
+    //       console.log("대충 로그인 성공") // 테스트
+    //       navigate('/login');
+    //     } 
+    //     else {
+    //       alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    //     } 
+    //   }
+    //   else {
+    //     alert('전화번호 중복을 확인해주세요.');
+    //   }
+    // }
+    // else {
+    //   alert('모든 필수 항목을 채워주세요.');
+    // }
   };
 
 

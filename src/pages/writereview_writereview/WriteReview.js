@@ -8,9 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import HeadName from "../../components/head/Head";
 
-const userID = 123453289;
-
-const WriteReview = () => {
+const WriteReview = ({setReceiptCheck}) => {
   const { reviews, addReview, getReviewsByUserId } = useReviewHook();
   const [userReviews, setUserReviews] = useState([]);
   const [selectedReview, setSelectedReview] = useState(null);
@@ -42,35 +40,38 @@ const WriteReview = () => {
   const queryParams = new URLSearchParams(location.search);
   const reviewIdFromUrl = queryParams.get("reviewId");
 
-  useEffect(() => {
-    setUserReviews(getReviewsByUserId(String(userID))); // Converting userID to string
-  }, [reviews]);
+  // useEffect(() => {
+  //   setUserReviews(getReviewsByUserId(String(userID))); // Converting userID to string
+  // }, [reviews]);
 
 
 
   const handleWriteReview = () => {
     const userId = 168;
     // const userId = sessionStorage.getItem('token');
-    fetch('http://15.165.26.32:8080/reviews/', {
-      method: 'POST',
-      body: JSON.stringify({
-        memberId: userId,
-        storeName: storeName,
-        address: address,
-        content: reviewContent,
-        ratingPoint: rating,
-        img: reviewImage
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      console.log(response.message);
-      navigate('/');
-    })
+    // fetch('http://15.165.26.32:8080/reviews/', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     memberId: userId,
+    //     storeName: storeName,
+    //     address: address,
+    //     content: reviewContent,
+    //     ratingPoint: rating,
+    //     img: reviewImage
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    // .then(response => {
+    //   console.log(response.message);
+    //   navigate('/');
+    // })
 
-    window.sessionStorage.setItem('ReceiptCheck', false);
+    setReceiptCheck(false);
+    // sessionStorage.setItem('ReceiptCheck', false);
+    // updateReceiptCheck(false)
+    navigate('/')
   }
 
   return (
@@ -140,6 +141,7 @@ const WriteReview = () => {
     
 
 
+<form>
         <Button 
           size="long" 
           text="리뷰 작성하기" 
@@ -147,6 +149,7 @@ const WriteReview = () => {
           >
 
           </Button>
+          </form>
       </div>
 
 

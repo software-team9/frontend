@@ -1,7 +1,7 @@
 import { useState } from "react";
 import wishListData from "./userData.json"; // JSON 파일을 이 경로로 가정
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 const useUserDataHook = () => {
   const [wishLists, setWishLists] = useState(wishListData.users);
@@ -47,15 +47,33 @@ const useUserDataHook = () => {
   };
 
   const handleLogin = (id, pw) => {
-    fetch(`http://15.165.26.32:8080/join`, {
+
+
+    // axios.post(`http://15.165.26.32:8080/login`, {
+    //   phoneNumber : id,
+    //   password : pw
+    // }, 
+    // {withCredentials: true },)
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // })
+
+    fetch(`http://15.165.26.32:8080/login`, {
       method : "POST",
       headers : {
-        "Content-Type" : "application/json; charset=utf-8"
+        "Content-Type" : "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": `http://localhost:3000`,
+        'Access-Control-Allow-Credentials':"true",
       },
       body: JSON.stringify({
         phoneNumber : id,
         password : pw
       }),
+      credentials: 'include',
+      mode: 'cors',
     }) 
     .then((response) => {
       if (!response.ok) {

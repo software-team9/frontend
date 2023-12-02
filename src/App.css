@@ -3,7 +3,15 @@
   width:375px;
   margin: 0 auto;
   background-color: grey;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
 }
+
+.App::-webkit-scrollbar {
+  display: none;
+}
+
 
 .App-logo {
   height: 40vmin;
@@ -39,3 +47,4 @@
     transform: rotate(360deg);
   }
 }
+

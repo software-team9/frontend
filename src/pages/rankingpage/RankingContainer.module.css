@@ -1,38 +1,50 @@
-.container {
-    width: 90%;
-    max-width: 375px;
-    margin: 0 auto; /* 중앙 정렬 */
-    overflow-x: auto; /* 필요시 수평 스크롤바를 표시 */
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse; /* 셀 사이의 간격 없애기 */
-  }
-  
-  .storeItem {
-    /* 기존 Ranking.module.css 내용 그대로 사용 */
+.tableContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 81.2px;
+    border: 1px solid #ccc; /* For visual purposes, to see the container */
+    /* Add any additional styling like background-color, border-radius, etc. */
   }
   
   .rankBox {
-    /* 기존 Ranking.module.css 내용 그대로 사용 */
+    /* Style for the rank box */
+    width: 20px; /* Example size, adjust as needed */
+    height: 20px; /* Example size, adjust as needed */
+    background-color: red; /* As seen in the image */
+    color: white;
+    text-align: center;
+    line-height: 20px; /* To vertically center the text */
+    border-radius: 50%; /* To make it a circle */
+    margin-right: 10px; /* To add some space between rank box and image */
   }
   
-  .rankNumber {
-    /* 기존 Ranking.module.css 내용 그대로 사용 */
+  .storeImg {
+    /* Style for the store image */
+    width: 40px; /* Example size, adjust as needed */
+    height: 40px; /* Example size, adjust as needed */
+    background-color: #ddd; /* Placeholder color for the image */
+    margin-right: 10px; /* To add some space between image and store name */
   }
   
   .storeName {
-    /* 기존 Ranking.module.css 내용 그대로 사용, 주소가 너무 길 경우 처리를 위해 추가 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* Style for the store name */
+    font-weight: bold;
+    margin-right: 10px; /* To add some space between name and address */
   }
   
-  .storeAddress {
-    /* 주소가 너무 길 경우 처리를 위해 추가 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .storeAdress {
+    /* Style for the store address */
+    color: #666; /* Example color, adjust as needed */
+    font-size: 0.8em; /* Smaller font size for address */
   }
+  
+  .storeRate {
+    /* Style for the store rate */
+    color: red; /* Example color, adjust as needed */
+    font-weight: bold;
+  }
+  
+  /* You may need to adjust the flex layout depending on the final design */
   

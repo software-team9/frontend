@@ -5,11 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import HeadName from "../../components/head/Head";
 
-
-const ReceiptRecognition = () => {
+const ReceiptRecognition = ({setReceiptCheckTrue}) => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -44,8 +42,10 @@ const ReceiptRecognition = () => {
     //   }
     // })
 
-    window.sessionStorage.setItem('ReceiptCheck', true);
-    window.sessionStorage.setItem('ReviewImage', image);
+    setReceiptCheckTrue();
+    // sessionStorage.setItem('ReceiptCheck', true);
+
+    // window.sessionStorage.setItem('ReviewImage', image);
     navigate('/writereview');
   }
 
@@ -96,12 +96,17 @@ const ReceiptRecognition = () => {
         <label htmlFor="upload-button" style={uploadButtonStyle}>
           이미지 선택
         </label>
+        <form>
         <button 
           style={secondaryButtonStyle} 
           onClick={() => checkReceiptImage()}>
           확인
         </button>
+        </form>
       </div>
+      <div>
+        {sessionStorage.getItem('ReceiptCheck')}
+        </div>
       <input
         type="file"
         id="upload-button"
