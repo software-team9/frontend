@@ -1,63 +1,50 @@
-// MyPage.js
-import React, { useState } from "react";
+import React from "react";
 import styles from "./MyPage.module.css";
 import { Link } from "react-router-dom";
-import image from "./123.png";
+import image from "./123.png"; 
 
-const MyPage = ({ userData }) => {
+const MyPage = () => {
+  const userName = "User Name"; 
+  const userPhone = "010-9999-9999"; 
+
   return (
     <div className={styles.container}>
-      <div className={styles.profileSection}>
-        <div className={styles.userInfo}>
-          <h2>사용자 이름</h2>
-          <p>010-1234-5678</p>
-          <p>{userData}</p> 
-        </div>
-        <div className={styles.profileImage}>
-          {image && (
-            <div className={styles.image}>
-              <img src={image} alt="프로필 이미지" />
-            </div>
-          )}
-        </div>
-      </div>
-      <div className={styles.separator}></div>
-      <Link
-        to="/mypage/editprofile"
-        className={`${styles.menuItem}`}
-      >
-        <div className={styles.rectangle16}></div>
-        회원정보 수정
-      </Link>
-      <Link to="/mypage/reviewlist" className={styles.menuItem}>
-        <div className={styles.rectangle16}></div>내 리뷰 리스트
-      </Link>
-      <Link
-        to="/mypage/wishlist"
-        className={`${styles.menuItem}`}
-      >
-        <div className={styles.rectangle16}></div>내 위시 리스트
-      </Link>
-      <Link to="/mypage/inquirylist" className={styles.menuItem}>
-        <div className={styles.rectangle16}></div>내 문의 리스트
-      </Link>
-      <Link
-        to="/mypage/inquiry"
-        className={`${styles.menuItem} `}
-      >
-        <div className={styles.rectangle16}></div>
-        1:1 문의하기
-      </Link>
+      <section className={styles.profileSection}>
+        <img
+          alt="User Profile"
+          className={styles.profileImage}
+          src={image} 
+        />
+        <h1 className={styles.userName}>{userName}</h1>
+        <p className={styles.userPhone}>{userPhone}</p>
+      </section>
 
-      <Link to="/quit" className={`${styles.menuItem} ${styles.withdrawal}`}>
-        <div className={styles.rectangle16}></div>
-        회원탈퇴
-      </Link>
+      <section className={styles.linksSection}>
+        <Link to="/mypage/editprofile" className={styles.menuItem}>
+          회원정보 수정
+        </Link>
+        <Link to="/mypage/reviewlist" className={styles.menuItem}>
+          내 리뷰 리스트
+        </Link>
+        <Link to="/mypage/wishlist" className={styles.menuItem}>
+          내 위시 리스트
+        </Link>
+        <Link to="/mypage/inquirylist" className={styles.menuItem}>
+          내 문의 리스트
+        </Link>
+        <Link to="/mypage/inquiry" className={styles.menuItem}>
+          1:1 문의하기
+        </Link>
+      </section>
 
-      <Link to="/logout" className={`${styles.menuItem} ${styles.logout}`}>
-        <div className={styles.rectangle16}></div>
-        로그아웃
-      </Link>
+      <section className={styles.linksSectionAlt}>
+        <Link to="/quit" className={styles.menuItemAlt}>
+          회원탈퇴
+        </Link>
+        <Link to="/logout" className={styles.menuItemAlt}>
+          로그아웃
+        </Link>
+      </section>
     </div>
   );
 };

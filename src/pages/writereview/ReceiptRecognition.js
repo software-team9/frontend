@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import HeadName from "../../components/head/Head";
 
-const ReceiptRecognition = ({setReceiptCheckTrue}) => {
+const ReceiptRecognition = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const handleImageChange = (e) => {
@@ -23,30 +23,31 @@ const ReceiptRecognition = ({setReceiptCheckTrue}) => {
   };
 
   const checkReceiptImage = () => {
-    // fetch('http://localhost:8080/reviews/receipt/', {
-    //   method: "POST",
-    //   headers : {
-    //     "Content-Type" : "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     image
-    //   }),
-    // })
-    // .then(response => {
-    //   if(response.message === 'SUCCESS') {
-    //     setReceiptCheckTrue();
-    //     navigate('writereview');
-    //   }
-    //   else {
-    //     alert("영수증 사진에 문제가 있습니다.");
-    //   }
-    // })
+    fetch('http://15.165.26.32:8080/reviews/receipt', {
+      method: "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({
+        image
+      }),
+    })
+    .then(response => {
+      if(response.ok) {
+        // setReceiptCheckTrue();
+        sessionStorage.setItem('ReviewImage', image);
+        navigate('writereview/writereview');
+      }
+      else {
+        alert('Error Occured');
+      }
+    })
 
-    setReceiptCheckTrue();
+
     // sessionStorage.setItem('ReceiptCheck', true);
 
-    // window.sessionStorage.setItem('ReviewImage', image);
-    navigate('/writereview');
+    // sessionStorage.setItem('ReviewImage', image);
+    // navigate('/writereview/writereview');
   }
 
   const uploadButtonStyle = {
@@ -96,24 +97,14 @@ const ReceiptRecognition = ({setReceiptCheckTrue}) => {
         <label htmlFor="upload-button" style={uploadButtonStyle}>
           이미지 선택
         </label>
-        <form>
+        <div>
         <button 
           style={secondaryButtonStyle} 
-          onClick={() => checkReceiptImage()}>
+          onClick={checkReceiptImage}>
           확인
         </button>
-        </form>
-      </div>
-      <div>
-        {sessionStorage.getItem('ReceiptCheck')}
         </div>
-      <input
-        type="file"
-        id="upload-button"
-        style={{ display: 'none' }}
-        onChange={handleImageChange}
-        required
-      />
+      </div>
 
     </div>
   );

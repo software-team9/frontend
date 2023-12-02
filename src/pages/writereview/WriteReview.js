@@ -8,16 +8,13 @@ import { useNavigate } from 'react-router-dom';
 
 import HeadName from "../../components/head/Head";
 
-const WriteReview = ({setReceiptCheck}) => {
-  const { reviews, addReview, getReviewsByUserId } = useReviewHook();
-  const [userReviews, setUserReviews] = useState([]);
-  const [selectedReview, setSelectedReview] = useState(null);
+const WriteReview = () => {
   const [rating, setRating] = useState(0)
   const [storeName, setStoreName] = useState();
   const [address, setAddress] = useState();
   const [reviewContent, setReviewContent] = useState("");
   const navigate = useNavigate();
-  const [reviewImage, setReviewImage] = useState("");
+  const [reviewImage, setReviewImage] = useState(sessionStorage.getItem('ReviewImage'));
 
   const handleStoreNameChange = (e) => {
     setStoreName(e.target.value);
@@ -36,47 +33,38 @@ const WriteReview = ({setReceiptCheck}) => {
   };
 
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const reviewIdFromUrl = queryParams.get("reviewId");
 
-  // useEffect(() => {
-  //   setUserReviews(getReviewsByUserId(String(userID))); // Converting userID to string
-  // }, [reviews]);
+
 
 
 
   const handleWriteReview = () => {
-    const userId = 168;
-    // const userId = sessionStorage.getItem('token');
-    // fetch('http://15.165.26.32:8080/reviews/', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     memberId: userId,
-    //     storeName: storeName,
-    //     address: address,
-    //     content: reviewContent,
-    //     ratingPoint: rating,
-    //     img: reviewImage
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    // .then(response => {
-    //   console.log(response.message);
-    //   navigate('/');
-    // })
-
-    setReceiptCheck(false);
-    // sessionStorage.setItem('ReceiptCheck', false);
+    const userId = sessionStorage.getItem('token');
+    fetch('http://15.165.26.32:8080/reviews/', {
+      method: 'POST',
+      body: JSON.stringify({
+        memberId: userId,
+        storeName: storeName,
+        address: address,
+        content: reviewContent,
+        ratingPoint: rating,
+        img: reviewImage
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      console.log(response.message);
+      navigate('/');
+    })
+    sessionStorage.setItem('ReceiptCheck', false);
     // updateReceiptCheck(false)
     navigate('/')
   }
 
   return (
     <div className={styles.container}>
-      <TopNav /> 
       <HeadName title="리뷰작성" /> /writereview
 
       /writereview 
@@ -90,7 +78,7 @@ const WriteReview = ({setReceiptCheck}) => {
       <input
           type="storeName"
           placeholder="가게이름"
-          value={storeName}
+          value={storeName || ''}
           onChange={handleStoreNameChange}
           required
           className={styles.Input}
@@ -100,7 +88,7 @@ const WriteReview = ({setReceiptCheck}) => {
         <input
           type="address"
           placeholder="가게주소"
-          value={address}
+          value={address || ''}
           onChange={handleAddressChange}
           required
           className={styles.Input}
@@ -113,7 +101,7 @@ const WriteReview = ({setReceiptCheck}) => {
             className={styles.textarea}
             id="ReviewContent"
             placeholder="리뷰 내용을 입력하세요"
-            value={reviewContent}
+            value={reviewContent || ''}
             onChange={handleReviewContentChange}
             required
           />
@@ -122,16 +110,17 @@ const WriteReview = ({setReceiptCheck}) => {
           <input
             type="number"
             name="rating"
-            value={rating}
+            value={rating || ''}
             onChange={handleRatingChange}
             min="0"
             max="5"
+            required
           />
         </div>
         <div>
           {reviewImage && (
             <div style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px', marginTop: '10px' }}>
-              <img src={""} alt="Uploaded" style={{ maxWidth: '100%' }} />
+              <img src={reviewImage} alt="Uploaded" style={{ maxWidth: '100%' }} />
             </div>
           )}
         </div>
@@ -141,15 +130,15 @@ const WriteReview = ({setReceiptCheck}) => {
     
 
 
-<form>
+<div>
         <Button 
           size="long" 
           text="리뷰 작성하기" 
-          onClick={() => handleWriteReview()}
+          onClick={handleWriteReview}
           >
 
           </Button>
-          </form>
+          </div>
       </div>
 
 

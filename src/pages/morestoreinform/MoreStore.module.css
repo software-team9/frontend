@@ -1,97 +1,107 @@
-/* MoreStoreInform.module.css */
-.addReviewButton {
-  background: none;
-  border: none;
-  color: #d32323;
-  cursor: pointer;
-  font-size: 24px;
-}
-
-.addReviewButton:hover {
-  background-color: #d32323;
-  color: white;
-}
-
 .container {
+  max-width: 375px;
+  margin: auto;
+  background-color: white;
   display: flex;
   flex-direction: column;
 }
 
-.detailItem {
-  margin-bottom: 10px;
-  text-align: left;
-}
-
-.emptyMessage {
-  background: #f9f9f9;
-  border: 1px dashed #ccc;
-  border-radius: 4px;
-  color: #555;
-  font-size: 1rem;
-  margin: 10px 0;
-  padding: 20px;
+.storeHeader {
+  padding: 12px;
   text-align: center;
+  background-color: #D32323;
+  color: white;
 }
 
-.redLine {
-  background-color: #d32323;
-  height: 4px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+.storeImage {
+  object-fit: cover;
+  width: 100%;
+  margin-bottom: 12px;
 }
 
-.reviewItem {
-  background-color: #f8f8f8;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-  padding: 15px;
+.storeName {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
-.reviewRating {
-  color: #fbbc05;
-  margin-right: 5px;
+.storeAddress {
+  font-size: 1rem;
 }
 
 .reviewSection {
-  margin: 20px 0;
+  padding: 16px;
+  background-color: white;
+  position: relative;
 }
 
-.reviewText {
-  margin-bottom: 5px;
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0; 
+  vertical-align: middle;
+  text-align: left; 
+  margin-bottom: 15px;
+  display: flex; /* Use flex to align title and button */
+  justify-content: space-between; /* Place title on one end and button on the other */
+  align-items: center; /* Align items vertically */
+  width: 375px;
+}
+
+.reviewItem {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.reviewIndex {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right:32px;
+  margin-left: 10px;
+}
+
+.reviewContent {
+  text-align: left;
+}
+
+.reviewAuthor {
+  font-weight: bold;
 }
 
 .reviewTime {
   color: #777;
-  font-size: 12px;
+  font-size: 0.8rem;
 }
 
-.sectionTitle {
-  align-items: center;
-  display: flex;
-  font-size: 20px;
-  justify-content: space-between;
+.addReviewButton {
+  position: absolute;
+  top: 16px; 
+  right: 16px;
+  background: none;
+  border: none;
+  color: #d32323;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0;
 }
 
-.storeDetailSection {
-  box-sizing: border-box;
-  margin: 0 15%; /* 좌우 여백을 각각 15%로 설정 */
-  text-align: left;
+.addReviewButton:hover {
+  color: #f9f9f9;
+  border-radius: 4px;
 }
 
-.storeImageSection {
-  background-position: center;
-  background-size: cover;
-  height: 30vh; /* 화면의 높이의 30% */
-  width: 100%;
-}
-
-.storeName {
-  font-size: 24px;
-  margin-bottom: 5px;
-  text-align: left;
-}
-
-.storeNameSection {
-  margin: 20px 0;
+.emptyMessage {
+  text-align: center;
+  padding: 20px;
+  font-size: 1rem;
+  color: #555;
+  margin: 10px 0;
+  background: #f9f9f9;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
 }

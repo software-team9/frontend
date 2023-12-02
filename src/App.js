@@ -19,8 +19,8 @@ import MyWishList from "./pages/mypage_mywishlist/MyWishList";
 import Ranking from "./pages/rankingpage/Ranking";
 import ReportReview from "./pages/reportreview/ReportReview";
 import SettingPage from "./pages/settingpage/SettingPage";
-import ReceiptRecognition from "./pages/writereview_receiptrecogition/ReceiptRecognition";
-import WriteReview from "./pages/writereview_writereview/WriteReview";
+import ReceiptRecognition from "./pages/writereview/ReceiptRecognition";
+import WriteReview from "./pages/writereview/WriteReview";
 
 import LogoutComponent from "./components/logout/LogoutComponent";
 import BottomNav from "./components/bottomnav/BottomNav";
@@ -39,7 +39,6 @@ function App() {
   // )
   const [reviewImage, setReviewImage] = useState(null);
 
-  const { ReceiptCheck, setReceiptCheck } = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   // const [isLogin, setIsLogin] = useState(false); // 실제로 쓸땐 이거 사용
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
@@ -53,13 +52,6 @@ function App() {
     setIsLogin(false);
   };
 
-  const setReceiptCheckTrue = () => {
-    setReceiptCheck(true);
-  }
-
-  const setReceiptCheckFalse = () => {
-    setReceiptCheck(false);
-  }
 
   const setpasswordCheckTrue = () => {
     setIsPasswordChecked(true);
@@ -90,6 +82,11 @@ function App() {
 //   }
 //   fetchTrends();
 // }, []);
+
+
+useEffect (() => {
+  sessionStorage.getItem('ReceiptCheck')
+}, []);
 
   return (
     <BrowserRouter>
@@ -248,19 +245,27 @@ function App() {
           <Route path="/setting" element={<SettingPage />} />
           
 
+
           <Route 
-            path="/writereview" 
+            path="/writereview/receiptRecognition" 
             element={
               isLogin ? (
-                ReceiptCheck ? (
+                <ReceiptRecognition />
+              ) : (
+                <LoginPage
+                  loginHandler={loginHandler}
+                  />
+              )
+            }
+            />
+
+
+          <Route 
+            path="/writereview/writereview" 
+            element={
+              isLogin ? (
                   <WriteReview
-                    setReceiptCheck={setReceiptCheck}
                   />
-                ) : (
-                  <ReceiptRecognition
-                    setReceiptCheck={setReceiptCheck}
-                  />
-                )
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}

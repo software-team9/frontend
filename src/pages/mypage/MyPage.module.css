@@ -1,90 +1,69 @@
-/* MyPage.module.css */
 .container {
-  align-items: center;
+  max-width: 375px;
+  margin: auto;
+  background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-
-.profileImage {
-  align-items: center;
-  border-radius: 50%;
-  display: flex;
-  height: 100px;
-  justify-content: center;
-  overflow: hidden;
-  width: 100px;
-}
-
-.profileImage img {
   height: 100%;
-  object-fit: contain;
-  width: 100%;
 }
 
 .profileSection {
-  align-items: center;
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.separator {
-  background-color: #ccc;
-  height: 1px;
-  margin: 10px 0;
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-.userInfo {
-  color: #d32323;
-  margin-right: 20px;
-}
-
-.userInfo h2 {
-  font-size: 1.8rem;
-}
-
-.userInfo p {
-  font-size: 1rem;
-}
-
-/* Add these styles for Link customization */
-.menuItem {
-  align-items: center; /* 세로 가운데 정렬 추가 */
-  display: flex; /* Flexbox 사용 */
-  justify-content: center; /* 가로 가운데 정렬 추가 */
-  color: #000000;
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: 13px;
-  text-align: left;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.withdrawal,
-.logout {
-  align-items: center;
-  color: #666;
-  cursor: pointer;
-  display: flex;
-  font-size: 0.9rem;
-  justify-content: center;
+  padding: 24px;
+  background-color: #D32323;
   text-align: center;
-  transition: color 0.3s;
+  color: white;
+  flex-direction: column;
+  align-items: center;
 }
 
-.withdrawal:hover,
-.logout:hover {
-  color: #d32323;
+.profileImage {
+  margin-top: 16px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
 }
 
-/* Optional: Add margin between the icon and text */
-.withdrawal .rectangle16,
-.logout .rectangle16 {
-  margin-right: 5px;
+.userName {
+  margin-top: 8px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.userPhone {
+  margin-top: 1px;
+  font-size: 18px;
+  font-weight: medium;
+}
+
+.linksSection,
+.linksSectionAlt {
+  padding: 32px 16px;
+}
+
+.menuItem,
+.menuItemAlt {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
+.menuItem:hover,
+.menuItemAlt:hover {
+  color: #D32323;
+}
+
+.linksSectionAlt {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.menuItemAlt {
+  color: #666;
+}
+
+.menuItemAlt:hover {
+  color: #D32323;
 }

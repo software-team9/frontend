@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./Rankinglist.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
-import RankingContainer from "./RankingContainer";
 
 const STORES_PER_PAGE = 10;
 
