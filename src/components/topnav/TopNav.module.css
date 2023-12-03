@@ -27,6 +27,13 @@ body {
   border: none;
   padding: 10px;
   cursor: pointer;
+  color: #D32323;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.backButton:hover {
+  color: #fff; 
 }
 
 .logoContainer {
@@ -35,10 +42,17 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+  height: 100%;
 }
 
-/* 오른쪽에 더미 요소를 추가하기 위한 스타일 */
+.logoImage {
+  margin: auto;
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+}
+
 .dummy {
-  padding: 10px; /* 뒤로 가기 버튼과 동일한 패딩을 적용 */
-  opacity: 0; /* 보이지 않게 설정 */
+  padding: 18px; 
+  opacity: 0;
 }

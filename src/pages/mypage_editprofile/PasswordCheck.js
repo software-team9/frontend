@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./PasswordCheck.module.css";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const PasswordCheck = ({ setpasswordCheckTrue }) => {
   const [pw, setPw] = useState(null);
@@ -9,25 +10,27 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
   const handlePasswordChange = (e) => setPw(e.target.value);
 
   const handlePassword = () => {
-    fetch(`http://15.165.26.32:8080/members/validate/${pw}`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      },
+
+    axios.get(`/members/validate/${pw}`, {
+      'Content-Type': 'application/json', withCredentials:true,
     })
-    .then((response) => {
-      if (response.ok) {
-        setpasswordCheckTrue();
+    .then(response => {
+
+      if(response.status === 200) {
+ 
         navigate("/mypage/editprofile");
+        console.log(response.data);
+      } else {
+        throw new Error("Error Occured");
       }
-      response.json()
+
+
     })
-    .then((json) => {
-      return json;
-    })
-    .catch((error) => {
-      console.error("상점 데이터 가져오기 오류:", error);
+    .catch(error => {
+      // 에러 처리
+      console.error('Error:', error);
     });
+
 
     
   };

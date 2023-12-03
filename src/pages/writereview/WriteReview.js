@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import HeadName from "../../components/head/Head";
 import Rating from "./Rating";
+import axios from 'axios';
 
 const WriteReview = () => {
   const [rating, setRating] = useState(0);
@@ -60,23 +61,36 @@ const WriteReview = () => {
     formData.append("address", address);
     formData.append("content", reviewContent);
     formData.append("ratingPoint", rating);
-    fetch("http://15.165.26.32:8080/reviews/", {
-      method: "POST",
-      body: formData,
+
+    axios.post('/reviews', {
+      body: formData
+    }, {  "Content-Type": "multipart/form-data" })
+    .then(response => {
+      navigate('/')
+      console.log(response.data)
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((json) => {
-        navigate("/");
-        console.log(json);
-      })
-      .catch((error) => {
-        console.error("API 요청에 실패하였습니다:", error.message);
-      });
+    .catch(error => {
+      console.error('오류 발생:', error);
+    });
+
+
+    // fetch("http://15.165.26.32:8080/reviews/", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((json) => {
+    //     navigate("/");
+    //     console.log(json);
+    //   })
+    //   .catch((error) => {
+    //     console.error("API 요청에 실패하였습니다:", error.message);
+    //   });
 
     // test
     // navigate('/')

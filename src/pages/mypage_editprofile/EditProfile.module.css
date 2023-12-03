@@ -1,122 +1,62 @@
 .container {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  max-width: 500px;
   margin: auto;
+  max-width: 375px;
+}
+
+.signUpForm {
+  width: 70%;
+}
+
+.dateInput,
+.genderSelected,
+.nameInput,
+.passwordInput {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.genderSelectSection {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; 
+  margin-bottom: 10px;
+}
+
+.genderSelected {
+  background-color: white;
+  border-radius: 4px;
+  color: #d32323;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+}
+
+
+.genderSelected {
+  background-color: white;
+  color: #D32323;
+  border: 1px solid #D32323;
+}
+
+.genderNotSelected {
+  background-color: white;
+  color: #D32323;
+  border: 1px solid #D32323;
 }
 
 .header {
-  display: flex;
   align-items: center;
+  display: flex;
   margin-bottom: 20px;
-}
-
-.backButton {
-  margin-right: 10px;
-  cursor: pointer;
 }
 
 .signUpForm {
   width: 100%;
-}
-
-.duplicateCheckForm {
-  width: 100%;
-}
-
-.passwordContainer,
-.termsContainer {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.phoneInputContainer {
-  display: flex;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.phoneInput {
-  flex: 7; /* 비율 7로 설정 */
-  margin-right: 10px; /* 버튼과의 여백 */
-}
-
-/* '입력' 버튼 컨테이너, 여기에 Button 컴포넌트가 포함됩니다 */
-.viewButtonContainer {
-  flex: 3; /* 비율 3로 설정 */
-}
-
-.passwordInput,
-.nameInput,
-.dateInput {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.genderSelect {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.genderButton,
-.genderSelected {
-  flex: 1;
-  margin: 0 5px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: white;
-  cursor: pointer;
-}
-
-.genderSelected {
-  background-color: #d32323;
-  color: white;
-}
-
-.termsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.checkboxLabel {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-/* 스타일링된 체크박스 */
-.termsContainer input[type="checkbox"],
-.individualTerms input[type="checkbox"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #ccc;
-  margin-right: 5px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-/* 선택된 체크박스 스타일 */
-.termsContainer input[type="checkbox"]:checked,
-.individualTerms input[type="checkbox"]:checked {
-  background-color: #d32323;
-  /* Add a checkmark or similar style */
-}
-
-/* 버튼이 비활성화 되었을 때의 스타일 */
-.inactive_button {
-  background-color: #fed3d3;
-  color: #fff;
-  cursor: not-allowed;
 }

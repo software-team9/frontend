@@ -4,40 +4,38 @@ import useWishHook from "../../hooks/useWishHook"; // 가정된 찜하기 상태
 import styles from "./MyWishList.module.css";
 import HeadName from "../../components/head/Head";
 import WishListCard from "./WishlistCard";
+import axios from 'axios';
 
 const MyWishList = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { getWishList } = useWishHook(); // 가정된 찜하기 목록 조회 훅
-  const [mywishlist, setMyWishlist] = useState([{
-    "storeId": 0,
-    "name": '',
-    "address": '',
-    "city": '',
-    "img": '',
-    "rating": 0.0,
-    "score": 0.0
-}]);
+  const [mywishlist, setMyWishlist] = useState([]);
+
+const [currentWish, setCurrentWish] = useState([]);
 
   
   useEffect(() => {
-    fetch(`http://15.165.26.32:8080/wishes`, {
-      method: 'GET',
+
+    axios.get('/wishes', {
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
+      withCredentials: true
     })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setMyWishlist(json);
-        } else {
-          console.error("내 위시리스트 데이터가 올바르지 않습니다.");
-        }
-      })
-      .catch((error) => {
-        console.error("내 위시리스트 데이터 가져오기 오류:", error);
-      });
+    .then(response => {
+      console.log(response.data);
+      setMyWishlist(response.data);
+    })
+    .catch(error => {
+      console.error('에러:', error);
+      console.log('요청 구성:', error.config);
+    });
+    
+
+
+
+
   }, []);
 
 
@@ -69,15 +67,15 @@ const MyWishList = () => {
   return (
     <div className={styles.rankingContainer}>
     <HeadName title="내 위시리스트" />
-    {mywishlist.length > 0 ? (
-      mywishlist.map((store) => (
-        <div key={store.storeId} onClick={() => handleStoreClick(store.storeId)} className={styles.cardWrapper}>
+    {mywishlist.length ? (
+      mywishlist.map((wish) => (
+        <div key={wish.storeId} onClick={() => handleStoreClick(wish.storeId)} className={styles.cardWrapper}>
           <WishListCard
-            storeId={store.storeId}
-            imageSrc={store.image}
-            name={store.name}
-            rating={store.rating}
-            wishState={store.wished}
+            storeId={wish.storeId}
+            imageSrc={wish.img}
+            name={wish.name}
+            rating={wish.rating}
+            wishState={true}
           />
         </div>
       ))

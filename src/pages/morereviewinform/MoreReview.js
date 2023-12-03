@@ -96,7 +96,7 @@ const handleSeasonChange = (event) => {
   return (
     <div className={styles.container}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="season-label">시즌</InputLabel>
+            <InputLabel id="season-label"></InputLabel>
             <Select
               labelId="season-label"
               id="season-select"

@@ -38,10 +38,10 @@ const ReceiptRecognition = () => {
     // .then(response => response.json())
     // .then(json => {
     //   if (json && json.length > 0 ) {
-        // sessionStorage.setItem('ReceiptStoreName', json.storeName);
-        // sessionStorage.setItem('ReceiptAddress', json.address);
-        // sessionStorage.setItem('ReviewImage', image);
-        // navigate('/writereview/receiptcheck');
+    //     sessionStorage.setItem('ReceiptStoreName', json.storeName);
+    //     sessionStorage.setItem('ReceiptAddress', json.address);
+    //     sessionStorage.setItem('ReviewImage', image);
+    //     navigate('/writereview/receiptcheck');
     //   } else {
     //     console.error("지원하지 않는 지역입니다.")
     //   }
@@ -51,35 +51,34 @@ const ReceiptRecognition = () => {
     // });
 
 
-
    
-      // const formData = new FormData();
-      // formData.append("image", image);
+      const formData = new FormData();
+      formData.append("image", image);
   
-      // fetch("http://15.165.26.32:8080/reviews/receipt", {
-      //   method: "POST",
-      //   body: formData,
-      // })
-      //   .then((response) => {
-      //     if (!response.ok) {
-      //       throw new Error("API 요청 실패");
-      //     }
-      //     return response.json();
-      //   })
-      //   .then((json) => {
-      //     sessionStorage.setItem('ReceiptStoreName', json.storeName);
-      //     sessionStorage.setItem('ReceiptAddress', json.address);
-      //     sessionStorage.setItem('ReviewImage', image);
-      //     navigate('/writereview/receiptcheck');
-      //     console.log(json);
-      //   })
-      //   .catch((error) => {
-      //     console.error("API 요청에 실패하였습니다:", error.message);
-      //   });
+      fetch("/reviews/receipt", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("API 요청 실패");
+          }
+          return response.json();
+        })
+        .then((json) => {
+          sessionStorage.setItem('ReceiptStoreName', json.storeName);
+          sessionStorage.setItem('ReceiptAddress', json.address);
+          sessionStorage.setItem('ReviewImage', image);
+          navigate('/writereview/receiptcheck');
+          console.log(json);
+        })
+        .catch((error) => {
+          console.error("API 요청에 실패하였습니다:", error.message);
+        });
     
 
 
-      navigate('/writereview/receiptcheck');
+      // navigate('/writereview/receiptcheck');
 
     // test
     // sessionStorage.setItem('ReviewImage', image);

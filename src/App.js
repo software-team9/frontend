@@ -163,22 +163,32 @@ useEffect (() => {
             path="/mypage/editprofile" 
             element={
               isLogin ? (
-                isPasswordChecked ? (
+                
                   <EditProfile
                   setpasswordCheckFalse = {setpasswordCheckFalse}
                   />
-                ) : (
-                  <PasswordCheck
-                  setpasswordCheckTrue={setpasswordCheckTrue}
-                  />
-                )
+              
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
                   />
               )
             }
-            />  
+            />
+            
+          <Route
+            path="/mypage/passwordcheck"
+            element={
+              isLogin ? (
+                <PasswordCheck
+                  />
+              ) : (
+                <LoginPage
+                  loginHandler={loginHandler}
+                  />
+              )
+            }
+            /> 
           <Route 
             path="/mypage/inquiry" 
             element={

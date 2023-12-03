@@ -4,14 +4,15 @@ import BottomNav from "../../components/bottomnav/BottomNav";
 import styles from "./SignUp.module.css";
 import TopNav from "../../components/topnav/TopNav";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const SignUp = () => {
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [name, setName] = useState(null);
-  const [pw, setPw] = useState(null);
-  const [pw_r, setPw_r] = useState(null);
-  const [birthday, setBirthday] = useState(null);
-  const [gender, setGender] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [name, setName] = useState('');
+  const [pw, setPw] = useState('');
+  const [pw_r, setPw_r] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [gender, setGender] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(0); // 0 duplicate 체크 하지 않음, 1 중복임, 2 중복아님
   const [terms, setTerms] = useState({
     service: false,
@@ -38,6 +39,7 @@ const SignUp = () => {
 
   // 모든 약관에 대한 동의를 처리합니다.
   const handleAllTermsChange = (checked) => {
+    console.log(name, phoneNumber, pw, gender, birthday)
     setTerms({
       service: checked,
       privacy: checked,
@@ -46,99 +48,65 @@ const SignUp = () => {
     });
   };
 
-  const handleDuplicateCheckButtonClick = (phoneNumber) => {
+  const handleDuplicateCheckButtonClick = () => {
     // Call the checkDuplicateId function when the button is clicked
-    fetch(`http://15.165.26.32:8080/members/dupCheck/${phoneNumber}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          setIsDuplicate(1);
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        } else {
-          setIsDuplicate(2);
-        }
-      })
-      .catch((error) => {
-        console.error("Fetch error", error);
-      });
-  };
-
-  const handleSignUp = (e) => {
-    fetch("http://15.165.26.32:8080/join", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        // "Access-Control-Allow-Origin": `http://localhost:3000`,
-        // 'Access-Control-Allow-Credentials':"true",
-      },
-      body: JSON.stringify({
-        name,
-        phoneNumber,
-        password: pw,
-        gender,
-        birthday,
-      }),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      } else {
-        console.log("Login Success");
-        navigate("/login");
+    axios.get(`/members/dupCheck/${phoneNumber}`, {
+    }
+    )
+    .then((response) => {
+      console.log(response)
+      if(response.status === 200) {
+        setIsDuplicate(2);
+        alert("사용가능한 비밀번호입니다.")
       }
+    })
+    .catch((error) => {
+      console.error("Fetch error", error);
     });
 
-    e.preventDefault();
-    if (
-      phoneNumber &&
-      name &&
-      pw &&
-      pw_r &&
-      birthday &&
-      gender &&
-      terms.service &&
-      terms.privacy
-    ) {
-      if (isDuplicate === 2) {
+
+  };
+
+  const handleSignUp = () => {
+
         if (pw === pw_r) {
-          fetch("http://15.165.26.32:8080/join", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json; charset=utf-8",
-              // "Access-Control-Allow-Origin": `http://localhost:3000`,
-              // 'Access-Control-Allow-Credentials':"true",
-            },
-            body: JSON.stringify({
-              name,
-              phoneNumber,
-              password: pw,
-              gender,
-              birthday,
-            }),
-          })
+      
+            axios.post("/join", {
+              headers: {
+                "Content-Type": "application/json",
+              }, 
+            }, {
+              "name" : name,
+              "phoneNumber" : phoneNumber,
+              "password": pw,
+              "gender": gender,
+              "birthday": birthday,
+            })
             .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              } else {
+              console.log(name, phoneNumber, pw, gender, birthday)
+              console.log(response);
+              if (response.status === 200) {
                 console.log("Login Success");
                 navigate("/login");
               }
             })
             .catch((error) => {
-              console.error("Fetch error", error);
+              console.error(error);
             });
+    
+
+     
+
+          
+
+
+
+
+
         } else {
           alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         }
-      } else {
-        alert("전화번호 중복을 확인해주세요.");
-      }
-    } else {
-      alert("모든 필수 항목을 채워주세요.");
-    }
+
   };
 
   // 개별 약관 체크박스의 상태가 변경될 때마다 전체 동의 체크박스 상태를 업데이트합니다.
@@ -163,10 +131,12 @@ const SignUp = () => {
             placeholder="휴대폰번호"
             className={styles.phoneInput}
             // value and onChange handlers here
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
           />
           <button
             className={styles.duplicateCheckButton}
-            onClick={handleDuplicateCheckButtonClick(phoneNumber)}
+            onClick={handleDuplicateCheckButtonClick}
           >
             인증
           </button>
@@ -212,17 +182,17 @@ const SignUp = () => {
         <div className={styles.genderSelect}>
           <button
             className={
-              gender === "male" ? styles.genderSelected : styles.genderButton
+              gender === "MALE" ? styles.genderSelected : styles.genderButton
             }
-            onClick={() => handleGenderSelect("male")}
+            onClick={() => handleGenderSelect("MALE")}
           >
             남
           </button>
           <button
             className={
-              gender === "female" ? styles.genderSelected : styles.genderButton
+              gender === "FEMALE" ? styles.genderSelected : styles.genderButton
             }
-            onClick={() => handleGenderSelect("female")}
+            onClick={() => handleGenderSelect("FEMALE")}
           >
             여
           </button>

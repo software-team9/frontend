@@ -5,9 +5,10 @@ import styles from "./MoreStore.module.css";
 // import useStoreHook from "../../hooks/useStoreHook";
 // import useWishHook from "../../hooks/useWishHook";
 
-
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
 import RankingGraph from "./RankingGraph";
+import BadgeList from "../../components/badge/BadgeList";
+import {getStoreSeasonRank} from "../../hooks/useStoreHook"
 
 const MoreStore = () => {
   const location = useLocation();
@@ -15,194 +16,176 @@ const MoreStore = () => {
   const storeId = queryParams.get("storeId");
   const navigate = useNavigate();
   // const { getReviewsByStoreId } = useReviewHook();
-  // const { getWishStateByStoreId, putChangeWish } = useWishHook(); 
+  // const { getWishStateByStoreId, putChangeWish } = useWishHook();
 
   // const { stores } = useStoreHook();
   const maxReviewCount = 3;
   const [store, setStore] = useState({
-    "storeId": 0,
-    "name": '',
-    "address": '',
-    "city": '',
-    "img": '',
-    "rating": 0.0,
-    "score": 0.0
+    storeId: 0,
+    name: "",
+    address: "",
+    city: "",
+    img: "",
+    rating: 0.0,
+    score: 0.0,
   });
-  const [histories, setHistories] = useState([
+  const [histories, setHistories] = useState([ // 랭킹 히스토리 데이터
     {
-      "storeName": '',
-      "storeId": 0,
-      "city": '',
-      "season": '',
-      "ranking": 0,
-      "img": ''
-    }
-  ])
+      storeName: "",
+      storeId: 0,
+      city: "",
+      season: "",
+      ranking: 0,
+      img: "",
+    },
+  ]);
   const [storeReviews, setStoreReviews] = useState([
     {
-      content: '',
+      content: "",
       ratingPoint: 0.0,
-      img: '',
-      season: '',
-      reviewId: 0
-    }
+      img: "",
+      season: "",
+      reviewId: 0,
+    },
   ]);
 
-
   const [wishState, setWishState] = useState(false); // 찜하기 상태
-  const [season, setSeason] = useState("")
-  const [seasons, setSeasons] = useState([]);
+  const [season, setSeason] = useState("");
+  const [seasons, setSeasons] = useState([]); 
   const [stores, setStores] = useState();
+
+
 
   useEffect(() => {
     console.log(storeId);
     fetch(`http://15.165.26.32:8080/store/${storeId}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json && typeof json === 'object') {
+        if (json && typeof json === "object") {
           // setStore(json);
           setStore(json);
           console.log(json);
         } else {
-          console.error('수신된 상점 데이터가 유효하지 않습니다:', json);
+          console.error("수신된 상점 데이터가 유효하지 않습니다:", json);
         }
       })
       .catch((error) => {
-        console.error('상점 데이터를 가져오는 중 오류 발생:', error);
+        console.error("상점 데이터를 가져오는 중 오류 발생:", error);
       });
   }, [storeId]);
-  
 
   useEffect(() => {
     console.log(storeId);
     fetch(`http://15.165.26.32:8080/seasonRank/store/${storeId}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((json) => {
         if (json) {
           // setStore(json);
-          setHistories(json)
+          setHistories(json);
           console.log(json);
         } else {
-          console.error('시즌 데이터가 유효하지 않습니다:', json);
+          console.error("시즌 데이터가 유효하지 않습니다:", json);
         }
       })
       .catch((error) => {
-        console.error('시즌 데이터를 가져오는 중 오류 발생:', error);
+        console.error("시즌 데이터를 가져오는 중 오류 발생:", error);
       });
   }, [storeId]);
 
-
-
-
-useEffect(() => {
-  // seasons 데이터 가져오기
-  fetch('http://15.165.26.32:8080/seasonRank/seasonName', {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json"
-    },
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      if (json && json.length > 0 ) {
-        // seasons 데이터 업데이트
-        setSeasons(json.reverse());
-        console.log(json);
-        setSeason(json[0])
-      } else {
-        console.error("시즌 데이터가 올바르지 않습니다.");
-      }
+  useEffect(() => {
+    fetch(`http://15.165.26.32:8080/wish/state/${storeId})`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .catch((error) => {
-      console.error("시즌 데이터 가져오기 오류:", error);
-    });
-}, []);
-
-useEffect(() => {
-  fetch(`http://15.165.26.32:8080/wish/state/${storeId})`, {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json"
-    },
-  })
-  .then((response) => response.json())
-  .then((json) => {
-    if (json && typeof json === 'object') {
-      setWishState(json)
-      console.log(json);
-    } else {
-      console.error("위시 데이터가 올바르지 않습니다.");
-    }
-  })
-  .catch((error) => {
-    console.error("위시 데이터 가져오기 오류:", error);
-  });
-}, [storeId])
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && typeof json === "object") {
+          setWishState(json);
+          console.log(json);
+        } else {
+          console.error("위시 데이터가 올바르지 않습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("위시 데이터 가져오기 오류:", error);
+      });
+  }, [storeId]);
 
   //   if (stores.length > 0) {
   //     const foundStore = stores.find((s) => s.storeId === storeId);
   //     setStore(foundStore);
   //   }
 
-  //   const wish = getWishStateByStoreId(storeId, "userId"); 
+  //   const wish = getWishStateByStoreId(storeId, "userId");
   //   setWishState(wish);
   // }, [wishState]);
 
   useEffect(() => {
-    fetch(`http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=0&size=3`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      },
-    })
-    .then((response) => response.json())
-    .then((json) => {
-      if (json) {
-        setStoreReviews(json)
-        console.log(json);
-      } else {
-        console.error("리뷰 데이터가 올바르지 않습니다.");
+    fetch(
+      `http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=0&size=3`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    })
-    .catch((error) => {
-      console.error("리뷰 데이터 가져오기 오류:", error);
-    });
-}, [storeId, season]);
-    // if (storeId) {
-    //   const reviews = getReviewsByStoreId(storeId, season, 1, maxReviewCount);
-    //   setStoreReviews(reviews);
-    // }
-
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json) {
+          setStoreReviews(json);
+          console.log(json);
+        } else {
+          console.error("리뷰 데이터가 올바르지 않습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("리뷰 데이터 가져오기 오류:", error);
+      });
+  }, [storeId, season]);
+  // if (storeId) {
+  //   const reviews = getReviewsByStoreId(storeId, season, 1, maxReviewCount);
+  //   setStoreReviews(reviews);
+  // }
 
   const handleMoreReviews = () => {
     navigate(`/morereview?storeId=${storeId}`);
   };
 
   const handleWish = () => {
-
     fetch(`http://15.165.26.32:8080/wish/change/${storeId}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     })
-    .then((response) => response.json())
-    .then((json) => json())
-    .catch((error) => {
-      console.error("상점 데이터 가져오기 오류:", error);
-    });
+      .then((response) => response.json())
+      .then((json) => json())
+      .catch((error) => {
+        console.error("상점 데이터 가져오기 오류:", error);
+      });
   };
 
+  const parseRankingData = (data) => {
+    return data.map((item) => {
+      return {
+        season: item.season,
+        ranking: item.ranking,
+      };
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -216,14 +199,16 @@ useEffect(() => {
             />
             <div className={styles.element}></div>
             <div className={styles.StoreNameContainer}>
-            <h1 className={styles.storeName}>{store.name}</h1>
-            <div
-              className={`${styles.wishIcon} ${wishState ? styles.checked : ""}`}
-              onClick={handleWish}
-            >
-              {wishState ? '\u2714' : '\u2764'}
+              <h1 className={styles.storeName}>{store.name}</h1>
+              <div
+                className={`${styles.wishIcon} ${
+                  wishState ? styles.checked : ""
+                }`}
+                onClick={handleWish}
+              >
+                {wishState ? "\u2714" : "\u2764"}
+              </div>
             </div>
-          </div>
 
             <div className={styles.AddressContainer}>
               <img
@@ -240,7 +225,9 @@ useEffect(() => {
             <div className={styles.reviewHeader}>
               {" "}
               <h2 className={styles.sectionTitle}>랭킹 히스토리</h2>
-              <RankingGraph />
+            </div>
+            <div className={styles.rankingBedge}>
+              <BadgeList data={histories} />
             </div>
           </section>
 
@@ -270,7 +257,7 @@ useEffect(() => {
                 // </div>
                 <div>
                   <ReviewCard
-                    reviewId = { storeReviews.reviewId}
+                    reviewId={storeReviews.reviewId}
                     imageSrc={storeReviews.img}
                     rating={storeReviews.ratingPoint}
                     reviewText={storeReviews.content}

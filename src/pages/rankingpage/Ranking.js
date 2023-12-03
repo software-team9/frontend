@@ -4,7 +4,8 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./Ranking.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
 import RankingCard from "./RankingCard";
-import Dday from './Dday'
+import Dday from "./Dday";
+import NoDataView from './NoDataView';
 
 import img from "./image.jpg";
 const STORES_PER_PAGE = 4;
@@ -18,8 +19,8 @@ const storedata = {
 };
 
 const Ranking = () => {
-
-  const targetDate = '2023-12-25';  // 시즌 끝나는 시간을 서버에서 불러와서 targetDate에 저장하면 됩니다.
+  const targetDate = "2023-12-25"; 
+  // 시즌 끝나는 시간을 서버에서 불러와서 targetDate에 저장하면 됩니다.
 
   const [page, setPage] = useState(1);
 
@@ -29,23 +30,27 @@ const Ranking = () => {
   const navigate = useNavigate();
   // const { getStoreListByCondition } = useStoreHook();
 
-  const [stores, setStores] = useState([{
-    "storeId": 0,
-    "name": '',
-    "address": '',
-    "city": '',
-    "img": '',
-    "rating": ''
-}]);
+  const [stores, setStores] = useState([
+    {
+      storeId: 0,
+      name: "",
+      address: "",
+      city: "",
+      img: "",
+      rating: "",
+    },
+  ]);
 
-const [hallOfFames, setHallofFames] = useState([{
-  "storeId": 0,
-  "name": '',
-  "address": '',
-  "city": '',
-  "img": '',
-  "rating": ''
-}]);
+  const [hallOfFames, setHallofFames] = useState([
+    {
+      storeId: 0,
+      name: "",
+      address: "",
+      city: "",
+      img: "",
+      rating: "",
+    },
+  ]);
 
   // State for filtering
   const [city, setCity] = useState("서울");
@@ -67,15 +72,18 @@ const [hallOfFames, setHallofFames] = useState([{
 
   useEffect(() => {
     // stores에 대한 데이터 가져오기
-    fetch(`http://15.165.26.32:8080/stores/rank/${city}?page=${currentPage - 1}`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      },
-    })
+    fetch(
+      `http://15.165.26.32:8080/stores/rank/${city}?page=${currentPage - 1}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((json) => {
-        if (json && json.length > 0 ) {
+        if (json && json.length > 0) {
           setStores(json);
           setTotalPages(Math.ceil(json.length / STORES_PER_PAGE)); // Update totalPages
           console.log(json);
@@ -88,20 +96,21 @@ const [hallOfFames, setHallofFames] = useState([{
       });
   }, [currentPage, city]);
 
-
   useEffect(() => {
     // season stores에 대한 데이터 가져오기
     fetch(`http://15.165.26.32:8080/seasonRank/${season}/${city}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json && json.length > 0 ) {
+        if (json && json.length > 0) {
           setHallofFames(json);
-          setHallOfFame_TotalPages(Math.ceil(json.length / HALL_OF_FAME_STORES_PER_PAGE)); // Update totalPages
+          setHallOfFame_TotalPages(
+            Math.ceil(json.length / HALL_OF_FAME_STORES_PER_PAGE)
+          ); // Update totalPages
           console.log(json);
         } else {
           console.error("상점 데이터가 올바르지 않습니다.");
@@ -111,9 +120,6 @@ const [hallOfFames, setHallofFames] = useState([{
         console.error("상점 데이터 가져오기 오류:", error);
       });
   }, [city, season]);
-
-
-
 
   useEffect(() => {
     setTotalPages(Math.ceil(stores.length / STORES_PER_PAGE));
@@ -127,32 +133,30 @@ const [hallOfFames, setHallofFames] = useState([{
 
   useEffect(() => {
     setTotalPages(Math.ceil(hallOfFames.length / HALL_OF_FAME_STORES_PER_PAGE));
-    const startIndex = (HallOfFame_currentPage - 1) * HALL_OF_FAME_STORES_PER_PAGE;
+    const startIndex =
+      (HallOfFame_currentPage - 1) * HALL_OF_FAME_STORES_PER_PAGE;
     const selectedStores = hallOfFames.slice(
       startIndex,
       startIndex + HALL_OF_FAME_STORES_PER_PAGE
     );
     setHallOfFame_CurrentStores(HallOfFame_currentStores);
   }, [HallOfFame_currentStores, hallOfFames]);
-  
- 
-
 
   useEffect(() => {
     // seasons 데이터 가져오기
-    fetch('http://15.165.26.32:8080/seasonRank/seasonName', {
-      method: 'GET',
+    fetch("http://15.165.26.32:8080/seasonRank/seasonName", {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json && json.length > 0 ) {
+        if (json && json.length > 0) {
           // seasons 데이터 업데이트
           setSeasons(json.reverse());
           console.log(json);
-          setSeason(json[0])
+          setSeason(json[0]);
         } else {
           console.error("시즌 데이터가 올바르지 않습니다.");
         }
@@ -161,8 +165,6 @@ const [hallOfFames, setHallofFames] = useState([{
         console.error("시즌 데이터 가져오기 오류:", error);
       });
   }, [city]);
-
-
 
   // Handlers for filtering
   const handleCityChange = (event) => {
@@ -193,16 +195,23 @@ const [hallOfFames, setHallofFames] = useState([{
 
   return (
     <div className={styles.rankingContainer}>
-      {/* View options container */}
       <div className={styles.viewOptionsContainer}>
         <span
-          className={selectedView === "realTime" ? styles.selectedView : ""}
+          className={
+            selectedView === "realTime"
+              ? styles.selectedView
+              : styles.unselectedView
+          }
           onClick={() => handleViewChange("realTime")}
         >
           실시간 랭킹
         </span>
         <span
-          className={selectedView === "hallOfFame" ? styles.selectedView : ""}
+          className={
+            selectedView === "hallOfFame"
+              ? styles.selectedView
+              : styles.unselectedView
+          }
           onClick={() => handleViewChange("hallOfFame")}
         >
           명예의 전당
@@ -213,7 +222,7 @@ const [hallOfFames, setHallofFames] = useState([{
       {selectedView === "realTime" && (
         <div>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="city-label">지역</InputLabel>
+            <InputLabel id="city-label"></InputLabel>
             <Select
               labelId="city-label"
               id="city-select"
@@ -254,7 +263,6 @@ const [hallOfFames, setHallofFames] = useState([{
               <MenuItem value={"포천"}>포천</MenuItem>
               <MenuItem value={"하남"}>하남</MenuItem>
               <MenuItem value={"화성"}>화성</MenuItem>
-              {/* Add your city options */}
             </Select>
           </FormControl>
           <Dday targetDate={targetDate} />
@@ -268,7 +276,7 @@ const [hallOfFames, setHallofFames] = useState([{
                   >
                     <td>
                       <RankingCard
-                        rank={index + 1 + (currentPage-1) * STORES_PER_PAGE}
+                        rank={index + 1 + (currentPage - 1) * STORES_PER_PAGE}
                         imageSrc={store.img}
                         name={store.name}
                         rating={store.rating}
@@ -279,15 +287,16 @@ const [hallOfFames, setHallofFames] = useState([{
                 ))}
               </tbody>
             </table>
-            <div>
-            </div>
+            <div></div>
             <div className={styles.pagination}>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (page) => (
                   <button
                     key={page}
                     className={
-                      currentPage === page ? styles.activePage : styles.pageNumber
+                      currentPage === page
+                        ? styles.activePage
+                        : styles.pageNumber
                     }
                     onClick={() => handlePageClick(page)}
                   >
@@ -302,7 +311,7 @@ const [hallOfFames, setHallofFames] = useState([{
       {selectedView === "hallOfFame" && (
         <div>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="city-label">지역</InputLabel>
+            <InputLabel id="city-label"></InputLabel>
             <Select
               labelId="city-label"
               id="city-select"
@@ -343,12 +352,11 @@ const [hallOfFames, setHallofFames] = useState([{
               <MenuItem value={"포천"}>포천</MenuItem>
               <MenuItem value={"하남"}>하남</MenuItem>
               <MenuItem value={"화성"}>화성</MenuItem>
-              {/* Add your city options */}
             </Select>
           </FormControl>
 
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="season-label">시즌</InputLabel>
+            <InputLabel id="season-label"></InputLabel>
             <Select
               labelId="season-label"
               id="season-select"
@@ -356,17 +364,18 @@ const [hallOfFames, setHallofFames] = useState([{
               onChange={handleSeasonChange}
               label="Season"
             >
-            {seasons.map((seasonValue) => (
-              <MenuItem key={seasonValue} value={seasonValue}>
-                {seasonValue}
-              </MenuItem>
-            ))}
+              {seasons.map((seasonValue) => (
+                <MenuItem key={seasonValue} value={seasonValue}>
+                  {seasonValue}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <div>
             <table className={styles.tableContainer}>
               <tbody>
-                {HallOfFame_currentStores.map((hallOfFames, index) => (
+              {HallOfFame_currentStores.length > 0 ? (
+                HallOfFame_currentStores.map((hallOfFames, index) => (
                   <tr
                     key={hallOfFames.storesId}
                     className={styles.storeItem}
@@ -382,7 +391,14 @@ const [hallOfFames, setHallofFames] = useState([{
                       />
                     </td>
                   </tr>
-                ))}
+                ))
+              ):(
+                <tr>
+                  <td>
+                    <NoDataView />
+                  </td>
+                </tr>
+              )}
               </tbody>
             </table>
           </div>

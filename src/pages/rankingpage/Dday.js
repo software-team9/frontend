@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Dday.module.css';
+import axios from 'axios';
 
 const Dday = ({ targetDate }) => {
-  const [timeLeft, setTimeLeft] = useState({});
+  const [timeLeft, setTimeLeft] = useState({
+    "days": 0,
+    "hours": 0
+  });
+
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -12,10 +17,8 @@ const Dday = ({ targetDate }) => {
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((difference / (1000 * 60 * 60)) % 24) + (days * 24);
-        const minutes = Math.floor((difference / 1000 / 60) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
 
-        timeLeft = { days, hours, minutes, seconds };
+        timeLeft = { days, hours};
       }
 
       return timeLeft;
@@ -25,13 +28,31 @@ const Dday = ({ targetDate }) => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
+
     return () => clearInterval(timer);
   }, [targetDate]);
 
+  useEffect(() => {
+
+    axios.get('seasonRank/next', {
+      'Content-Type': 'application/json', 
+    })
+    .then(response => {
+      console.log(response.data);
+      setTimeLeft(response);
+    })
+    .catch(error => {
+      // 에러 처리
+      console.error('Error:', error);
+    });
+    // http://15.165.26.32:8080/seasonRank/next
+
+  }, [])
+
   const displayTimeLeft = () => {
-    const { days, hours, minutes, seconds } = timeLeft;
+    const { days, hours } = timeLeft;
     const dayDisplay = days ? `${days} days` : '';
-    const timeDisplay = `${hours}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+    const timeDisplay = `${hours}h `;
     const isUrgent = days <= 7;
 
     return (

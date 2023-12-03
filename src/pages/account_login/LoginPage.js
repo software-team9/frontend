@@ -22,7 +22,7 @@ const Login = ({loginHandler}) => {
     // loginHandler();
     handleLogin({loginHandler}, id, pw); // 로그인 처리
   };
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -34,6 +34,8 @@ const Login = ({loginHandler}) => {
           name="tel"
           placeholder="휴대폰번호"
           onChange={handleIdChange}
+          type="tel"
+          pattern="^\d{10}$"
           value={id}
           required
         />
@@ -41,6 +43,7 @@ const Login = ({loginHandler}) => {
           name="password"
           placeholder="비밀번호"
           onChange={handlePasswordChange}
+          type="password"
           value={pw}
           required
         />

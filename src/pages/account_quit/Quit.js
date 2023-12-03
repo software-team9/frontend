@@ -4,6 +4,7 @@ import styles from "./Quit.module.css";
 import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import Head from "../../components/head/Head";
+import axios from 'axios';
 
 const Quit = ({ userData, logoutHandler }) => {
   const [pw, setPw] = useState(null);
@@ -15,28 +16,29 @@ const Quit = ({ userData, logoutHandler }) => {
 
   const handleQuit = (userData, logoutHandler) => {
     if (pw === pw_r) {
-      fetch('http://15.165.26.32:8080/members/delete', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          password: pw
-        }),
+
+      axios.delete('/members/delete', {
+        password: pw
+      }, {
         headers: {
           'Content-Type': 'application/json',
-        },
+        }, withCredentials: true
       })
       .then(response => {
         if(response.ok) {
+          console.log(response.data);
           logoutHandler();
           navigate('/');
         }
-        else {
-          alert("벡엔드쪽 문제 발생");
-        }
+
       })
-    } else {
-      alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      .catch(error => {
+        console.error('에러:', error);
+        console.log('요청 구성:', error.config);
+      });
+
     }
-  };
+  }
 
 
   return (

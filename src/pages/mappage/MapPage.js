@@ -202,7 +202,7 @@ const MapPage = () => {
     <div className={styles.Container}>
       <div className={styles.FormControl}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 } }>
-            <InputLabel id="city-label" >지역</InputLabel>
+            <InputLabel id="city-label" ></InputLabel>
             <Select
               labelId="city-label"
               id="city-select"

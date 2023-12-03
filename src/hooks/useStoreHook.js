@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import storeData from "./StoreList.json";
+import axios from 'axios';
 
 const useStoreHook = () => {
   const [stores, setStores] = useState([{
@@ -100,6 +101,22 @@ async function getWishListByUserId(userId) {
     setStores(stores.filter((store) => store.storeId !== storeId));
   };
 
+  const getStoreSeasonRank = (storeId) => {
+
+    axios.get('/members/member', {
+      'Content-Type': 'application/json', 
+    })
+    .then(response => {
+      // 서버 응답 처리
+      return response.data;
+    })
+    .catch(error => {
+      // 에러 처리
+      console.error('Error:', error);
+    })
+  };
+ 
+
   return {
     stores,
     getAllStores,
@@ -109,6 +126,7 @@ async function getWishListByUserId(userId) {
     deleteStore,
     getStoreListByCondition,
     getWishListByUserId,
+    getStoreSeasonRank,
   };
 };
 

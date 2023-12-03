@@ -4,6 +4,7 @@ import HeadName from "../../components/head/Head";
 import styles from "./MyReviewList.module.css";
 import useReviewHook from "../../hooks/useReviewHook";
 import reviewData from "../../hooks/MyReviewList.json";
+import axios from 'axios';
 
 const REVIEWS_PER_PAGE = 10;
 
@@ -27,64 +28,62 @@ const MyReviewList = () => {
 
   useEffect(() => {
     // reveiws에 대한 데이터 가져오기
-    fetch(`http://15.165.26.32:8080/reviews/member/`, {
-      method: 'GET',
+
+    axios.get('/reviews/member', {
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
+      withCredentials: true
     })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setReviews(json);
-          // setTotalPages(Math.ceil(json.length / REVIEWS_PER_PAGE)); // Update totalPages
-          console.log(json);
-        } else {
-          console.error("리뷰 데이터가 올바르지 않습니다.");
-        }
-      })
-      .catch((error) => {
-        console.error("리뷰 데이터 가져오기 오류:", error);
-      });
+    .then(response => {
+      console.log(response.data);
+      setReviews(response.data);
+    })
+    .catch(error => {
+      console.error('에러:', error);
+      console.log('요청 구성:', error.config);
+    });
+
+
   }, []);
 
 
 
-  useEffect(() => {
-    setTotalPages(Math.ceil(reviews.length / REVIEWS_PER_PAGE));
-    const startIndex = (currentPage - 1) * REVIEWS_PER_PAGE;
-    const selectedReviews = reviews.slice(
-      startIndex,
-      startIndex + REVIEWS_PER_PAGE
-    );
-    setCurrentReviews(selectedReviews);
-  }, [currentPage, reviews]);
+  // useEffect(() => {
+  //   setTotalPages(Math.ceil(reviews.length / REVIEWS_PER_PAGE));
+  //   const startIndex = (currentPage - 1) * REVIEWS_PER_PAGE;
+  //   const selectedReviews = reviews.slice(
+  //     startIndex,
+  //     startIndex + REVIEWS_PER_PAGE
+  //   );
+  //   setCurrentReviews(selectedReviews);
+  // }, [currentPage, reviews]);
 
 
     // Handlers for pagination
-    const handlePageClick = (page) => {
-      setCurrentPage(page);
-    };
+    // const handlePageClick = (page) => {
+    //   setCurrentPage(page);
+    // };
 
   return (
     <div className={styles.container}>
       <HeadName title="내 리뷰리스트" />
 
-      {reviews> 0 ? (
+      {reviews ? (
         <div>
 
   
-          {currentReviews.map((review, index) => (
-            <div key={review.content} className={styles.reviewCard}>
+          {reviews.map((review, index) => (
+            <div key={review.reviewId} className={styles.reviewCard}>
               <img
-                src={review.imageUrl}
+                src={review.img}
                 alt="Review"
                 className={styles.reviewImage}
               />
-              <p className={styles.reviewText}>{review.text}</p>
+              <p className={styles.context}>{review.content}</p>
             </div>
           ))}
-          <div className={styles.pagination}>
+          {/* <div className={styles.pagination}>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map(
               (page) => (
                 <button
@@ -98,7 +97,7 @@ const MyReviewList = () => {
                 </button>
               )
             )}
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className={styles.emptyMessage}>

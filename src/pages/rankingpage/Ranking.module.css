@@ -6,14 +6,6 @@
   justify-content: center;
 }
 
-.selectedView {
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
-  margin-right: 30px;
-  margin-left: 30px;
-  font-size: 1.5em;
-}
 
 .tableContainer {
   width: 100%;
@@ -54,7 +46,6 @@
 /* 상단 탭 */
 .viewOptionsContainer span {
   padding: 10px 20px;
-  background-color: #f1f1f1;
   border-radius: 5px;
   margin-right: 10px;
   font-size: 1em;
@@ -63,14 +54,34 @@
 }
 
 .viewOptionsContainer span:hover {
-  background-color: #e2e2e2;
+  background-color: #F49292;
 }
 
 .selectedView {
   font-weight: bold;
-  background-color: #D32323;
-  color: white;
+  background-color: #D32323; 
+  color: white; 
   border-radius: 5px;
+  cursor: pointer;
+
+  font-size: 1.5em;
+}
+
+.unselectedView {
+  background-color: #F49292; 
+  color: #7D7878; 
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 10px 20px; 
+  transform: scale(0.7);
+}
+
+.unselectedView:hover {
+  background-color: #F49292;
+  transform: scale(0.8);
 }
 
 /* 지역 선택 부분 */
@@ -85,12 +96,12 @@
 .MuiSelect-select {
   padding: 10px;
   border-radius: 5px;
-  background-color: #f4f4f4;
+  background-color:#F49292 ;
   transition: all 0.3s ease;
 }
 
 .MuiSelect-select:hover {
-  background-color: #e8e8e8;
+  background-color: #F49292;
 }
 
 .MuiSelect-icon {
