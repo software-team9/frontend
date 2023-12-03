@@ -10,14 +10,6 @@
     align-items: center;
     padding: 10px 0;
   }
-
-  .head1 {
-    text-align: left;
-  }
-
-  .head2 {
-    text-align: left;
-  }
   
   .textContainer {
     text-align: center;
@@ -28,6 +20,10 @@
     margin: 20px 0;
   }
   
+  .heading {
+    text-align: left;
+    margin-bottom: 20px;
+  }
   Input {
     width: 100%;
     padding: 10px;
@@ -35,6 +31,10 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
+  }
+
+  .input {
+    text-align: left;
   }
   
   #ReviewContent {
@@ -76,58 +76,27 @@
     resize: vertical; 
   }
   
-
-  .div1 {
-    width: 330px;
-    height: 40px; 
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
   
 .uploadButtonStyle {
-  margin : auto; 
-  width: 330px; /* 화면 넓이 비율 */
-  /* margin: 4px 0; */
-  height: 40px; 
-  background-color: #d32323; 
-  color: white; 
-  border: none;
-  border-radius: 8px; 
-  font-size: 16px; 
-  font-weight: bold; 
-  /* text-align: center; 
-  line-height: center;  */
-  cursor: pointer; 
-  outline: none; 
-  transition: background-color 0.3s; 
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  margin-bottom: 8px;
-};
-
-.secondaryButtonStyle {
-  margin-top: 8px;
-  margin : auto; 
-  width: 330px; /* 화면 넓이 비율 */
-  /* margin: 4px 0; */
-  height: 40px; 
-  background-color: #d32323; 
-  color: white; 
-  border: none;
-  border-radius: 8px; 
-  font-size: 16px; 
-  font-weight: bold; 
-  /* text-align: center; 
-  line-height: center;  */
-  cursor: pointer; 
-  outline: none; 
-  transition: background-color 0.3s; 
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-}
+    margin : auto; 
+    width: 330px; /* 화면 넓이 비율 */
+    /* margin: 4px 0; */
+    height: 40px; 
+    background-color: #d32323; 
+    color: white; 
+    border: none;
+    border-radius: 8px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    /* text-align: center; 
+    line-height: center;  */
+    cursor: pointer; 
+    outline: none; 
+    transition: background-color 0.3s; 
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  };
   

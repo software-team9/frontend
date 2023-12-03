@@ -4,7 +4,29 @@ import wishData from "./WishList.json";
 const useWishHook = () => {
     
     const getWishList = () => { // 현재 회원의 찜하기 목록 조회
-        return wishData;
+        fetch(`http://15.165.26.32:8080/wishes`, {
+            method: "GET",
+            headers : {
+                "Content-Type" : "application/json; charset=utf-8",
+              },
+        })
+        .then((response) => {
+            if(!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            else {
+                return response.json;
+            }
+        })
+        .then((data) => {
+            return data;
+        })
+        .catch((error) => {
+            // Handle errors here
+            console.error('Fetch error:', error);
+        });
+
+        // return wishData;
     }
 
     const putChangeWish = (storeId) => { // 특정 가게 찜하기 상태 변경

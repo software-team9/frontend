@@ -21,6 +21,7 @@ import ReportReview from "./pages/reportreview/ReportReview";
 import SettingPage from "./pages/settingpage/SettingPage";
 import ReceiptRecognition from "./pages/writereview/ReceiptRecognition";
 import WriteReview from "./pages/writereview/WriteReview";
+import ReceiptCheck from "./pages/writereview/ReceiptCheck";
 
 import LogoutComponent from "./components/logout/LogoutComponent";
 import BottomNav from "./components/bottomnav/BottomNav";
@@ -266,6 +267,19 @@ useEffect (() => {
             element={
               isLogin ? (
                   <WriteReview
+                  />
+              ) : (
+                <LoginPage
+                  loginHandler={loginHandler}
+                  />
+              )
+            }
+            />
+            <Route 
+            path="/writereview/receiptcheck" 
+            element={
+              isLogin ? (
+                  <ReceiptCheck
                   />
               ) : (
                 <LoginPage

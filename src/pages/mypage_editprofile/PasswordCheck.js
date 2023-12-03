@@ -8,11 +8,28 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
 
   const handlePasswordChange = (e) => setPw(e.target.value);
 
-  const handlePassword = (e) => {
-    e.preventDefault(); // 기본 제출 동작 방지
-    const userId = sessionStorage.getItem("token");
-    setpasswordCheckTrue();
-    navigate("/mypage/editprofile");
+  const handlePassword = () => {
+    fetch(`http://15.165.26.32:8080/members/validate/${pw}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+    .then((response) => {
+      if (response.ok) {
+        setpasswordCheckTrue();
+        navigate("/mypage/editprofile");
+      }
+      response.json()
+    })
+    .then((json) => {
+      return json;
+    })
+    .catch((error) => {
+      console.error("상점 데이터 가져오기 오류:", error);
+    });
+
+    
   };
 
   return (
@@ -23,7 +40,7 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
           <p className={styles.cardDescription}>계속하려면 비밀번호를 입력하세요</p>
         </div>
         <div className={styles.cardContent}>
-          <form onSubmit={handlePassword}>
+          <div>
             <input
               id="password"
               type="password"
@@ -33,10 +50,13 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
               required
               className={styles.passwordInput}
             />
-            <button type="submit" className={styles.button}>
+            <button 
+              type="submit" 
+              className={styles.button}
+              onClick={handlePassword}>
               확인
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

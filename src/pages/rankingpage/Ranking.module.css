@@ -24,3 +24,79 @@
   justify-content: center;
 }
 
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pageNumber {
+  border: none;
+  background-color: #fff;
+  color: #D32323;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.activePage {
+  border: none;
+  background-color: #D32323;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* 상단 탭 */
+.viewOptionsContainer span {
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.viewOptionsContainer span:hover {
+  background-color: #e2e2e2;
+}
+
+.selectedView {
+  font-weight: bold;
+  background-color: #D32323;
+  color: white;
+  border-radius: 5px;
+}
+
+/* 지역 선택 부분 */
+.MuiFormControl-root {
+  margin: 20px 0;
+}
+
+.MuiInputLabel-root {
+  font-size: 1em;
+}
+
+.MuiSelect-select {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  transition: all 0.3s ease;
+}
+
+.MuiSelect-select:hover {
+  background-color: #e8e8e8;
+}
+
+.MuiSelect-icon {
+  color: #D32323;
+}
+
+.MuiMenuItem-root {
+  font-size: 1em;
+}

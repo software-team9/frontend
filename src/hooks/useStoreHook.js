@@ -1,8 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import storeData from "./StoreList.json";
 
 const useStoreHook = () => {
-  const [stores, setStores] = useState(storeData);
+  const [stores, setStores] = useState([{
+      "id": 0,
+      "name": '',
+      "address": '',
+      "city": '',
+      "img": ''
+  }]);
+
+  const handleValueChange = (e) => {
+    setStores({
+        ...stores,
+        [e.target.name]:e.target.value
+    });
+}  
+
+useEffect(() => {
+
+})
+
+
 
 async function getWishListByUserId(userId) {
   try {
@@ -23,24 +42,22 @@ async function getWishListByUserId(userId) {
   };
 
   const getStoreListByCondition = (city) => {
-    // fetch (`http://15.165.26.32:8080/stores/rank/${city}?page=0&size=5`, {
-    //   method : 'GET',
-    //   headers : {
-    //     "Content-Type" : "application/json"
-    //   },
-    //   credentials : 'include'
-      
-    // })
-    // .then((response) => {
-    //   if(!response.ok) {
-    //     throw new Error('Network error!');
-    //   }
-    //   return response.json();
-    // })
-    // .then((data) => {
-    //   return data;
-    // })
-    return storeData;
+    fetch (`http://15.165.26.32:8080/stores/rank/${city}?page=0&size=5`, {
+      method : 'GET',
+      headers : {
+        "Content-Type" : "application/json"
+      },
+    })
+    .then((response) => {
+      if(!response.ok) {
+        throw new Error('Network error!');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    // return storeData;
   };
 
   const getXYByKeyword = (address) => {

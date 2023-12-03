@@ -7,25 +7,24 @@ const MyPage = () => {
   const [userName, setUserName] = useState(""); // 추가
   const [userPhone, setUserPhone] = useState(""); // 추가
 
+  const [userData, setUserData] = useState({
+    "name": '',
+    "phoneNumber": '',
+    "password": '',
+    "gender": '',
+    "birthday": ''
+})
   useEffect(() => {
     const getMemberInfo = () => {
-      fetch(`http://15.165.26.32:8080/login`, {
+      fetch(`http://15.165.26.32:8080/members/member`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          } else {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          // data에서 가져온 name과 phoneNumber를 상태에 업데이트
-          setUserName(data.name);
-          setUserPhone(data.phoneNumber);
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
         })
         .catch((error) => {
           console.error('Fetch error:', error);
@@ -33,7 +32,7 @@ const MyPage = () => {
     };
 
     getMemberInfo();
-  }, []); // useEffect를 마운트될 때 한 번만 호출되도록 빈 의존성 배열 추가
+  }, [userName, userPhone]); // useEffect를 마운트될 때 한 번만 호출되도록 빈 의존성 배열 추가
 
 
   return (
@@ -44,8 +43,8 @@ const MyPage = () => {
           className={styles.profileImage}
           src={image} 
         />
-        <h1 className={styles.userName}>{userName}</h1>
-        <p className={styles.userPhone}>{userPhone}</p>
+        <h1 className={styles.userName}>{userData.name}</h1>
+        <p className={styles.userPhone}>{userData.phoneNumber}</p>
       </section>
 
       <section className={styles.linksSection}>

@@ -23,7 +23,15 @@ const MapPage = () => {
   const [state, setState] = useState()
   const [searchResults, setSearchResults] = useState(null); // State to store search results
   const [positions, setPositions] = useState([]);
-
+  const [stores, setStores] = useState([{
+    "storeId": 0,
+    "name": '',
+    "address": '',
+    "city": '',
+    "img": '',
+    "rating": 0,
+    "score" : 0
+}]);
 
   const handleCityChange = (event) => {
     setCity(event.target.value);
@@ -68,26 +76,48 @@ const MapPage = () => {
     // ...
   };
 
-  const getStoreListForMap = (city) => {
-    // fetch (`http://15.165.26.32:8080/stores/map/${city}`, {
-    //   method : 'GET',
-    //   headers : {
-    //     "Content-Type" : "application/json"
-    //   }, 
-    // })
-    // .then((response) => {
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   return response.json();
-    // })
-    // .then((data) => {
-    //   return data;
-    // })
+  useEffect(() => {
+    fetch (`http://15.165.26.32:8080/stores/map/${city}`, {
+      method : 'GET',
+      headers : {
+        "Content-Type" : "application/json"
+      }, 
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json) {
+        setStores(json);
+      } else {
+        console.error("상점 데이터가 올바르지 않습니다.");
+      }
+    })
+    .catch((error) => {
+      console.error("상점 데이터 가져오기 오류: ", error);
+    })
+  }, [city]);
+
+  // const getStoreListForMap = (city) => {
+  //   fetch (`http://15.165.26.32:8080/stores/map/${city}`, {
+  //     method : 'GET',
+  //     headers : {
+  //       "Content-Type" : "application/json"
+  //     }, 
+  //   })
+  //   .then((response) => response.json())
+  //   .then((json) => {
+  //     if (json && json.length > 0 ) {
+  //       setStores(json);
+  //     } else {
+  //       console.error("상점 데이터가 올바르지 않습니다.");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("상점 데이터 가져오기 오류: ", error);
+  //   })
     
 
-    return storeData;
-  };
+    // return storeData;
+  
 
   const getXYByKeyword = async (address) => {
     try {
@@ -99,13 +129,21 @@ const MapPage = () => {
       });
   
       const data = await response.json();
-  
+
+      const firstDocument = data.documents && data.documents.length > 0 ? data.documents[0] : null;
+
+      if (firstDocument) {
+        const x = firstDocument.x;
+        const y = firstDocument.y;
+        // 나머지 코드
+        return { lat: y, lng: x };
+      } else {
+        console.error('응답에서 문서를 찾을 수 없습니다.');
+        return { lat: 0, lng: 0 };
+      }
+
       // Assuming the first document in the response contains the desired coordinates
-      const firstDocument = data.documents[0];
-      const x = firstDocument.x; // Replace 'x' with the actual key in your response
-      const y = firstDocument.y; // Replace 'y' with the actual key in your response
-  
-      return { lat: y, lng: x };
+
     } catch (error) {
       console.error('Error fetching data:', error);
       return { lat: 0, lng: 0 }; // Replace with appropriate default values
@@ -119,10 +157,10 @@ const MapPage = () => {
     try {
       const transformedData = [];
   
-      for (const store of getStoreListForMap(city)) {
+      for (const store of stores) {
         const latlng = await getXYByKeyword(store.address);
         transformedData.push({ 
-          id: store.id, 
+          id: store.storeId, 
           title: store.name, 
           latlng: latlng,
           content: (
@@ -131,7 +169,7 @@ const MapPage = () => {
                 <strong>{store.name}</strong>
               </p>
               <p>{store.address}</p>
-              <button onClick={() => handleStoreClick(store.id)}>View Details</button>
+              <button onClick={() => handleStoreClick(store.storeId)}>View Details</button>
             </div>
           ) 
         });
@@ -145,7 +183,7 @@ const MapPage = () => {
   
   useEffect(() => {
     fetchPositions();
-  }, [storeData]);
+  }, [stores]);
 
 
   const handleStoreClick = (storeId) => {
@@ -163,8 +201,8 @@ const MapPage = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.FormControl}>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="city-label">지역</InputLabel>
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 } }>
+            <InputLabel id="city-label" >지역</InputLabel>
             <Select
               labelId="city-label"
               id="city-select"
@@ -205,7 +243,7 @@ const MapPage = () => {
               <MenuItem value={"포천"}>포천</MenuItem>
               <MenuItem value={"하남"}>하남</MenuItem>
               <MenuItem value={"화성"}>화성</MenuItem>
-              {/* Add your city options */}
+   
             </Select>
           </FormControl>
       </div>
@@ -213,8 +251,10 @@ const MapPage = () => {
           <Map // 지도를 표시할 Container
           center={cityCoordinates[city]}
           style={{
-            width: "100%",
-            height: "100%",
+            width: "375px",
+            height: "calc(100% - 174px)",
+            top: "114px",
+            position: "fixed"
           }}
           level={4} // 지도의 확대 레벨
           onCenterChanged={(map) => setState({

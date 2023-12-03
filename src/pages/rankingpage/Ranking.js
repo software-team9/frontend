@@ -4,9 +4,11 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./Ranking.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
 import RankingCard from "./RankingCard";
+import Dday from './Dday'
 
 import img from "./image.jpg";
-const STORES_PER_PAGE = 10;
+const STORES_PER_PAGE = 4;
+const HALL_OF_FAME_STORES_PER_PAGE = 4;
 const storedata = {
   rank: "1",
   name: "리그오브레스토랑",
@@ -16,25 +18,104 @@ const storedata = {
 };
 
 const Ranking = () => {
+
+  const targetDate = '2023-12-25';  // 시즌 끝나는 시간을 서버에서 불러와서 targetDate에 저장하면 됩니다.
+
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
   const navigate = useNavigate();
-  const { getStoreListByCondition } = useStoreHook();
+  // const { getStoreListByCondition } = useStoreHook();
+
+  const [stores, setStores] = useState([{
+    "storeId": 0,
+    "name": '',
+    "address": '',
+    "city": '',
+    "img": '',
+    "rating": ''
+}]);
+
+const [hallOfFames, setHallofFames] = useState([{
+  "storeId": 0,
+  "name": '',
+  "address": '',
+  "city": '',
+  "img": '',
+  "rating": ''
+}]);
 
   // State for filtering
   const [city, setCity] = useState("서울");
-  const [category, setCategory] = useState("");
+  // const [category, setCategory] = useState("");
   const [season, setSeason] = useState("");
+  const [seasons, setSeasons] = useState([]);
 
   // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentStores, setCurrentStores] = useState([]);
 
+  const [HallOfFame_currentPage, setHallOfFame_CurrentPage] = useState(1);
+  const [HallOfFame_totalPages, setHallOfFame_TotalPages] = useState(0);
+  const [HallOfFame_currentStores, setHallOfFame_CurrentStores] = useState([]);
+
   // State for the selected view option (real-time ranking or hall of fame)
   const [selectedView, setSelectedView] = useState("realTime");
 
   useEffect(() => {
-    // Fetch and update data based on conditions (city, category, etc.)
-    const stores = getStoreListByCondition(city);
+    // stores에 대한 데이터 가져오기
+    fetch(`http://15.165.26.32:8080/stores/rank/${city}?page=${currentPage - 1}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && json.length > 0 ) {
+          setStores(json);
+          setTotalPages(Math.ceil(json.length / STORES_PER_PAGE)); // Update totalPages
+          console.log(json);
+        } else {
+          console.error("상점 데이터가 올바르지 않습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("상점 데이터 가져오기 오류:", error);
+      });
+  }, [currentPage, city]);
+
+
+  useEffect(() => {
+    // season stores에 대한 데이터 가져오기
+    fetch(`http://15.165.26.32:8080/seasonRank/${season}/${city}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && json.length > 0 ) {
+          setHallofFames(json);
+          setHallOfFame_TotalPages(Math.ceil(json.length / HALL_OF_FAME_STORES_PER_PAGE)); // Update totalPages
+          console.log(json);
+        } else {
+          console.error("상점 데이터가 올바르지 않습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("상점 데이터 가져오기 오류:", error);
+      });
+  }, [city, season]);
+
+
+
+
+  useEffect(() => {
     setTotalPages(Math.ceil(stores.length / STORES_PER_PAGE));
     const startIndex = (currentPage - 1) * STORES_PER_PAGE;
     const selectedStores = stores.slice(
@@ -42,19 +123,58 @@ const Ranking = () => {
       startIndex + STORES_PER_PAGE
     );
     setCurrentStores(selectedStores);
-  }, [currentPage]);
+  }, [currentPage, stores]);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(hallOfFames.length / HALL_OF_FAME_STORES_PER_PAGE));
+    const startIndex = (HallOfFame_currentPage - 1) * HALL_OF_FAME_STORES_PER_PAGE;
+    const selectedStores = hallOfFames.slice(
+      startIndex,
+      startIndex + HALL_OF_FAME_STORES_PER_PAGE
+    );
+    setHallOfFame_CurrentStores(HallOfFame_currentStores);
+  }, [HallOfFame_currentStores, hallOfFames]);
+  
+ 
+
+
+  useEffect(() => {
+    // seasons 데이터 가져오기
+    fetch('http://15.165.26.32:8080/seasonRank/seasonName', {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && json.length > 0 ) {
+          // seasons 데이터 업데이트
+          setSeasons(json.reverse());
+          console.log(json);
+          setSeason(json[0])
+        } else {
+          console.error("시즌 데이터가 올바르지 않습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("시즌 데이터 가져오기 오류:", error);
+      });
+  }, [city]);
+
+
 
   // Handlers for filtering
   const handleCityChange = (event) => {
     setCity(event.target.value);
   };
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
+  // const handleCategoryChange = (event) => {
+  //   setCategory(event.target.value);
+  // };
 
   const handleSeasonChange = (event) => {
-    setCategory(event.target.value);
+    setSeason(event.target.value);
   };
 
   // Handlers for pagination
@@ -137,27 +257,8 @@ const Ranking = () => {
               {/* Add your city options */}
             </Select>
           </FormControl>
-{/* 
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="category-label">카테고리</InputLabel>
-            <Select
-              labelId="category-label"
-              id="category-select"
-              value={category}
-              onChange={handleCategoryChange}
-              label="Category"
-            >
-       
-            </Select>
-          </FormControl> */}
+          <Dday targetDate={targetDate} />
           <div>
-            <RankingCard
-              rank={storedata.rank}
-              imageSrc={storedata.imageSrc}
-              name={storedata.name}
-              rating={storedata.rating}
-              address={storedata.adress}
-            />
             <table className={styles.tableContainer}>
               <tbody>
                 {currentStores.map((store, index) => (
@@ -167,10 +268,10 @@ const Ranking = () => {
                   >
                     <td>
                       <RankingCard
-                        rank={index + 1}
-                        imageSrc={store.image}
-                        name={store.storeName}
-                        rating={store.avr_rating}
+                        rank={index + 1 + (currentPage-1) * STORES_PER_PAGE}
+                        imageSrc={store.img}
+                        name={store.name}
+                        rating={store.rating}
                         address={store.address}
                       />
                     </td>
@@ -178,6 +279,23 @@ const Ranking = () => {
                 ))}
               </tbody>
             </table>
+            <div>
+            </div>
+            <div className={styles.pagination}>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    className={
+                      currentPage === page ? styles.activePage : styles.pageNumber
+                    }
+                    onClick={() => handlePageClick(page)}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -238,35 +356,29 @@ const Ranking = () => {
               onChange={handleSeasonChange}
               label="Season"
             >
-              {/* Add your category options */}
-              <MenuItem value={""}></MenuItem>
+            {seasons.map((seasonValue) => (
+              <MenuItem key={seasonValue} value={seasonValue}>
+                {seasonValue}
+              </MenuItem>
+            ))}
             </Select>
           </FormControl>
           <div>
-            {/* 
-              ---- 테스트 데이터 ----
-              <RankingCard
-              rank={storedata.rank}
-              imageSrc={storedata.imageSrc}
-              name={storedata.name}
-              rating={storedata.rating}
-              address={storedata.adress}
-            /> */}
             <table className={styles.tableContainer}>
               <tbody>
-                {currentStores.map((store, index) => (
+                {HallOfFame_currentStores.map((hallOfFames, index) => (
                   <tr
-                    key={store.storeId}
+                    key={hallOfFames.storesId}
                     className={styles.storeItem}
-                    onClick={() => handleStoreClick(store.storeId)}
+                    onClick={() => handleStoreClick(hallOfFames.storesId)}
                   >
                     <td>
                       <RankingCard
                         rank={index + 1}
-                        imageSrc={store.image}
-                        name={store.storeName}
-                        rating={store.avr_rating}
-                        address={store.address}
+                        imageSrc={hallOfFames.img}
+                        name={hallOfFames.name}
+                        rating={hallOfFames.rating}
+                        address={hallOfFames.address}
                       />
                     </td>
                   </tr>

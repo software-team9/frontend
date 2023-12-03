@@ -1,0 +1,18 @@
+.ratingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.starInput {
+  cursor: pointer;
+  font-size: 2rem;
+  color: lightgray;
+  position: relative;
+}
+
+.starInput:hover,
+.starInput:hover ~ .starInput,
+.starInput:checked ~ .starInput {
+  color: orange;
+}

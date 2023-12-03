@@ -38,8 +38,30 @@ const useReviewHook = () => {
   };
 
   // 특정 사용자 ID에 해당하는 리뷰 필터링
-  const getReviewsByUserId = (userId) => {
-    return reviews.filter((review) => review.userId === userId);
+  const getReviewsByUserId = () => {
+    fetch(`http://15.165.26.32:8080/reviews/member/`, {
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json; charset=utf-8",
+        // "Access-Control-Allow-Origin": `http://localhost:3000`,
+        // 'Access-Control-Allow-Credentials':"true",
+      },
+    }) 
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      // Handle errors here
+      console.error('Fetch error:', error);
+    });
   };
 
   // 특정 가게 ID에 해당하는 리뷰 필터링

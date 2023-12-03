@@ -11,6 +11,7 @@ const EditProfile = ({userData, setpasswordCheckFalse}) => {
   const [pw, setPw] = useState(null);
   const [pw_r, setPw_r] = useState(null);
   const [birthday, setBirthday] = useState(null);
+  const [gender, setGender] = useState("MALE");
   const navigate = useNavigate();
 
   const handleNameChange = (e) => setName(e.target.value);
@@ -22,8 +23,35 @@ const EditProfile = ({userData, setpasswordCheckFalse}) => {
     if (name && pw && pw_r && birthday ) {
         if (pw === pw_r) {
           setpasswordCheckFalse();
-          console.log("대충 로그인 성공")
-          navigate('/mypage');
+
+          fetch('http://15.165.26.32:8080/members/edit', {
+            method: "PUT",
+            headers : {
+              "Content-Type" : "application/json; charset=utf-8",
+              // "Access-Control-Allow-Origin": `http://localhost:3000`,
+              // 'Access-Control-Allow-Credentials':"true",
+            },
+            body: JSON.stringify({
+              name : name,
+              password : pw,
+              gender: gender,
+              birthday: birthday
+            }),
+          })
+          .then((response) => {
+            if(!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            else {
+              navigate('/mypage');
+            }
+          })
+          .catch((error) => {
+            // Handle errors here
+            console.error('Fetch error:', error);
+          });
+          
+          
         } 
         else {
           alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
@@ -32,6 +60,8 @@ const EditProfile = ({userData, setpasswordCheckFalse}) => {
     else {
       alert('모든 필수 항목을 채워주세요.');
     }
+
+    
   };
 
   return (

@@ -7,10 +7,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
-const ReviewReport = ({userData}, {reviewId}) => {
+const ReviewReport = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const reviewId = queryParams.get("reviewId");
+
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
@@ -23,23 +27,22 @@ const ReviewReport = ({userData}, {reviewId}) => {
   }
 
   const handleReport = (userData, reviewId) => {
-    // fetch('URL', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ 
-    //     ReviewId: reviewId,
-    //     UserId: userData,
-    //     category,
-    //     content
-    //   }),
-    //   headers: {
-    //     'Content-Type' : 'application/json'
-    //   }
-    // })
-    // .then(response => {
-    //   console.log(response.message);
-    //   // navigate('/'); // 다시 전 more review로 되돌아감
-    // })
-    navigate('/')
+    fetch('http://15.165.26.32:8080/reports/', {
+      method: 'POST',
+      body: JSON.stringify({ 
+        reviewId: reviewId,
+        category,
+        content
+      }),
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    })
+    .then(response => {
+      console.log(response.message);
+      navigate('/');
+      // navigate('/'); // 다시 전 more review로 되돌아감
+    })
   }
 
   
@@ -48,7 +51,6 @@ const ReviewReport = ({userData}, {reviewId}) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <TopNav />
       </div>
       <div className={styles.title}>리뷰 신고하기</div>
       <div className={styles.separator}></div>
@@ -88,7 +90,7 @@ const ReviewReport = ({userData}, {reviewId}) => {
         <Button 
           text="확인" 
           size="long" 
-          onClick={() => handleReport(userData, reviewId)}
+          onClick={() => handleReport()}
           />
       </div>
     </div>

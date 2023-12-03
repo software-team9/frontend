@@ -11,14 +11,14 @@ const BottomNav = () => {
 
   return (
     <div className={styles.button_nav}>
-      <button onClick={() => navigateTo("/writereview/receiptRecognition")}>
-        <img src="src/components/bottomnav/icon/rate_review.svg" alt="Review" />
+      <button onClick={() => navigateTo("/")}>
+        <img src="/public/home.svg" alt="Home" />
       </button>
       <button onClick={() => navigateTo("/map")}>
         <img src="/public/map.svg" alt="Map" />
       </button>
-      <button onClick={() => navigateTo("/")}>
-        <img src="/public/home.svg" alt="Home" />
+      <button onClick={() => navigateTo("/writereview/receiptRecognition")}>
+        <img src="src/components/bottomnav/icon/rate_review.svg" alt="Review" />
       </button>
       <button onClick={() => navigateTo("/mypage/wishlist")}>
         <img src="/public/setting.svg" alt="WishList" />

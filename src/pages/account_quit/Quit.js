@@ -15,47 +15,29 @@ const Quit = ({ userData, logoutHandler }) => {
 
   const handleQuit = (userData, logoutHandler) => {
     if (pw === pw_r) {
-      // fetch('URL', {
-      //   method: 'POST',
-      //   body: JSON.stringify({
-      //     UserId: userData,
-      //     password: pw
-      //   }),
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // })
-      // .then(response => {
-      //   if(response.meessage === 'OK') {
-      //     deleteByUserId();
-      //     logoutHandler();
-      //     navigate('/');
-      //   }
-      //   else {
-      //     alert("벡엔드쪽 문제 발생");
-      //   }
-      // })
-
-      logoutHandler();
-      navigate("/");
+      fetch('http://15.165.26.32:8080/members/delete', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          password: pw
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        if(response.ok) {
+          logoutHandler();
+          navigate('/');
+        }
+        else {
+          alert("벡엔드쪽 문제 발생");
+        }
+      })
     } else {
       alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     }
   };
 
-  const deleteByUserId = () => {
-    fetch("URL", {
-      method: "POST",
-      body: JSON.stringify({
-        UserID: userData,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      console.log(response.message);
-    });
-  };
 
   return (
     <div className={styles.container}>
@@ -96,9 +78,9 @@ const Quit = ({ userData, logoutHandler }) => {
         </label>
       </div>
       <div>
+        <br/>
         <div className={styles.warningTextarea}>
-          계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록이 삭제됩니다. 삭제된
-          정보는 복구할 수 없으니 신중하게 결정해주세요.
+          계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록이 삭제됩니다. 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.
         </div>
         <input
           type="password"
