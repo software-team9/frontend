@@ -7,4 +7,22 @@ module.exports = function(app) {
     changeOrigin: true,
   })
   )
+
+  app.use(createProxyMiddleware('/logout', {
+    target: "http://15.165.26.32:8080",
+    changeOrigin: true,
+  })
+  )
+
+  app.use(createProxyMiddleware('/members', {
+    target: "http://15.165.26.32:8080",
+    changeOrigin: true,
+  })
+  )
+
+  app.use(createProxyMiddleware('/join', {
+    target: "http://15.165.26.32:8080",
+    changeOrigin: true,
+  })
+  )
 };

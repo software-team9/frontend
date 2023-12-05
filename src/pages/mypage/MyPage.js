@@ -103,7 +103,8 @@ useEffect(() => {
   .then(response => {
     setUserData(response.data);
     // 서버 응답 처리
-
+    console.log(userData.name);
+    console.log(userData.phoneNumber);
     console.log(response.data);
   })
   .catch(error => {
@@ -125,6 +126,7 @@ useEffect(() => {
           src={image} 
         />
         <h1 className={styles.userName}>{userData.name}</h1>
+        
         <p className={styles.userPhone}>{userData.phoneNumber}</p>
       </section>
       <p>{sessionStorage.getItem('JESSIONID')}</p>

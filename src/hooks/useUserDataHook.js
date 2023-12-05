@@ -105,7 +105,7 @@ const useUserDataHook = () => {
 
 
     // withCredentials:true
-axios.post('http://15.165.26.32:8080/login', {
+axios.post('/login', {
        phoneNumber : id,
       password : pw
 }, {'Content-Type': 'application/json' })

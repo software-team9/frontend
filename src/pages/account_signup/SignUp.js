@@ -61,38 +61,47 @@ const SignUp = () => {
       }
     })
     .catch((error) => {
-      console.error("Fetch error", error);
-    });
+      if (error.response) {
+        // 서버가 응답을 반환한 경우
+        console.error("Fetch error", error.response.data);
+        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+      } else if (error.request) {
+        // 서버가 응답하지 않은 경우
+        console.error("No response was received", error.request);
+      } else {
+        // 그 외의 에러 발생 시
+        console.error("Error", error.message);
+      }
 
-
-  };
+  })
+};
 
   const handleSignUp = () => {
+    console.log(name, phoneNumber, pw, gender, birthday)
 
         if (pw === pw_r) {
       
-            axios.post("/join", {
-              headers: {
-                "Content-Type": "application/json",
-              }, 
-            }, {
-              "name" : name,
-              "phoneNumber" : phoneNumber,
-              "password": pw,
-              "gender": gender,
-              "birthday": birthday,
-            })
-            .then((response) => {
-              console.log(name, phoneNumber, pw, gender, birthday)
-              console.log(response);
-              if (response.status === 200) {
-                console.log("Login Success");
-                navigate("/login");
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+          axios.post('/join', {
+            name : name,
+            phoneNumber : phoneNumber,
+            password: pw,
+            gender: gender,
+            birthday: birthday,
+          }, {
+            headers: {
+              "Content-Type": "application/json",
+            }, 
+          })
+          .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+              console.log("Login Success");
+              navigate("/login");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
     
 
      
@@ -161,7 +170,7 @@ const SignUp = () => {
           className={styles.passwordInput}
         />
         <input
-          type="password_re"
+          type="password"
           placeholder="비밀번호 확인"
           value={pw_r}
           onChange={handlePassword_RChange}
@@ -242,6 +251,6 @@ const SignUp = () => {
       </div>
     </div>
   );
-};
+          }
 
 export default SignUp;
