@@ -61,7 +61,7 @@ const useUserDataHook = () => {
     //   console.log(error);
     // })
 
-    fetch(`http://15.165.26.32:8080/login`, {
+    fetch('/login', {
       method : "POST",
       headers : {
         "Content-Type" : "application/json; charset=utf-8",
@@ -81,6 +81,7 @@ const useUserDataHook = () => {
       }
       else if (response.ok) {
         window.sessionStorage.setItem('IsLogin', true);
+        console.log()
         navigate('/');
       }
     })

@@ -51,77 +51,67 @@ const SignUp = () => {
 
     
     // Call the checkDuplicateId function when the button is clicked
-    // fetch('URL', {
-    //   method: 'POST',
-    //   headers : {
-    //     "Content-Type" : "application/json; charset=utf-8"
-    //   },
-    //   body: JSON.stringify({
-    //     phoneNumber : phoneNumber
-    //   }),
-    // })
-    // .then(response => {
-    //   if (response.message === 'OK') {
-    //     setIsDuplicate(2);
-    //   }
-    //   else if (response.message === 'Duplicated') {
-    //     setIsDuplicate(1);
-    //   }
-    //   else {
-    //     alert('대충 오류');
-    //   }
-    // })
-
-    setIsDuplicate(2); // 테스트용 중복 체크 통과
-  };
+      fetch(`http://15.165.26.32:8080/members/dupCheck/${phoneNumber}`, {
+        // 요청 설정
+      })
+        .then(response => {
+          if (response.ok) {
+            setIsDuplicate(2);
+            alert("인증성공");
+          }
+          else if(response.status === 400){
+            alert("error");
+          }
+        })  
+      }
 
   const handleSignUp = (e) => {
 
-    fetch('http://15.165.26.32:8080/')
-
-
-
-
-
-    // e.preventDefault();
-    // if (phoneNumber && name && pw && pw_r && birthday && gender && terms.service && terms.privacy ) {
-    //   if (isDuplicate === 2) {
-    //     if (pw === pw_r) {
-    //       // fetch('URL', {
-    //       //   method: 'POST',
-    //       //   body: JSON.stringify({
-    //       //     phoneNumber,
-    //       //     name,
-    //       //     password: pw,
-    //       //     birthday,
-    //       //     gender
-    //       //   }),
-    //       //   headers: {
-    //       //     'Content-Type': 'application/json',
-    //       //   },
-    //       // })
-    //       // .then(response => {
-    //       //   if(response.message === 'OK') {
-    //       //     navigate('/login');
-    //       //   } else {
-    //       //     alert ('벡엔드 쪽 오류 발생');
-    //       //   }
-    //       // })
+    e.preventDefault();
+    if (phoneNumber && name && pw && pw_r && birthday && gender && terms.service && terms.privacy ) {
+      console.log(phoneNumber)
+      console.log(name)
+      console.log(pw)
+      console.log(pw_r)
+      console.log(birthday)
+      console.log(gender)
+      if (isDuplicate === 2) {
+        if (pw === pw_r) {
+            fetch('/join', {
+              method: 'POST',
+              body: JSON.stringify({
+                name : name,
+                phoneNumber:phoneNumber,
+                password: pw,
+                gender: gender,
+                birthday: birthday
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+          .then(response => {
+            if(response.status===200) {
+              navigate('/login');
+            } else {
+              alert ('벡엔드 쪽 오류 발생');
+            }
+          })
          
-    //       console.log("대충 로그인 성공") // 테스트
-    //       navigate('/login');
-    //     } 
-    //     else {
-    //       alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-    //     } 
-    //   }
-    //   else {
-    //     alert('전화번호 중복을 확인해주세요.');
-    //   }
-    // }
-    // else {
-    //   alert('모든 필수 항목을 채워주세요.');
-    // }
+          console.log("대충 로그인 성공") // 테스트
+          navigate('/login');
+        } 
+        else {
+          alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        } 
+      }
+      else {
+        alert('전화번호 중복을 확인해주세요.');
+      }
+    }
+    else {
+      alert('모든 필수 항목을 채워주세요.');
+    }
   };
 
 
@@ -183,7 +173,7 @@ const SignUp = () => {
           className={styles.passwordInput}
         />
         <input
-          type="password_re"
+          type="password_R"
           placeholder="비밀번호 확인"
           value={pw_r}
           onChange={handlePassword_RChange}
@@ -203,17 +193,17 @@ const SignUp = () => {
         <div className={styles.genderSelect}>
           <button
             className={
-              gender === "male" ? styles.genderSelected : styles.genderButton
+              gender === "MALE" ? styles.genderSelected : styles.genderButton
             }
-            onClick={() => handleGenderSelect("male")}
+            onClick={() => handleGenderSelect("MALE")}
           >
             남
           </button>
           <button
             className={
-              gender === "female" ? styles.genderSelected : styles.genderButton
+              gender === "FEMALE" ? styles.genderSelected : styles.genderButton
             }
-            onClick={() => handleGenderSelect("female")}
+            onClick={() => handleGenderSelect("FEMALE")}
           >
             여
           </button>
