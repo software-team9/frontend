@@ -10,7 +10,53 @@ const MyWishList = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { getWishList } = useWishHook(); // 가정된 찜하기 목록 조회 훅
-  const [mywishlist, setMyWishlist] = useState([]);
+  const [mywishlist, setMyWishlist] = useState([
+    {
+        "storeId": 173,
+        "name": "솔솔우동 용인본점",
+        "address": "서울특별시 종로구 종로 200-4",
+        "city": "서울",
+        "img": "https://t1.kakaocdn.net/mystore/5D031E772B5A4646AF67563546888FB9",
+        "rating": 4.0,
+        "score": 0.0
+    },
+    {
+        "storeId": 225,
+        "name": "짬뽕",
+        "address": "서울특별시 종로구 종로 200-4",
+        "city": "서울",
+        "img": "https://t1.daumcdn.net/cfile/1563013B4F547AAC0D",
+        "rating": 3.0,
+        "score": 0.0
+    },
+    {
+        "storeId": 227,
+        "name": "탕수육",
+        "address": "서울특별시 종로구 종로 200-4",
+        "city": "서울",
+        "img": "https://t1.daumcdn.net/place/768D2A4EB7C34396B5060C622DECFAD1",
+        "rating": 5.0,
+        "score": 0.0
+    },
+    {
+        "storeId": 229,
+        "name": "볶음밥",
+        "address": "서울특별시 종로구 종로 200-4",
+        "city": "서울",
+        "img": "https://t1.kakaocdn.net/mystore/7910A6A9E4BD4B09AD29AEAA530E5D60",
+        "rating": 0.0,
+        "score": 0.0
+    },
+    {
+        "storeId": 235,
+        "name": "ㅜㄹㄸ이ㅜㄸㄹ띵",
+        "address": "서울특별시 종로구 종로 200-4",
+        "city": "서울",
+        "img": null,
+        "rating": 0.0,
+        "score": 0.0
+    }
+]);
 
 const [currentWish, setCurrentWish] = useState([]);
 

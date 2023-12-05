@@ -70,8 +70,33 @@ const SignUp = () => {
   const handleSignUp = () => {
 
         if (pw === pw_r) {
+
+          // fetch("join", {
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   }, 
+          //   body: JSON.stringify({
+          //     "name" : name,
+          //     "phoneNumber" : phoneNumber,
+          //     "password": pw,
+          //     "gender": gender,
+          //     "birthday": birthday,
+          //   }),
+          // })
+          // .then((response) => {
+          //   console.log(name, phoneNumber, pw, gender, birthday)
+          //   console.log(response);
+          //   if (response.status === 200) {
+          //     console.log("Login Success");
+          //     navigate("/login");
+          //   }
+          // })
+          // .catch((error) => {
+          //   console.error(error);
+          // });
+
       
-            axios.post("/join", {
+            axios.post("http://15.165.26.32:8080/join", {
               headers: {
                 "Content-Type": "application/json",
               }, 
@@ -93,16 +118,6 @@ const SignUp = () => {
             .catch((error) => {
               console.error(error);
             });
-    
-
-     
-
-          
-
-
-
-
-
         } else {
           alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         }
@@ -161,7 +176,7 @@ const SignUp = () => {
           className={styles.passwordInput}
         />
         <input
-          type="password_re"
+          type="password"
           placeholder="비밀번호 확인"
           value={pw_r}
           onChange={handlePassword_RChange}

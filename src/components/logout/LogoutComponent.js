@@ -6,8 +6,7 @@ const LogoutComponent = ({logoutHandler}) => {
     const navigate = useNavigate();
    
     React.useEffect(() => {
-      const logoutAndFetch = async () => {
-        try {
+
           // 로그아웃 처리
    
           
@@ -31,16 +30,8 @@ const LogoutComponent = ({logoutHandler}) => {
 
 
 
+ 
   
-          // 이후의 로직 수행
-          
-        } catch (error) {
-          console.error('Error during fetch request:', error);
-        }
-      };
-  
-      // 호출
-      logoutAndFetch();
     }, []);
   
     return (

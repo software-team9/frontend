@@ -6,11 +6,45 @@ import styles from "./MoreStore.module.css";
 // import useWishHook from "../../hooks/useWishHook";
 
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
-import RankingGraph from "./RankingGraph";
 import BadgeList from "../../components/badge/BadgeList";
-import {getStoreSeasonRank} from "../../hooks/useStoreHook"
+import { getStoreSeasonRank } from "../../hooks/useStoreHook";
+
+import image1 from "./이미지4.jpg";
+import image2 from "./이미지5.jpg";
+import image3 from "./이미지6.jpg";
 
 const MoreStore = () => {
+  const dummyReview = [
+    {
+      storeName: "육회자매집 본점",
+      storeId: 171,
+      city: "수원",
+      season: "2023-Spring",
+      ranking: 7,
+      img: "2023-Winter",
+    }, {
+      storeName: "육회자매집 본점",
+      storeId: 171,
+      city: "수원",
+      season: "2022-Winter",
+      ranking: 12,
+      img: "2023-Winter",
+    }, {
+      storeName: "육회자매집 본점",
+      storeId: 171,
+      city: "수원",
+      season: "2022-Summer",
+      ranking: 41,
+      img: "2023-Winter",
+    }, {
+      storeName: "육회자매집 본점",
+      storeId: 171,
+      city: "수원",
+      season: "2019-Fall",
+      ranking: 67,
+      img: "2023-Winter",
+    },
+  ];
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const storeId = queryParams.get("storeId");
@@ -29,7 +63,8 @@ const MoreStore = () => {
     rating: 0.0,
     score: 0.0,
   });
-  const [histories, setHistories] = useState([ // 랭킹 히스토리 데이터
+  const [histories, setHistories] = useState([
+    // 랭킹 히스토리 데이터
     {
       storeName: "",
       storeId: 0,
@@ -41,20 +76,61 @@ const MoreStore = () => {
   ]);
   const [storeReviews, setStoreReviews] = useState([
     {
-      content: "",
-      ratingPoint: 0.0,
-      img: "",
-      season: "",
-      reviewId: 0,
+      content: "제육맛집",
+      ratingPoint: 5,
+      img: image1,
+      season: "2023-Winter",
+      reviewId: 307,
+    },
+    {
+      content: "음식이 정말 맛있어요",
+      ratingPoint: 5,
+      img: image2,
+      season: "2023-Winter",
+      reviewId: 306,
+    },
+    {
+      content: "다시 오고 싶어요",
+      ratingPoint: 5,
+      img: image3,
+      season: "2023-Winter",
+      reviewId: 302,
+    },
+    {
+      content: "다시 또 오고싶은 가게에요!",
+      ratingPoint: 5,
+      img: "src/main/resources/static/images/16b368a4-1787-416f-ab21-475b066dd26f.png",
+      season: "2023-Winter",
+      reviewId: 309,
     },
   ]);
 
   const [wishState, setWishState] = useState(false); // 찜하기 상태
   const [season, setSeason] = useState("");
-  const [seasons, setSeasons] = useState([]); 
+  const [seasons, setSeasons] = useState([]);
   const [stores, setStores] = useState();
 
-
+  useEffect(() => {
+    fetch(`http://15.165.26.32:8080/wish/state/${storeId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && typeof json === "object") {
+          // setStore(json);
+          setStore(json);
+          console.log(json);
+        } else {
+          console.error("수신된 상점 데이터가 유효하지 않습니다:", json);
+        }
+      })
+      .catch((error) => {
+        console.error("상점 데이터를 가져오는 중 오류 발생:", error);
+      });
+  }, [storeId]);
 
   useEffect(() => {
     console.log(storeId);
@@ -132,29 +208,29 @@ const MoreStore = () => {
   //   setWishState(wish);
   // }, [wishState]);
 
-  useEffect(() => {
-    fetch(
-      `http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=0&size=3`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setStoreReviews(json);
-          console.log(json);
-        } else {
-          console.error("리뷰 데이터가 올바르지 않습니다.");
-        }
-      })
-      .catch((error) => {
-        console.error("리뷰 데이터 가져오기 오류:", error);
-      });
-  }, [storeId, season]);
+  // useEffect(() => {
+  //   fetch(
+  //     `http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=0&size=3`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       if (json) {
+  //         setStoreReviews(json);
+  //         console.log(json);
+  //       } else {
+  //         console.error("리뷰 데이터가 올바르지 않습니다.");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("리뷰 데이터 가져오기 오류:", error);
+  //     });
+  // }, [storeId, season]);
   // if (storeId) {
   //   const reviews = getReviewsByStoreId(storeId, season, 1, maxReviewCount);
   //   setStoreReviews(reviews);
@@ -227,7 +303,7 @@ const MoreStore = () => {
               <h2 className={styles.sectionTitle}>랭킹 히스토리</h2>
             </div>
             <div className={styles.rankingBedge}>
-              <BadgeList data={histories} />
+              <BadgeList data={dummyReview} />
             </div>
           </section>
 

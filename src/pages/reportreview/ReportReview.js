@@ -55,11 +55,7 @@ const ReviewReport = () => {
       <div className={styles.title}>리뷰 신고하기</div>
       <div className={styles.separator}></div>
       <div className={styles.reportType}>
-        <img
-          src="./categoryIcon.png"
-          alt="Category Icon"
-          className={styles.icon}
-        />
+      
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-standard-label">
             신고유형

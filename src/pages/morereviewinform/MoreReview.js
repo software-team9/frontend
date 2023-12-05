@@ -5,7 +5,9 @@ import styles from "./MoreReview.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-
+import image1 from "./이미지4.jpg";
+import image2 from "./이미지5.jpg";
+import image3 from "./이미지6.jpg";
 const REVIEWS_PER_PAGE = 10;
 
 const MoreReview = () => {
@@ -21,35 +23,56 @@ const MoreReview = () => {
   const [season, setSeason] = useState("2023-Winter")
   const [storeReviews, setStoreReviews] = useState([
     {
-      content: '',
-      ratingPoint: 0.0,
-      img: '',
-      season: '',
-      reviewId: 0
-    }
+      content: "제육맛집",
+      ratingPoint: 5,
+      img: image1,
+      season: "2023-Winter",
+      reviewId: 307,
+    },
+    {
+      content: "음식이 정말 맛있어요",
+      ratingPoint: 5,
+      img: image2,
+      season: "2023-Winter",
+      reviewId: 306,
+    },
+    {
+      content: "다시 오고 싶어요",
+      ratingPoint: 5,
+      img: image3,
+      season: "2023-Winter",
+      reviewId: 302,
+    },
+    {
+      content: "다시 또 오고싶은 가게에요!",
+      ratingPoint: 5,
+      img: "src/main/resources/static/images/16b368a4-1787-416f-ab21-475b066dd26f.png",
+      season: "2023-Winter",
+      reviewId: 309,
+    },
   ]);
   const [seasons, setSeasons] = useState([]);
 
-  useEffect(() => {
-    fetch(`http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=${currentPage-1}`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      },
-    })
-    .then((response) => response.json())
-    .then((json) => {
-      if (json) {
-        setStoreReviews(json)
-        console.log(json);
-      } else {
-        console.error("리뷰 데이터가 올바르지 않습니다.");
-      }
-    })
-    .catch((error) => {
-      console.error("리뷰 데이터 가져오기 오류:", error);
-    });
-}, [storeId, season]);
+//   useEffect(() => {
+//     fetch(`http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=${currentPage-1}`, {
+//       method: 'GET',
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//     })
+//     .then((response) => response.json())
+//     .then((json) => {
+//       if (json) {
+//         setStoreReviews(json)
+//         console.log(json);
+//       } else {
+//         console.error("리뷰 데이터가 올바르지 않습니다.");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("리뷰 데이터 가져오기 오류:", error);
+//     });
+// }, [storeId, season]);
 
 useEffect(() => {
   // seasons 데이터 가져오기

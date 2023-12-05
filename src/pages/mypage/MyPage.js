@@ -6,8 +6,8 @@ import axios from 'axios';
 
 
 const MyPage = () => {
-  const [userName, setUserName] = useState(""); // 추가
-  const [userPhone, setUserPhone] = useState(""); // 추가
+  const [userName, setUserName] = useState("홍길동"); // 추가
+  const [userPhone, setUserPhone] = useState("01012341234"); // 추가
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     "name": '',
@@ -124,8 +124,8 @@ useEffect(() => {
           className={styles.profileImage}
           src={image} 
         />
-        <h1 className={styles.userName}>{userData.name}</h1>
-        <p className={styles.userPhone}>{userData.phoneNumber}</p>
+        <h1 className={styles.userName}>홍길동</h1>
+        <p className={styles.userPhone}>01012341234</p>
       </section>
       <p>{sessionStorage.getItem('JESSIONID')}</p>
       <section className={styles.linksSection}>

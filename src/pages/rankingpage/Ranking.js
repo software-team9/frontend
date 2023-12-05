@@ -58,6 +58,7 @@ const Ranking = () => {
   const [season, setSeason] = useState("");
   const [seasons, setSeasons] = useState([]);
 
+
   // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -84,7 +85,7 @@ const Ranking = () => {
       .then((response) => response.json())
       .then((json) => {
         if (json && json.length > 0) {
-          setStores(json);
+          setStores(json.reverse());
           setTotalPages(Math.ceil(json.length / STORES_PER_PAGE)); // Update totalPages
           console.log(json);
         } else {
@@ -374,20 +375,20 @@ const Ranking = () => {
           <div>
             <table className={styles.tableContainer}>
               <tbody>
-              {HallOfFame_currentStores.length > 0 ? (
-                HallOfFame_currentStores.map((hallOfFames, index) => (
+              {currentStores.length > 0 ? (
+                currentStores.map((store, index) => (
                   <tr
-                    key={hallOfFames.storesId}
-                    className={styles.storeItem}
-                    onClick={() => handleStoreClick(hallOfFames.storesId)}
+                    key={store.storesId}
+                    className={store.storeItem}
+                    onClick={() => handleStoreClick(store.storesId)}
                   >
                     <td>
                       <RankingCard
                         rank={index + 1}
-                        imageSrc={hallOfFames.img}
-                        name={hallOfFames.name}
-                        rating={hallOfFames.rating}
-                        address={hallOfFames.address}
+                        imageSrc={store.img}
+                        name={store.name}
+                        rating={store.rating}
+                        address={store.address}
                       />
                     </td>
                   </tr>
