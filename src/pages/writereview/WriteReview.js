@@ -62,16 +62,17 @@ const WriteReview = () => {
     formData.append("image", image );
     const body= {
       // image: image,
-      storeName: "풍천장어굽소",
+      storeName: storeName,
       content: reviewContent,
       ratingPoint:rating,
-      address: "경기 수원시 권선구 탑동 175 1층",
+      address: address,
     }
     formData.append("reviewDto", new Blob([JSON.stringify(body)], { type: "application/json"}))
     
+    console.log(body.storeName, body.content, body.ratingPoint)
     axios.post("/reviews/", formData, {
       headers: {'Content-Type': 'multipart/form-data'},
- 
+      
     })
     .then(response => {
       navigate('/')
