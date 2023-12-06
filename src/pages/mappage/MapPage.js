@@ -164,11 +164,17 @@ const MapPage = () => {
           title: store.name, 
           latlng: latlng,
           content: (
-            <div>
-              <p>
+            <div className={styles.MapMarkerContent}>
+              <img
+                src={store.img}
+                alt="storeimg"
+                className={styles.reviewImage}
+              />
+              <br/>
+              <text>
                 <strong>{store.name}</strong>
-              </p>
-              <p>{store.address}</p>
+              </text>
+              <text>{store.address}</text>
               <button onClick={() => handleStoreClick(store.storeId)}>View Details</button>
             </div>
           ) 

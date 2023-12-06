@@ -159,7 +159,8 @@ const Ranking = () => {
       .then((json) => {
         if (json && json.length > 0) {
           // seasons 데이터 업데이트
-          setSeasons(json.reverse());
+          // setSeasons(json.reverse());
+          setSeasons(json)
           console.log(json);
           setSeason(json[0]);
         } else {

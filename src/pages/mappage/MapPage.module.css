@@ -26,3 +26,22 @@
   overflow: hidden;
   height: "100%";
 }
+
+.reviewImage {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 375 / 200;
+  object-fit: cover;
+}
+
+/* 새로운 스타일 추가 */
+.MapMarkerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.MapMarkerContent button {
+  margin-top: 10px; /* 버튼과 상단 간격 조절 */
+}

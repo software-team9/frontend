@@ -114,6 +114,9 @@ const MoreStore = () => {
 
 
 
+  
+
+
 
     // fetch(`/seasonRank/store/${storeId}`, {
     //   method: "GET",
@@ -153,6 +156,39 @@ const MoreStore = () => {
 
 
   }, [storeId]);
+
+
+
+
+
+    useEffect(() => {
+      // seasons 데이터 가져오기
+      fetch("http://15.165.26.32:8080/seasonRank/seasonName", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          if (json && json.length > 0) {
+            // seasons 데이터 업데이트
+            // setSeasons(json.reverse());
+    
+            console.log(json);
+            setSeason(json[0]);
+          } else {
+            console.error("시즌 데이터가 올바르지 않습니다.");
+          }
+        })
+        .catch((error) => {
+          console.error("시즌 데이터 가져오기 오류:", error);
+        });
+    }, []);
+
+
+
+
 
   useEffect(() => {
 
@@ -201,6 +237,7 @@ const MoreStore = () => {
   // }, [wishState]);
 
   useEffect(() => {
+    console.log("season: ", season)
     fetch(
       `http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=0&size=3`,
       {

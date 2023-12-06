@@ -6,17 +6,18 @@ import useStoreHook from "../../hooks/useStoreHook";
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const REVIEWS_PER_PAGE = 10;
+const REVIEWS_PER_PAGE = 4;
 
 const MoreReview = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const storeId = queryParams.get("storeId");
   const { getReviewsByStoreId } = useReviewHook();
-
+  const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentReviews, setCurrentReviews] = useState([]);
+
   const [store, setStore] = useState(null);
   const [season, setSeason] = useState("2023-Winter")
   const [storeReviews, setStoreReviews] = useState([
@@ -63,7 +64,7 @@ useEffect(() => {
     .then((json) => {
       if (json && json.length > 0 ) {
         // seasons 데이터 업데이트
-        setSeasons(json.reverse());
+        setSeasons(json);
         console.log(json);
         setSeason(json[0])
       } else {

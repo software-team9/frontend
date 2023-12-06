@@ -80,7 +80,9 @@ const MyReviewList = () => {
                 alt="Review"
                 className={styles.reviewImage}
               />
-              <p className={styles.context}>{review.content}</p>
+              <text><strong>{review.storeName}</strong></text>
+              <text className={styles.context}>{review.content}</text>
+              <text>{`⭐ ${review.ratingPoint}`}</text>
             </div>
           ))}
           {/* <div className={styles.pagination}>

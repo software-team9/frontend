@@ -56,25 +56,58 @@ const WriteReview = () => {
 
   const handleWriteReview = () => {
     const formData = new FormData();
-    formData.append("image", image);
-    formData.append("storeName", storeName);
-    formData.append("address", address);
-    formData.append("content", reviewContent);
-    formData.append("ratingPoint", rating);
+    const body= {
+      image: image,
+      storeName: storeName,
+      address: address,
+      content: reviewContent,
+      ratingPoint:rating
+    }
+    formData.append("image", body.image );
+    formData.append("storeName", body.storeName);
+    formData.append("address", body.address);
+    formData.append("content", body.reviewContent);
+    formData.append("ratingPoint", body.rating);
 
-    axios.post('/reviews', {
-      body: formData
-    }, {  
+
+    fetch("/reviews", {
+      method: "POST",
+      body: formData,
       headers: {
-        "Content-Type": "multipart/form-data" 
-      }
+        "Content-Type": "multipart/form-data",
+      },
     })
-    .then(response => {
-      navigate('/')
-    })
-    .catch(error => {
-      console.error('오류 발생:', error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("API 요청 실패");
+        }
+        return response.json();
+      })
+      .then((json) => {
+        sessionStorage.setItem('ReceiptStoreName', json.storeName);
+        sessionStorage.setItem('ReceiptAddress', json.address);
+        sessionStorage.setItem('ReviewImage', image);
+        navigate('/writereview/receiptcheck');
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error("API 요청에 실패하였습니다:", error.message);
+      });
+
+
+
+    // axios({
+    //   method: "post",
+    //   url: "/reviews",
+     
+    //   body: formData,
+    // })
+    // .then(response => {
+    //   navigate('/')
+    // })
+    // .catch(error => {
+    //   console.error('오류 발생:', error);
+    // });
 
 
     // fetch("http://15.165.26.32:8080/reviews/", {
