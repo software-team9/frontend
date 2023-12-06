@@ -13,20 +13,42 @@ const LogoutComponent = ({logoutHandler}) => {
           
           // fetch 요청
 
-          axios.post('/logout', {
-            'Content-Type': 'application/json', withCredentials:true 
+          fetch('/logout', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "Access-Control-Allow-Origin": "http://localhost:3000",
+              "Access-Control-Allow-Credentials": "true"
+            },
+            credentials: "include",
+            mode: 'cors'
+          })    
+          .then((response) => {
+            if(!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            } else if (response.ok) {
+              sessionStorage.setItem('IsLogin', false);
+              navigate('/')
+              logoutHandler()
+            }
           })
-       .then(response => {
-        if(response.status === 200) {
-          console.log('Fetch request successful');
-          logoutHandler();
-          sessionStorage.setItem('IsLogin', false)
-          navigate('/');
-        }
-       })
-       .catch(error => {
-         console.error('오류 발생:', error);
-       });
+
+
+
+      //     axios.post('/logout', {
+      //       'Content-Type': 'application/json', withCredentials:true 
+      //     })
+      //  .then(response => {
+      //   if(response.status === 200) {
+      //     console.log('Fetch request successful');
+      //     logoutHandler();
+      //     sessionStorage.setItem('IsLogin', false)
+      //     navigate('/');
+      //   }
+      //  })
+      //  .catch(error => {
+      //    console.error('오류 발생:', error);
+      //  });
 
 
 

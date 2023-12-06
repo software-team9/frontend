@@ -9,8 +9,14 @@ import ReviewCard from "../../components/reviewcard/More_ReviewCard";
 import RankingGraph from "./RankingGraph";
 import BadgeList from "../../components/badge/BadgeList";
 import {getStoreSeasonRank} from "../../hooks/useStoreHook"
+import axios from 'axios';
+import {Favorite, FavoriteBorder, SystemSecurityUpdate} from '@mui/icons-material';
+import {Card, CardContent, CardActions, Typography, IconButton} from '@mui/material';
+import SnackMsg from './SnackMsg';
 
 const MoreStore = () => {
+  const [like, setLike] = React.useState({});
+  const [snackState, setSnackState] = React.useState({open : false, msg :''})
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const storeId = queryParams.get("storeId");
@@ -31,6 +37,7 @@ const MoreStore = () => {
   });
   const [histories, setHistories] = useState([ // 랭킹 히스토리 데이터
     {
+      
       storeName: "",
       storeId: 0,
       city: "",
@@ -66,7 +73,7 @@ const MoreStore = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json && typeof json === "object") {
+        if (json) {
           // setStore(json);
           setStore(json);
           console.log(json);
@@ -81,47 +88,108 @@ const MoreStore = () => {
 
   useEffect(() => {
     console.log(storeId);
-    fetch(`http://15.165.26.32:8080/seasonRank/store/${storeId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+
+    axios.get(`/seasonRank/store/${storeId}`, {
+      'Content-Type': 'application/json', withCredentials:true,
     })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          // setStore(json);
-          setHistories(json);
-          console.log(json);
-        } else {
-          console.error("시즌 데이터가 유효하지 않습니다:", json);
-        }
-      })
-      .catch((error) => {
-        console.error("시즌 데이터를 가져오는 중 오류 발생:", error);
-      });
+    .then(response => {
+      setHistories(response.data);
+      // 서버 응답 처리
+      console.log("SeasonRank: ", response.data);
+    })
+    .catch((error) => {
+      if (error.response) {
+        // 서버가 응답을 반환한 경우
+        console.error("Fetch error", error.response.data);
+        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+      } else if (error.request) {
+        // 서버가 응답하지 않은 경우
+        console.error("No response was received", error.request);
+      } else {
+        // 그 외의 에러 발생 시
+        console.error("Error", error.message);
+      }
+  
+  })
+
+
+
+
+    // fetch(`/seasonRank/store/${storeId}`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log("Response: ", response.data)
+        
+    //   })
+    //   .then((json) => {
+    //     if (json) {
+    //       // setStore(json);
+    //       setHistories(json); 
+    //       console.log(json);
+    //     } else {
+    //       console.error("시즌 데이터가 유효하지 않습니다:", json);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       // 서버가 응답을 반환한 경우
+    //       console.error("Fetch error", error.response.data);
+    //       alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+    //     } else if (error.request) {
+    //       // 서버가 응답하지 않은 경우
+    //       console.error("No response was received", error.request);
+    //     } else {
+    //       // 그 외의 에러 발생 시
+    //       console.error("Error", error.message);
+    //     }
+    
+    // })
+
+
+
+
   }, [storeId]);
 
   useEffect(() => {
-    fetch(`http://15.165.26.32:8080/wish/state/${storeId})`, {
+
+
+
+
+    fetch(`/wish/state/${storeId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json && typeof json === "object") {
-          setWishState(json);
-          console.log(json);
-        } else {
-          console.error("위시 데이터가 올바르지 않습니다.");
-        }
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // Now you can set the wishState based on the parsed data
+        setWishState(data);
+        console.log("wishstate: ", data);
       })
       .catch((error) => {
-        console.error("위시 데이터 가져오기 오류:", error);
-      });
-  }, [storeId]);
+        if (error.response) {
+          // 서버가 응답을 반환한 경우
+          console.error("Fetch error", error.response.data);
+          alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+        } else if (error.request) {
+          // 서버가 응답하지 않은 경우
+          console.error("No response was received", error.request);
+        } else {
+          // 그 외의 에러 발생 시
+          console.error("Error", error.message);
+        }
+      })
+
+
+
+  }, [storeId, like]);
 
   //   if (stores.length > 0) {
   //     const foundStore = stores.find((s) => s.storeId === storeId);
@@ -165,7 +233,7 @@ const MoreStore = () => {
   };
 
   const handleWish = () => {
-    fetch(`http://15.165.26.32:8080/wish/change/${storeId}`, {
+    fetch(`/wish/change/${storeId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +242,7 @@ const MoreStore = () => {
       .then((response) => response.json())
       .then((json) => json())
       .catch((error) => {
-        console.error("상점 데이터 가져오기 오류:", error);
+        console.error("위시 데이터 변경 실패:", error);
       });
   };
 
@@ -186,6 +254,77 @@ const MoreStore = () => {
       };
     });
   };
+
+  const toggleFavorite = () => () => {
+    const isFavorite = like;
+    if (!isFavorite) {
+        fetch(`/wish/change/${storeId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then( response => response.json())
+        .then((data) => {
+            // 처리할 내용 추가
+            // console.log(data);
+            // setLikes({ ...likes, [collectionId]: true });
+            // setSnackState({ ...snackState, open: true, msg: `${collectionName} is clicked` });
+            setLike(prevLikes => ( true ));
+            setSnackState(prevState => ({
+            ...prevState,
+            open: true,
+            msg: `${store.name} sets liked`
+            })); 
+        }).catch(error => {
+            // 오류 처리
+            console.error('오류 발생:', error);
+        })
+
+        setLike(prevLikes => ( true ));
+            setSnackState(prevState => ({
+            ...prevState,
+            open: true,
+            msg: `${store.name} sets liked`
+            })); 
+    } else {
+        fetch(`/wish/change/${storeId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then( r => r.json()).then((d) => {
+            // 처리할 내용 추가
+            // console.log('Music unliked:', d);
+            // setLikes({ ...likes, [collectionId]: false });
+            // setSnackState({ ...snackState, open: true, msg: `${collectionName} is unclicked` });
+            setLike(prevLikes => ( false ));
+            setSnackState(prevState => ({
+              ...prevState,
+              open: true,
+              msg: `${store.name} sets unliked`
+            }));
+        }).catch(error => {
+            // 오류 처리
+            console.error('오류 발생:', error);
+        })
+        setLike(prevLikes => ( false ));
+            setSnackState(prevState => ({
+              ...prevState,
+              open: true,
+              msg: `${store.name} sets unliked`
+            }));
+    }
+}
+
+const handleSnackbarClose = (event, reason) => {
+  if (reason === 'clickaway') {
+      return ;
+  }
+
+  setSnackState({open : false, msg : ''});
+}
 
   return (
     <div className={styles.container}>
@@ -200,14 +339,19 @@ const MoreStore = () => {
             <div className={styles.element}></div>
             <div className={styles.StoreNameContainer}>
               <h1 className={styles.storeName}>{store.name}</h1>
-              <div
+              <CardActions>
+              <IconButton onClick={toggleFavorite()}>
+                            {like ? <Favorite /> : <FavoriteBorder />}
+              </IconButton>
+              </CardActions>
+              {/* <div
                 className={`${styles.wishIcon} ${
                   wishState ? styles.checked : ""
                 }`}
                 onClick={handleWish}
               >
                 {wishState ? "\u2714" : "\u2764"}
-              </div>
+              </div> */}
             </div>
 
             <div className={styles.AddressContainer}>
@@ -270,6 +414,8 @@ const MoreStore = () => {
           </section>
         </>
       )}
+                  {/* <SnackMsg open = {snackState.open} message = {snackState.msg}
+                onClose = {handleSnackbarClose}/> */}
     </div>
   );
 };

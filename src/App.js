@@ -45,13 +45,18 @@ function App() {
   // const [isLogin, setIsLogin] = useState(false); // 실제로 쓸땐 이거 사용
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
 
+  // useEffect(() => {
+  //   setIsLogin(sessionStorage.getItem('IsLogin'))
+  // }, [isLogin])
 
   const loginHandler = () => {
     setIsLogin(true);
+    console.log("isLogin is set true")
   };
 
   const logoutHandler = () => {
     setIsLogin(false);
+    console.log("isLogin is set false")
   };
 
 
@@ -96,7 +101,7 @@ useEffect (() => {
         <TopNav />
         <Routes>
           <Route 
-            path="/login" 
+            path="/app/login" 
             element={<LoginPage 
                         loginHandler={loginHandler}
                       />
@@ -107,6 +112,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <Quit
+                  logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage

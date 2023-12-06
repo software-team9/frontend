@@ -40,7 +40,6 @@ const Inquiry = ({userData}) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <TopNav />
       </div>
       <div className={styles.title}>
         <h1>문의하기</h1>

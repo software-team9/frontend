@@ -57,7 +57,7 @@ const SignUp = () => {
       console.log(response)
       if(response.status === 200) {
         setIsDuplicate(2);
-        alert("사용가능한 비밀번호입니다.")
+        alert("사용가능한 휴대전화번호입니다.")
       }
     })
     .catch((error) => {
@@ -75,6 +75,9 @@ const SignUp = () => {
 
   })
 };
+const handleBack = () => {
+  navigate('/app/login')
+}
 
   const handleSignUp = () => {
     console.log(name, phoneNumber, pw, gender, birthday)
@@ -96,7 +99,7 @@ const SignUp = () => {
             console.log(response);
             if (response.status === 200) {
               console.log("Login Success");
-              navigate("/login");
+              navigate("/app/login");
             }
           })
           .catch((error) => {
@@ -129,7 +132,7 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span className={styles.backButton}>〈</span>
+        <span className={styles.backButton} onClick={handleBack}>〈</span>
         <h1>회원가입</h1>
       </div>
 

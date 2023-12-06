@@ -9,28 +9,28 @@ const Dday = ({ targetDate }) => {
   });
 
 
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const difference = +new Date(targetDate) - +new Date();
-      let timeLeft = {};
+  // useEffect(() => {
+  //   const calculateTimeLeft = () => {
+  //     // const difference = +new Date(targetDate) - +new Date();
+  //     // let timeLeft = {};
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24) + (days * 24);
+  //     // if (difference > 0) {
+  //     //   const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  //     //   const hours = Math.floor((difference / (1000 * 60 * 60)) % 24) + (days * 24);
 
-        timeLeft = { days, hours};
-      }
+  //     //   timeLeft = { days, hours};
+  //     // }
 
-      return timeLeft;
-    };
+  //     return timeLeft;
+  //   };
 
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+  //   const timer = setInterval(() => {
+  //     setTimeLeft(calculateTimeLeft());
+  //   }, 1000);
 
 
-    return () => clearInterval(timer);
-  }, [targetDate]);
+  //   return () => clearInterval(timer);
+  // }, [targetDate]);
 
   useEffect(() => {
 
@@ -39,7 +39,7 @@ const Dday = ({ targetDate }) => {
     })
     .then(response => {
       console.log(response.data);
-      setTimeLeft(response);
+      setTimeLeft(response.data);
     })
     .catch(error => {
       // 에러 처리

@@ -1,0 +1,59 @@
+.card {
+    width: 300px;
+    margin: 10px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .rankLabel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #D32323;
+    color: white;
+    padding: 4px 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    z-index: 0.5;
+    border-top-right-radius: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .shopImage {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 375 / 200;
+    object-fit: cover;
+  }
+  
+  .cardContent {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .shopName {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin: 8px 0;
+  }
+  
+  .rating {
+    color: #D32323;
+    margin: 4px 0;
+  }
+  
+  .shopAddress {
+    color: #777;
+    font-size: 0.875rem;
+    margin-top: 4px;
+  }
+  

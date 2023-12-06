@@ -5,7 +5,7 @@ import image from "./123.png";
 import axios from 'axios';
 
 
-const MyPage = () => {
+const MyPage = ({logoutHandler}) => {
   const [userName, setUserName] = useState(""); // 추가
   const [userPhone, setUserPhone] = useState(""); // 추가
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ const MyPage = () => {
     "gender": '',
     "birthday": ''
 })
+
 
 // useEffect(() => {
 //   const fetchData = async () => {
@@ -92,6 +93,41 @@ const MyPage = () => {
 //     console.error('Error:', error);
 //   });
 // })
+const handleSubmit = () => {
+  // loginHandler();
+  // handleLogin({loginHandler}, id, pw); // 로그인 처리
+  fetch('/logout', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Access-Control-Allow-Credentials": "true"
+    },
+    credentials: "include",
+    mode: 'cors'
+  })    
+  .then((response) => {
+    if(response.status ===200) {
+      sessionStorage.setItem('IsLogin', false);
+      navigate('/')
+      logoutHandler()
+    }
+  })
+  .catch((error) => {
+    if (error.response) {
+      // 서버가 응답을 반환한 경우
+      console.error("Fetch error", error.response.data);
+      alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+    } else if (error.request) {
+      // 서버가 응답하지 않은 경우
+      console.error("No response was received", error.request);
+    } else {
+      // 그 외의 에러 발생 시
+      console.error("Error", error.message);
+    }
+
+})
+};
 
 
 
@@ -107,10 +143,20 @@ useEffect(() => {
     console.log(userData.phoneNumber);
     console.log(response.data);
   })
-  .catch(error => {
-    // 에러 처리
-    console.error('Error:', error);
-  });
+  .catch((error) => {
+    if (error.response) {
+      // 서버가 응답을 반환한 경우
+      console.error("Fetch error", error.response.data);
+      alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+    } else if (error.request) {
+      // 서버가 응답하지 않은 경우
+      console.error("No response was received", error.request);
+    } else {
+      // 그 외의 에러 발생 시
+      console.error("Error", error.message);
+    }
+
+})
 }, [])
 
 
@@ -149,9 +195,10 @@ useEffect(() => {
         <Link to="/quit" className={styles.menuItemAlt}>
           회원탈퇴
         </Link>
-        <Link to="/logout" className={styles.menuItemAlt}>
+        <p className={styles.menuItemAlt} onClick={() => handleSubmit()}>로그아웃</p>
+        {/* <Button to="/logout" className={styles.menuItemAlt} onClick={handleSubmit}>
           로그아웃
-        </Link>
+        </Button> */}
       </section>
     </div>
   );

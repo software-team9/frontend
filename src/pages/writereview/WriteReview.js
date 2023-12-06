@@ -64,10 +64,13 @@ const WriteReview = () => {
 
     axios.post('/reviews', {
       body: formData
-    }, {  "Content-Type": "multipart/form-data" })
+    }, {  
+      headers: {
+        "Content-Type": "multipart/form-data" 
+      }
+    })
     .then(response => {
       navigate('/')
-      console.log(response.data)
     })
     .catch(error => {
       console.error('오류 발생:', error);

@@ -108,20 +108,47 @@ const useUserDataHook = () => {
 axios.post('/login', {
        phoneNumber : id,
       password : pw
-}, {'Content-Type': 'application/json' })
+}, {
+  headers: {
+    'Content-Type': 'application/json' 
+  }
+})
   .then(response => {
     console.log(response)
     if(response.status === 200) {
       sessionStorage.setItem('IsLogin', true);
-      loginHandler();
+      // loginHandler();
       navigate('/');
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
   })
   .catch(error => {
     console.error('오류 발생:', error);
   });
 
-
+// fetch('/login', {
+//   method: "POST",
+//   headers : {
+//     "Content-Type": "application/json; charset-utf-8",
+//     "Access-Control-Allow-Origin": 'http://localhost:3000',
+//     "Access-Control-Allow Credentials": "true"
+//   },
+//   body:JSON.stringify({
+//     phoneNumber: id,
+//     password: pw
+//   }),
+//   credentials: "include",
+//   mode:'cors'
+// })
+// .then((response) => {
+//   if(!response.ok) {
+//     throw new Error(`HTTP error! status: ${response.status}`);
+//   } else if (response.ok) {
+//     sessionStorage.setItem('IsLogin', true);
+//     navigate('/')
+//   }
+// })
 
     
   };

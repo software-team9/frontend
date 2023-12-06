@@ -4,6 +4,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./Ranking.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
 import RankingCard from "./RankingCard";
+import FameCard from "./FameCard";
 import Dday from "./Dday";
 import NoDataView from './NoDataView';
 
@@ -41,15 +42,17 @@ const Ranking = () => {
     },
   ]);
 
+
+
   const [hallOfFames, setHallofFames] = useState([
     {
-      storeId: 0,
-      name: "",
-      address: "",
       city: "",
       img: "",
-      rating: "",
-    },
+      ranking: 0,
+      season: "",
+      storeId: 0,
+      storeName: ""
+    }
   ]);
 
   // State for filtering
@@ -73,7 +76,7 @@ const Ranking = () => {
   useEffect(() => {
     // stores에 대한 데이터 가져오기
     fetch(
-      `http://15.165.26.32:8080/stores/rank/${city}?page=${currentPage - 1}`,
+      `http://15.165.26.32:8080/stores/rank/${city}`,
       {
         method: "GET",
         headers: {
@@ -83,7 +86,7 @@ const Ranking = () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        if (json && json.length > 0) {
+        if (json) {
           setStores(json);
           setTotalPages(Math.ceil(json.length / STORES_PER_PAGE)); // Update totalPages
           console.log(json);
@@ -94,11 +97,12 @@ const Ranking = () => {
       .catch((error) => {
         console.error("상점 데이터 가져오기 오류:", error);
       });
-  }, [currentPage, city]);
+  }, [city]);
 
   useEffect(() => {
     // season stores에 대한 데이터 가져오기
-    fetch(`http://15.165.26.32:8080/seasonRank/${season}/${city}`, {
+    console.log("season: ", season, "city: ", city)
+    fetch(`/seasonRank/${season}/${city}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -106,18 +110,19 @@ const Ranking = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json && json.length > 0) {
+        console.log("API response:", json); // Add this line to see the API response
+        if (Array.isArray(json)) {  // Check if the response is an array
           setHallofFames(json);
           setHallOfFame_TotalPages(
             Math.ceil(json.length / HALL_OF_FAME_STORES_PER_PAGE)
           ); // Update totalPages
           console.log(json);
         } else {
-          console.error("상점 데이터가 올바르지 않습니다.");
+          console.error("명예의 전당 데이터가 올바르지 않습니다.");
         }
       })
       .catch((error) => {
-        console.error("상점 데이터 가져오기 오류:", error);
+        console.error("명예의 전당 데이터 가져오기 오류:", error);
       });
   }, [city, season]);
 
@@ -133,14 +138,14 @@ const Ranking = () => {
 
   useEffect(() => {
     setTotalPages(Math.ceil(hallOfFames.length / HALL_OF_FAME_STORES_PER_PAGE));
-    const startIndex =
+    const HallOfFame_startIndex =
       (HallOfFame_currentPage - 1) * HALL_OF_FAME_STORES_PER_PAGE;
-    const selectedStores = hallOfFames.slice(
-      startIndex,
-      startIndex + HALL_OF_FAME_STORES_PER_PAGE
+    const HallOfFame_selectedStores = hallOfFames.slice(
+      HallOfFame_startIndex,
+      HallOfFame_startIndex + HALL_OF_FAME_STORES_PER_PAGE
     );
-    setHallOfFame_CurrentStores(HallOfFame_currentStores);
-  }, [HallOfFame_currentStores, hallOfFames]);
+    setHallOfFame_CurrentStores(HallOfFame_selectedStores);
+  }, [HallOfFame_currentPage, hallOfFames]);
 
   useEffect(() => {
     // seasons 데이터 가져오기
@@ -183,6 +188,12 @@ const Ranking = () => {
   const handlePageClick = (page) => {
     setCurrentPage(page);
   };
+
+  const handleHallOffFame_PageClick = (page) => {
+    setHallOfFame_CurrentPage(page)
+  };
+
+  
 
   // Handler for changing the selected view
   const handleViewChange = (view) => {
@@ -288,6 +299,7 @@ const Ranking = () => {
               </tbody>
             </table>
             <div></div>
+
             <div className={styles.pagination}>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (page) => (
@@ -374,6 +386,8 @@ const Ranking = () => {
           <div>
             <table className={styles.tableContainer}>
               <tbody>
+
+
               {HallOfFame_currentStores.length > 0 ? (
                 HallOfFame_currentStores.map((hallOfFames, index) => (
                   <tr
@@ -382,12 +396,10 @@ const Ranking = () => {
                     onClick={() => handleStoreClick(hallOfFames.storesId)}
                   >
                     <td>
-                      <RankingCard
-                        rank={index + 1}
+                      <FameCard
+                        rank={hallOfFames.ranking}
                         imageSrc={hallOfFames.img}
-                        name={hallOfFames.name}
-                        rating={hallOfFames.rating}
-                        address={hallOfFames.address}
+                        name={hallOfFames.storeName}
                       />
                     </td>
                   </tr>
@@ -401,6 +413,26 @@ const Ranking = () => {
               )}
               </tbody>
             </table>
+
+            <div className={styles.pagination}>
+              {Array.from({ length: HallOfFame_totalPages }, (_, index) => index + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    className={
+                      HallOfFame_currentPage === page
+                        ? styles.activePage
+                        : styles.pageNumber
+                    }
+                    onClick={() => handleHallOffFame_PageClick(page)}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+            </div>
+
+
           </div>
         </div>
       )}

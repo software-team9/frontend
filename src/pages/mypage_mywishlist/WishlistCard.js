@@ -7,7 +7,7 @@ const WishListCard = ({ imageSrc, name, rating, address="", wishState}) => {
       <img src={imageSrc} alt="Shop" className={styles.shopImage} />
       <div className={styles.cardContent}>
         <h3 className={styles.shopName}>{name}</h3>
-        <div className={styles.rating}>{`Rating: ${rating}`}</div>
+        <div className={styles.rating}>{`⭐ ${rating}`}</div>
         <p className={styles.shopAddress}>{address}</p>
       </div>
       <div 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Head from "../../components/head/Head";
 import axios from 'axios';
 
-const Quit = ({ userData, logoutHandler }) => {
+const Quit = ({logoutHandler }) => {
   const [pw, setPw] = useState(null);
   const [pw_r, setPw_r] = useState(null);
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Quit = ({ userData, logoutHandler }) => {
   const handlePasswordChange = (e) => setPw(e.target.value);
   const handlePassword_RChange = (e) => setPw_r(e.target.value);
 
-  const handleQuit = (userData, logoutHandler) => {
+  const handleQuit = () => {
     if (pw === pw_r) {
 
       axios.delete('/members/delete', {
@@ -22,20 +22,31 @@ const Quit = ({ userData, logoutHandler }) => {
       }, {
         headers: {
           'Content-Type': 'application/json',
-        }, withCredentials: true
+        }
       })
       .then(response => {
-        if(response.ok) {
-          console.log(response.data);
+
+          console.log("123123")
           logoutHandler();
           navigate('/');
-        }
+          sessionStorage.setItem('IsLogin', false);
+   
 
       })
-      .catch(error => {
-        console.error('에러:', error);
-        console.log('요청 구성:', error.config);
-      });
+      .catch((error) => {
+        if (error.response) {
+          // 서버가 응답을 반환한 경우
+          console.error("Fetch error", error.response.data);
+          alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+        } else if (error.request) {
+          // 서버가 응답하지 않은 경우
+          console.error("No response was received", error.request);
+        } else {
+          // 그 외의 에러 발생 시
+          console.error("Error", error.message);
+        }
+  
+    })
 
     }
   }
@@ -103,7 +114,7 @@ const Quit = ({ userData, logoutHandler }) => {
         <Button
           text="탈퇴하기"
           size="long"
-          onClick={() => handleQuit(userData, logoutHandler)}
+          onClick={() => handleQuit()}
         />
       </div>
     </div>
