@@ -3,8 +3,9 @@ import Button from "../../components/button/Button";
 import styles from "./Login.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import useUserDataHook from "../../hooks/useUserDataHook";
+import logo from "./logo.png";
 
-const Login = ({loginHandler}) => {
+const Login = ({ loginHandler }) => {
   const [id, setId] = useState(""); // State for phone number
   const [pw, setPw] = useState(""); // State for password
   const { handleLogin } = useUserDataHook();
@@ -21,50 +22,50 @@ const Login = ({loginHandler}) => {
   const handleSubmit = () => {
     // loginHandler();
     // handleLogin({loginHandler}, id, pw); // 로그인 처리
-    fetch('/login', {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         "Access-Control-Allow-Origin": "http://localhost:3000",
-        "Access-Control-Allow-Credentials": "true"
+        "Access-Control-Allow-Credentials": "true",
       },
       body: JSON.stringify({
         phoneNumber: id,
-        password: pw
+        password: pw,
       }),
       credentials: "include",
-      mode: 'cors'
-    })    
-    .then((response) => {
-      if(response.ok) {
-        sessionStorage.setItem('IsLogin', true);
-        navigate('/')
-        loginHandler()
-      }
+      mode: "cors",
     })
-    .catch((error) => {
-      if (error.response) {
-        // 서버가 응답을 반환한 경우
-        console.error("Fetch error", error.response.data);
-        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
-      } else if (error.request) {
-        // 서버가 응답하지 않은 경우
-        console.error("No response was received", error.request);
-        alert("로그인에 실패하였습니다");
-      } else {
-        // 그 외의 에러 발생 시
-        console.error("Error", error.message);
-        alert("로그인에 실패하였습니다");
-      
-      }
-
-  })
+      .then((response) => {
+        if (response.ok) {
+          sessionStorage.setItem("IsLogin", true);
+          navigate("/");
+          loginHandler();
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          // 서버가 응답을 반환한 경우
+          console.error("Fetch error", error.response.data);
+          alert(
+            `에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`
+          );
+        } else if (error.request) {
+          // 서버가 응답하지 않은 경우
+          console.error("No response was received", error.request);
+          alert("로그인에 실패하였습니다");
+        } else {
+          // 그 외의 에러 발생 시
+          console.error("Error", error.message);
+          alert("로그인에 실패하였습니다");
+        }
+      });
   };
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <h1 className={styles.logoText}>로고</h1>
+        <img src={logo} alt="로고" className={styles.logoImage} />{" "}
       </div>
       <div className={styles.loginMessage}>로그인하세요</div>
       <div className={styles.loginForm} onSubmit={handleSubmit}>

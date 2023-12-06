@@ -6,7 +6,6 @@ import styles from "./MoreStore.module.css";
 // import useWishHook from "../../hooks/useWishHook";
 
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
-import RankingGraph from "./RankingGraph";
 import BadgeList from "../../components/badge/BadgeList";
 import {getStoreSeasonRank} from "../../hooks/useStoreHook"
 import axios from 'axios';
@@ -111,13 +110,6 @@ const MoreStore = () => {
       }
   
   })
-
-
-
-  
-
-
-
     // fetch(`/seasonRank/store/${storeId}`, {
     //   method: "GET",
     //   headers: {
@@ -152,13 +144,7 @@ const MoreStore = () => {
     
     // })
 
-
-
-
   }, [storeId]);
-
-
-
 
 
     useEffect(() => {
@@ -191,9 +177,6 @@ const MoreStore = () => {
 
 
   useEffect(() => {
-
-
-
 
     fetch(`/wish/state/${storeId}`, {
       method: "GET",
@@ -292,8 +275,8 @@ const MoreStore = () => {
     });
   };
 
-  const toggleFavorite = () => () => {
-    const isFavorite = like;
+  const toggleFavorite = (storeId) => () => {
+    const isFavorite = like[storeId];
     if (!isFavorite) {
         fetch(`/wish/change/${storeId}`, {
           method: "PUT",
@@ -307,7 +290,7 @@ const MoreStore = () => {
             // console.log(data);
             // setLikes({ ...likes, [collectionId]: true });
             // setSnackState({ ...snackState, open: true, msg: `${collectionName} is clicked` });
-            setLike(prevLikes => ( true ));
+            setLike(prevLikes => ({ ...prevLikes, [storeId]: true }));
             setSnackState(prevState => ({
             ...prevState,
             open: true,
@@ -318,7 +301,7 @@ const MoreStore = () => {
             console.error('오류 발생:', error);
         })
 
-        setLike(prevLikes => ( true ));
+        setLike(prevLikes => ({ ...prevLikes, [storeId]: true }));
             setSnackState(prevState => ({
             ...prevState,
             open: true,
@@ -336,7 +319,7 @@ const MoreStore = () => {
             // console.log('Music unliked:', d);
             // setLikes({ ...likes, [collectionId]: false });
             // setSnackState({ ...snackState, open: true, msg: `${collectionName} is unclicked` });
-            setLike(prevLikes => ( false ));
+            setLike(prevLikes => ({ ...prevLikes, [storeId]: false }));
             setSnackState(prevState => ({
               ...prevState,
               open: true,
@@ -346,7 +329,7 @@ const MoreStore = () => {
             // 오류 처리
             console.error('오류 발생:', error);
         })
-        setLike(prevLikes => ( false ));
+        setLike(prevLikes => ({ ...prevLikes, [storeId]: false }));
             setSnackState(prevState => ({
               ...prevState,
               open: true,
@@ -377,18 +360,10 @@ const handleSnackbarClose = (event, reason) => {
             <div className={styles.StoreNameContainer}>
               <h1 className={styles.storeName}>{store.name}</h1>
               <CardActions>
-              <IconButton onClick={toggleFavorite()}>
-                            {like ? <Favorite /> : <FavoriteBorder />}
+              <IconButton onClick={toggleFavorite(storeId)}>
+                            {like[storeId] ? <Favorite /> : <FavoriteBorder />}
               </IconButton>
               </CardActions>
-              {/* <div
-                className={`${styles.wishIcon} ${
-                  wishState ? styles.checked : ""
-                }`}
-                onClick={handleWish}
-              >
-                {wishState ? "\u2714" : "\u2764"}
-              </div> */}
             </div>
 
             <div className={styles.AddressContainer}>

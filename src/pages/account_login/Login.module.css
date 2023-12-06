@@ -37,4 +37,12 @@
   border-radius: 4px;
 }
 
-/* Button 컴포넌트에 대한 추가적인 스타일링 필요 시 여기에 작성 */
+
+.logoImage {
+  width: 375px; 
+  height: auto;
+  position: absolute;
+  top: 30%; 
+  left: 50%; 
+  transform: translateX(-50%);
+}

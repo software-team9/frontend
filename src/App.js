@@ -279,7 +279,7 @@ useEffect (() => {
 
 
           <Route 
-            path="/writereview/writereview" 
+            path="/writereview" 
             element={
               isLogin ? (
                   <WriteReview

@@ -55,58 +55,37 @@ const WriteReview = () => {
   };
 
   const handleWriteReview = () => {
+    console.log("12")
+
     const formData = new FormData();
+
+    formData.append("image", image );
     const body= {
-      image: image,
-      storeName: storeName,
-      address: address,
+      // image: image,
+      storeName: "풍천장어굽소",
       content: reviewContent,
-      ratingPoint:rating
+      ratingPoint:rating,
+      address: "경기 수원시 권선구 탑동 175 1층",
     }
-    formData.append("image", body.image );
-    formData.append("storeName", body.storeName);
-    formData.append("address", body.address);
-    formData.append("content", body.reviewContent);
-    formData.append("ratingPoint", body.rating);
-
-
-    fetch("/reviews", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+    formData.append("reviewDto", new Blob([JSON.stringify(body)], { type: "application/json"}))
+    
+    axios.post("/reviews/", formData, {
+      headers: {'Content-Type': 'multipart/form-data'},
+ 
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("API 요청 실패");
-        }
-        return response.json();
-      })
-      .then((json) => {
-        sessionStorage.setItem('ReceiptStoreName', json.storeName);
-        sessionStorage.setItem('ReceiptAddress', json.address);
-        sessionStorage.setItem('ReviewImage', image);
-        navigate('/writereview/receiptcheck');
-        console.log(json);
-      })
-      .catch((error) => {
-        console.error("API 요청에 실패하였습니다:", error.message);
-      });
+    .then(response => {
+      navigate('/')
+    })
+    .catch(error => {
+      console.error('오류 발생:', error);
+    });
 
-
-
-    // axios({
-    //   method: "post",
-    //   url: "/reviews",
-     
+    // fetch('/reviews', {
+    //   method: 'POST',
     //   body: formData,
-    // })
-    // .then(response => {
-    //   navigate('/')
-    // })
-    // .catch(error => {
-    //   console.error('오류 발생:', error);
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
     // });
 
 
@@ -141,7 +120,7 @@ const WriteReview = () => {
       </div>
       <div>
         <input
-          type="storeName"
+          type="text"
           placeholder="가게이름"
           value={storeName || ""}
           onChange={handleStoreNameChange}
@@ -152,7 +131,7 @@ const WriteReview = () => {
       </div>
       <div>
         <input
-          type="address"
+          type="text"
           placeholder="가게주소"
           value={address || ""}
           onChange={handleAddressChange}
@@ -166,7 +145,7 @@ const WriteReview = () => {
       </div>
       <div>
         <textarea
-          type="ReviewContent"
+          type="text"
           placeholder="리뷰 내용을 입력하세요"
           value={reviewContent || ""}
           onChange={handleReviewContentChange}

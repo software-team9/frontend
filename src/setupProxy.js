@@ -37,4 +37,10 @@ module.exports = function(app) {
     changeOrigin: true,
   })
   )
+
+  app.use(createProxyMiddleware('/reviews', {
+    target: "http://15.165.26.32:8080",
+    changeOrigin: true,
+  })
+  )
 };

@@ -1,138 +1,179 @@
 /* Quit.module.css */
 .container {
-    /* display: flex;
+  /* display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 20%;
     padding: 20px;
     margin: 0 auto; */
-    /* max-width: 600px; */
-    /* margin: 0 auto; */
-    padding: 20px;
-    display: flex;
-    flex-direction: column; /* 세로 방향으로 정렬 */
-    align-items: center; /* 가운데 정렬 */
-  }
-  
-  .quitTitle {
-    margin-bottom: 20px;
-    font-size: 2rem;
-  }
-  
-  .separator {
-    width: 100%;
-    height: 1px;
-    background-color: #ccc;
-    margin: 20px 0;
- 
-  }
+  /* max-width: 600px; */
+  /* margin: 0 auto; */
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  align-items: center; /* 가운데 정렬 */
+}
 
-  .input {
-    margin : auto; 
+.quitTitle {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0;
+}
+
+.input {
+  margin: auto;
   width: 330px; /* 화면 넓이 비율 */
   /* margin: 4px 0; */
-  height: 40px; 
-  background-color: #d32323; 
-  color: white; 
+  height: 40px;
+  background-color: #d32323;
+  color: white;
   border: none;
-  border-radius: 8px; 
-  font-size: 16px; 
-  font-weight: bold; 
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
   /* text-align: center; 
   line-height: center;  */
-  cursor: pointer; 
-  outline: none; 
-  transition: background-color 0.3s; 
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s;
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
   margin-bottom: 8px;
-  }
+}
 
-  .warningTextarea {
-    color: #d32323;
-    margin-bottom: 20px;
-    /* padding: 10px; */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .passwordInput {
-    margin-bottom: 10px;
-    /* padding: 10px; */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .Button {
-    /* flex-direction: column;
+.warningTextarea {
+  color: #d32323;
+  margin-bottom: 20px;
+  /* padding: 10px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.passwordInput {
+  margin-bottom: 10px;
+  /* padding: 10px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Button {
+  /* flex-direction: column;
     justify-content: center;
     align-items: center; */
-    /* height: 20%; */
-    /* padding: 20px; */
-    /* margin: 0 auto; */
-    /* flex-direction:row;
+  /* height: 20%; */
+  /* padding: 20px; */
+  /* margin: 0 auto; */
+  /* flex-direction:row;
     display: flex; */
-    
-  }
-  .div1 {
-    width: 330px;
-    height: 40px; 
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
+}
+.div1 {
+  width: 330px;
+  height: 40px;
+  align-items: center;
+  margin-bottom: 8px;
+}
 
 .uploadButtonStyle {
-  margin : auto; 
+  margin: auto;
   width: 330px; /* 화면 넓이 비율 */
   /* margin: 4px 0; */
-  height: 40px; 
-  background-color: #d32323; 
-  color: white; 
+  height: 40px;
+  background-color: #d32323;
+  color: white;
   border: none;
-  border-radius: 8px; 
-  font-size: 16px; 
-  font-weight: bold; 
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
   /* text-align: center; 
   line-height: center;  */
-  cursor: pointer; 
-  outline: none; 
-  transition: background-color 0.3s; 
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s;
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
   margin-bottom: 8px;
-};
+}
 
 .secondaryButtonStyle {
   margin-top: 8px;
-  margin : auto; 
+  margin: auto;
   width: 330px; /* 화면 넓이 비율 */
   /* margin: 4px 0; */
-  height: 40px; 
-  background-color: #d32323; 
-  color: white; 
+  height: 40px;
+  background-color: #d32323;
+  color: white;
   border: none;
-  border-radius: 8px; 
-  font-size: 16px; 
-  font-weight: bold; 
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
   /* text-align: center; 
   line-height: center;  */
-  cursor: pointer; 
-  outline: none; 
-  transition: background-color 0.3s; 
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s;
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
 }
 
+.disabledButtonStyle {
+  margin: auto;
+  width: 330px; /* 화면 넓이 비율 */
+  /* margin: 4px 0; */
+  height: 40px;
+  background-color: #ccc;
+  color: #666;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: not-allowed;
+  outline: none;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-    /* display: 'flex', justifyContent: 'space-between', marginTop:'10px', */
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-  /* 추가적인 스타일링이 필요한 경우 여기에 작성하세요 */
-  
+.disabledButtonStyle {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

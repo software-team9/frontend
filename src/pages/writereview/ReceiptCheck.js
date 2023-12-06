@@ -17,7 +17,7 @@ const ReceiptCheck = () => {
       }
 
       const handleConfirm = () => {
-        navigate('/writereview/writereview')
+        navigate('/writereview')
       }
 
     return (
