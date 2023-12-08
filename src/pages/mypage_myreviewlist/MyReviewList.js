@@ -76,7 +76,7 @@ const MyReviewList = () => {
           {reviews.map((review, index) => (
             <div key={review.reviewId} className={styles.reviewCard}>
               <img
-                src={review.img}
+                src={`http://15.165.26.32:8080/images/${review.img}`}
                 alt="Review"
                 className={styles.reviewImage}
               />

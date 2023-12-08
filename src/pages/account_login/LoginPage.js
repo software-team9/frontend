@@ -3,7 +3,6 @@ import Button from "../../components/button/Button";
 import styles from "./Login.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import useUserDataHook from "../../hooks/useUserDataHook";
-import logo from "./logo.png";
 
 const Login = ({ loginHandler }) => {
   const [id, setId] = useState(""); // State for phone number
@@ -65,7 +64,7 @@ const Login = ({ loginHandler }) => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src={logo} alt="로고" className={styles.logoImage} />{" "}
+        <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="로고" className={styles.logoImage} />{" "}
       </div>
       <div className={styles.loginMessage}>로그인하세요</div>
       <div className={styles.loginForm} onSubmit={handleSubmit}>

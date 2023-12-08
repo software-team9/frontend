@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 
 const ReviewReport = () => {
@@ -19,6 +20,8 @@ const ReviewReport = () => {
   const [content, setContent] = useState('');
   const navigate = useNavigate();
 
+  
+
   const handleCategory = (e) => {
     setCategory(e.target.value);
   }
@@ -26,20 +29,39 @@ const ReviewReport = () => {
     setContent(e.target.value);
   }
 
-  const handleReport = (userData, reviewId) => {
-    fetch('http://15.165.26.32:8080/reports/', {
-      method: 'POST',
-      body: JSON.stringify({ 
-        reviewId: reviewId,
-        type: category,
-        content
-      }),
-      headers: {
-        'Content-Type' : 'application/json'
-      }
+  const handleReport = () => {
+    console.log("reviewId: ", reviewId, "type: ", category, "content : ", content)
+    axios.post('/reports/', {
+      reviewId: reviewId,
+      type: category,
+      content: content
+    }, {
+      'Content-Type': 'application/json',
     })
     .then(response => {
-      console.log(response.message);
+
+      // 서버 응답 처리
+      console.log(response);
+
+    })
+    .catch((error) => {
+      if (error.response) {
+        // 서버가 응답을 반환한 경우
+        console.error("Fetch error", error.response.data);
+        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+      } else if (error.request) {
+        // 서버가 응답하지 않은 경우
+        console.error("No response was received", error.request);
+      } else {
+        // 그 외의 에러 발생 시
+        console.error("Error", error.message);
+      }
+  
+  })
+
+
+    .then(response => {
+      
       navigate('/');
       // navigate('/'); // 다시 전 more review로 되돌아감
     })

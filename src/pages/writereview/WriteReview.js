@@ -7,8 +7,9 @@ import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 
 import HeadName from "../../components/head/Head";
-import Rating from "./Rating";
+import { Rating } from "@material-ui/lab/";
 import axios from 'axios';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const WriteReview = () => {
   const [rating, setRating] = useState(0);
@@ -81,6 +82,7 @@ const WriteReview = () => {
       console.error('오류 발생:', error);
     });
 
+    
     // fetch('/reviews', {
     //   method: 'POST',
     //   body: formData,
@@ -112,6 +114,10 @@ const WriteReview = () => {
     // navigate('/')
   };
 
+
+  useEffect(() => {
+    console.log(rating)
+  }, [rating])
   return (
     <div className={styles.container}>
       <HeadName title="리뷰작성" />
@@ -155,6 +161,29 @@ const WriteReview = () => {
         />
       </div>
       <div>
+      <Tooltip title={<React.Fragment>1. 다신 안갈 것 같아요. 
+2. 내 돈 주고는 안갈 것 같아요. <br/>
+3. 근처에 있으면 가볼 것 같아요. <br/>
+4. 좀 멀어도 가볼 만 해요. <br/>
+5. 아무리 멀어도 찾아가야 하는 곳! <br/></React.Fragment>} placement="top">
+            <text>리뷰 가이드</text>
+          </Tooltip>
+</div>
+
+
+
+      <Rating
+        name="rating"
+        value={rating}
+        onChange={(event, newValue) => {
+        setRating(newValue);
+      }}
+/>
+
+
+
+
+      {/* <div>
         <input
           type="number"
           name="rating"
@@ -165,7 +194,7 @@ const WriteReview = () => {
           max="5"
           required
         />
-      </div>
+      </div> */}
       {/* <div>
         <Rating onChange={(newRating) => setRating(newRating)} />
       </div> */}

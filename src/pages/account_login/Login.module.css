@@ -9,6 +9,7 @@
 
 .logo {
   /* 로고 이미지 스타일 */
+  top: 30px
 }
 
 .logoText {
@@ -41,8 +42,10 @@
 .logoImage {
   width: 375px; 
   height: auto;
-  position: absolute;
+  /* position: absolute; */
   top: 30%; 
-  left: 50%; 
-  transform: translateX(-50%);
+  /* left: 50%;  */
+  /* transform: translateX(-50%); */
+  /* justify-content: center;
+  align-items: center; */
 }

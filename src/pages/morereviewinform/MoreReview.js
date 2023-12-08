@@ -117,7 +117,7 @@ const handleSeasonChange = (event) => {
         <div>
           <ReviewCard
             reviewId = {storeReviews.reviewId}
-            imageSrc={storeReviews.img}
+            imageSrc={`http://15.165.26.32:8080/images/${storeReviews.img}`}
             rating={storeReviews.ratingPoint}
             reviewText={storeReviews.content}
           />
