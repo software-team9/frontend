@@ -130,6 +130,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <MoreReview
+                  logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -143,6 +144,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <MoreStore
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -171,6 +173,7 @@ useEffect (() => {
               isLogin ? (
                 
                   <EditProfile
+                  logoutHandler={logoutHandler}
                   setpasswordCheckFalse = {setpasswordCheckFalse}
                   />
               
@@ -187,6 +190,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <PasswordCheck
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -200,6 +204,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <Inquiry
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -213,6 +218,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <MyInquiryList
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -226,6 +232,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <MyReviewList
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -239,6 +246,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <MyWishList
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -252,6 +260,7 @@ useEffect (() => {
             element={
               isLogin ? (
                 <ReportReview
+                logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -268,7 +277,8 @@ useEffect (() => {
             path="/writereview/receiptRecognition" 
             element={
               isLogin ? (
-                <ReceiptRecognition />
+                <ReceiptRecognition 
+                logoutHandler={logoutHandler}/>
               ) : (
                 <LoginPage
                   loginHandler={loginHandler}
@@ -283,6 +293,7 @@ useEffect (() => {
             element={
               isLogin ? (
                   <WriteReview
+                  logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage
@@ -296,6 +307,7 @@ useEffect (() => {
             element={
               isLogin ? (
                   <ReceiptCheck
+                  logoutHandler={logoutHandler}
                   />
               ) : (
                 <LoginPage

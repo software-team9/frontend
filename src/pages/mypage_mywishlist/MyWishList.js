@@ -6,7 +6,7 @@ import HeadName from "../../components/head/Head";
 import WishListCard from "./WishlistCard";
 import axios from 'axios';
 
-const MyWishList = () => {
+const MyWishList = ({logoutHandler}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { getWishList } = useWishHook(); // 가정된 찜하기 목록 조회 훅
@@ -37,6 +37,34 @@ const [currentWish, setCurrentWish] = useState([]);
 
 
   }, []);
+
+  useEffect(()=> {
+    axios.get('/members/auth', {
+      'Content-Type': 'application/json', withCredentials:true,
+    })
+    .then(response => {
+      if(!(response.status === 200)) {
+      sessionStorage.setItem('IsLogin', false);
+      navigate('/')
+      logoutHandler()
+      }
+  
+    })
+    .catch((error) => {
+      if (error.response) {
+        // 서버가 응답을 반환한 경우
+        console.error("Fetch error", error.response.data);
+        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+      } else if (error.request) {
+        // 서버가 응답하지 않은 경우
+        console.error("No response was received", error.request);
+      } else {
+        // 그 외의 에러 발생 시
+        console.error("Error", error.message);
+      }
+  
+  })
+  }, [])
 
 
   // useEffect(() => {

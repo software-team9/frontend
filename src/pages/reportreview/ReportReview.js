@@ -1,5 +1,5 @@
 // ReviewReport.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/button/Button";
 import styles from "./ReportReview.module.css"; // Using ReviewReport styles
 import TopNav from "../../components/topnav/TopNav";
@@ -11,7 +11,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
-const ReviewReport = () => {
+const ReviewReport = ({logoutHandler}) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const reviewId = queryParams.get("reviewId");
@@ -66,7 +66,34 @@ const ReviewReport = () => {
       // navigate('/'); // 다시 전 more review로 되돌아감
     })
   }
-
+  
+  useEffect(()=> {
+    axios.get('/members/auth', {
+      'Content-Type': 'application/json', withCredentials:true,
+    })
+    .then(response => {
+      if(!(response.status === 200)) {
+      sessionStorage.setItem('IsLogin', false);
+      navigate('/')
+      logoutHandler()
+      }
+  
+    })
+    .catch((error) => {
+      if (error.response) {
+        // 서버가 응답을 반환한 경우
+        console.error("Fetch error", error.response.data);
+        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+      } else if (error.request) {
+        // 서버가 응답하지 않은 경우
+        console.error("No response was received", error.request);
+      } else {
+        // 그 외의 에러 발생 시
+        console.error("Error", error.message);
+      }
+  
+  })
+  }, [])
   
 
 

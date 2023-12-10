@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useReviewHook from "../../hooks/useReviewHook";
 import styles from "./MoreReview.module.css";
 import useStoreHook from "../../hooks/useStoreHook";
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import axios from 'axios';
 
 const REVIEWS_PER_PAGE = 4;
 
-const MoreReview = () => {
+const MoreReview = ({logoutHandler}) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const storeId = queryParams.get("storeId");
@@ -17,7 +18,7 @@ const MoreReview = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentReviews, setCurrentReviews] = useState([]);
-
+  const navigate = useNavigate();
   const [store, setStore] = useState(null);
   const [season, setSeason] = useState("2023-Winter")
   const [storeReviews, setStoreReviews] = useState([
@@ -75,6 +76,34 @@ useEffect(() => {
       console.error("시즌 데이터 가져오기 오류:", error);
     });
 }, []);
+
+useEffect(()=> {
+  axios.get('/members/auth', {
+    'Content-Type': 'application/json', withCredentials:true,
+  })
+  .then(response => {
+    if(!(response.status === 200)) {
+    sessionStorage.setItem('IsLogin', false);
+    navigate('/')
+    logoutHandler()
+    }
+
+  })
+  .catch((error) => {
+    if (error.response) {
+      // 서버가 응답을 반환한 경우
+      console.error("Fetch error", error.response.data);
+      alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+    } else if (error.request) {
+      // 서버가 응답하지 않은 경우
+      console.error("No response was received", error.request);
+    } else {
+      // 그 외의 에러 발생 시
+      console.error("Error", error.message);
+    }
+
+})
+}, [])
 
 useEffect(() => {
   setTotalPages(Math.ceil(storeReviews.length / REVIEWS_PER_PAGE));

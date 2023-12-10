@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./PasswordCheck.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const PasswordCheck = ({ setpasswordCheckTrue }) => {
+const PasswordCheck = ({ setpasswordCheckTrue, logoutHandler }) => {
   const [pw, setPw] = useState(null);
   const navigate = useNavigate();
 
@@ -34,6 +34,34 @@ const PasswordCheck = ({ setpasswordCheckTrue }) => {
 
     
   };
+
+  useEffect(()=> {
+    axios.get('/members/auth', {
+      'Content-Type': 'application/json', withCredentials:true,
+    })
+    .then(response => {
+      if(!(response.status === 200)) {
+      sessionStorage.setItem('IsLogin', false);
+      navigate('/')
+      logoutHandler()
+      }
+  
+    })
+    .catch((error) => {
+      if (error.response) {
+        // 서버가 응답을 반환한 경우
+        console.error("Fetch error", error.response.data);
+        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+      } else if (error.request) {
+        // 서버가 응답하지 않은 경우
+        console.error("No response was received", error.request);
+      } else {
+        // 그 외의 에러 발생 시
+        console.error("Error", error.message);
+      }
+  
+  })
+  }, [])
 
   return (
     <div className={styles.container}>
