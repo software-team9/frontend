@@ -394,7 +394,7 @@ const Ranking = () => {
                   <tr
                     key={hallOfFames.storesId}
                     className={styles.storeItem}
-                    onClick={() => handleStoreClick(hallOfFames.storesId)}
+                    onClick={() => handleStoreClick(hallOfFames.storeId)}
                   >
                     <td>
                       <FameCard
