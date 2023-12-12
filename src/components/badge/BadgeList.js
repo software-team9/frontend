@@ -1,12 +1,11 @@
 import React from "react";
-import styles from "./BadgeList.module.css"
-
+import styles from "./BadgeList.module.css";
 
 const seasonColors = {
-  "Spring": "E1EB96",
-  "Summer": "9ED8A1",
-  "Fall": "CDA4CB",
-  "Winter": "99DBDA"
+  Spring: "E1EB96",
+  Summer: "9ED8A1",
+  Fall: "CDA4CB",
+  Winter: "99DBDA",
 };
 
 const BadgeList = ({ data }) => {
@@ -19,14 +18,14 @@ const BadgeList = ({ data }) => {
   // Function to determine color based on ranking
   const determineColor = (rank) => {
     if (rank <= 3) return "FFD700";
-    if (rank <= 10) return "B22222"; 
-    if (rank <= 20) return "CD5C5C"; 
-    if (rank <= 30) return "E9967A"; 
-    if (rank <= 40) return "FFA07A"; 
-    if (rank <= 50) return "FF4500"; 
+    if (rank <= 10) return "B22222";
+    if (rank <= 20) return "CD5C5C";
+    if (rank <= 30) return "E9967A";
+    if (rank <= 40) return "FFA07A";
+    if (rank <= 50) return "FF4500";
     if (rank <= 60) return "F46B6B";
     if (rank <= 70) return "E68585";
-    if (rank <= 80) return "BA9595"; 
+    if (rank <= 80) return "BA9595";
     if (rank <= 90) return "AEA1A1";
   };
 
@@ -47,14 +46,16 @@ const BadgeList = ({ data }) => {
 
   return (
     <div className={styles.badgeList}>
-      {transformedData.map((item, index) => (
-        <div  key={index}>
-          <img
-            src={generateBadgeUrl(item.season, item.ranking)}
-            alt={`${item.season} Ranking`}
-          />
-        </div>
-      ))}
+      {transformedData
+        .filter((item) => item.ranking !== 0)
+        .map((item, index) => (
+          <div key={index}>
+            <img
+              src={generateBadgeUrl(item.season, item.ranking)}
+              alt={`${item.season} Ranking`}
+            />
+          </div>
+        ))}
     </div>
   );
 };

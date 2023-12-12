@@ -33,8 +33,8 @@
   padding: 15px;
   margin-bottom: 15px;
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
 }
 
 .reviewContent {
@@ -49,15 +49,15 @@
 }
 
 .reviewImage {
-  width: 100%; 
-  max-width: 200px; 
+  width: 100%;
+  max-width: 200px;
   height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
 }
 
 .reviewUserInfo {
-  text-align: center; 
+  text-align: center;
   width: 100%;
 }
 
@@ -67,8 +67,8 @@
 }
 
 .userImage {
-  width: 50px; 
-  height: 50px; 
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -80,7 +80,7 @@
 }
 
 .reviewText {
-  text-align: center; 
+  text-align: center;
   width: 100%;
   margin-bottom: 5px;
 }
@@ -99,8 +99,8 @@
 .pageNumber,
 .activePage {
   border: none;
-  background-color: #d32323;
-  color: #fff;
+  background-color: #fff;
+  color: #d32323;
   padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
@@ -108,6 +108,17 @@
 }
 
 .activePage {
-  background-color: #fff;
-  color: #D32323;
+  background-color: #d32323;
+  color: #fff;
+}
+
+.emptyMessage {
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 1.2rem;
+  color: #555;
+  background: #f7f7f7;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  margin: 20px;
 }

@@ -8,30 +8,6 @@ const Dday = ({ targetDate }) => {
     "hours": 0
   });
 
-
-  // useEffect(() => {
-  //   const calculateTimeLeft = () => {
-  //     // const difference = +new Date(targetDate) - +new Date();
-  //     // let timeLeft = {};
-
-  //     // if (difference > 0) {
-  //     //   const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-  //     //   const hours = Math.floor((difference / (1000 * 60 * 60)) % 24) + (days * 24);
-
-  //     //   timeLeft = { days, hours};
-  //     // }
-
-  //     return timeLeft;
-  //   };
-
-  //   const timer = setInterval(() => {
-  //     setTimeLeft(calculateTimeLeft());
-  //   }, 1000);
-
-
-  //   return () => clearInterval(timer);
-  // }, [targetDate]);
-
   useEffect(() => {
 
     axios.get('seasonRank/next', {
@@ -45,7 +21,6 @@ const Dday = ({ targetDate }) => {
       // 에러 처리
       console.error('Error:', error);
     });
-    // http://15.165.26.32:8080/seasonRank/next
 
   }, [])
 

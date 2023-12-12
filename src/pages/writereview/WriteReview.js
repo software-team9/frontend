@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 
 import HeadName from "../../components/head/Head";
 import { Rating } from "@material-ui/lab/";
-import axios from 'axios';
-import Tooltip from '@material-ui/core/Tooltip';
+import axios from "axios";
+import Tooltip from "@material-ui/core/Tooltip";
 
-const WriteReview = ({logoutHandler}) => {
+const WriteReview = ({ logoutHandler }) => {
   const [rating, setRating] = useState(0);
   const [storeName, setStoreName] = useState(
     sessionStorage.getItem("ReceiptStoreName")
@@ -56,96 +56,69 @@ const WriteReview = ({logoutHandler}) => {
   };
 
   const handleWriteReview = () => {
-    console.log("12")
-
     const formData = new FormData();
 
-    formData.append("image", image );
-    const body= {
+    formData.append("image", image);
+    const body = {
       // image: image,
       storeName: storeName,
       content: reviewContent,
-      ratingPoint:rating,
+      ratingPoint: rating,
       address: address,
-    }
-    formData.append("reviewDto", new Blob([JSON.stringify(body)], { type: "application/json"}))
-    
-    console.log(body.storeName, body.content, body.ratingPoint)
-    axios.post("/reviews/", formData, {
-      headers: {'Content-Type': 'multipart/form-data'},
-      
-    })
-    .then(response => {
-      navigate('/')
-    })
-    .catch(error => {
-      console.error('오류 발생:', error);
-    });
+    };
+    formData.append(
+      "reviewDto",
+      new Blob([JSON.stringify(body)], { type: "application/json" })
+    );
 
-    
-    // fetch('/reviews', {
-    //   method: 'POST',
-    //   body: formData,
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
-
-
-    // fetch("http://15.165.26.32:8080/reviews/", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((json) => {
-    //     navigate("/");
-    //     console.log(json);
-    //   })
-    //   .catch((error) => {
-    //     console.error("API 요청에 실패하였습니다:", error.message);
-    //   });
-
-    // test
-    // navigate('/')
+    console.log(body.storeName, body.content, body.ratingPoint);
+    axios
+      .post("/reviews/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        navigate("/");
+      })
+      .catch((error) => {
+        alert("이미 리뷰를 작성한 가게입니다");
+        console.error("오류 발생:", error);
+        // 수정해야 하는 부분 -> 중복 가게 처리
+      });
   };
 
-  useEffect(()=> {
-    axios.get('/members/auth', {
-      'Content-Type': 'application/json', withCredentials:true,
-    })
-    .then(response => {
-      if(!(response.status === 200)) {
-      sessionStorage.setItem('IsLogin', false);
-      navigate('/')
-      logoutHandler()
-      }
-  
-    })
-    .catch((error) => {
-      if (error.response) {
-        // 서버가 응답을 반환한 경우
-        console.error("Fetch error", error.response.data);
-        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
-      } else if (error.request) {
-        // 서버가 응답하지 않은 경우
-        console.error("No response was received", error.request);
-      } else {
-        // 그 외의 에러 발생 시
-        console.error("Error", error.message);
-      }
-  
-  })
-  }, [])
-
+  useEffect(() => {
+    axios
+      .get("/members/auth", {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (!(response.status === 200)) {
+          sessionStorage.setItem("IsLogin", false);
+          navigate("/");
+          logoutHandler();
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          // 서버가 응답을 반환한 경우
+          console.error("Fetch error", error.response.data);
+          alert(
+            `에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`
+          );
+        } else if (error.request) {
+          // 서버가 응답하지 않은 경우
+          console.error("No response was received", error.request);
+        } else {
+          // 그 외의 에러 발생 시
+          console.error("Error", error.message);
+        }
+      });
+  }, []);
 
   useEffect(() => {
-    console.log(rating)
-  }, [rating])
+    console.log(rating);
+  }, [rating]);
   return (
     <div className={styles.container}>
       <HeadName title="리뷰작성" />
@@ -189,43 +162,29 @@ const WriteReview = ({logoutHandler}) => {
         />
       </div>
       <div>
-      <Tooltip title={<React.Fragment>1. 다신 안갈 것 같아요. 
-2. 내 돈 주고는 안갈 것 같아요. <br/>
-3. 근처에 있으면 가볼 것 같아요. <br/>
-4. 좀 멀어도 가볼 만 해요. <br/>
-5. 아무리 멀어도 찾아가야 하는 곳! <br/></React.Fragment>} placement="top">
-            <text>리뷰 가이드</text>
-          </Tooltip>
-</div>
-
-
+        <Tooltip
+          title={
+            <React.Fragment>
+              1. 다신 안갈 것 같아요.   <br />
+              2. 내 돈 주고는 안갈 것 같아요. <br />
+              3. 근처에 있으면 가볼 것 같아요. <br />
+              4. 좀 멀어도 가볼 만 해요. <br />
+              5. 아무리 멀어도 찾아가야 하는 곳! <br />
+            </React.Fragment>
+          }
+          placement="top"
+        >
+          <text>리뷰 가이드</text>
+        </Tooltip>
+      </div>
 
       <Rating
         name="rating"
         value={rating}
         onChange={(event, newValue) => {
-        setRating(newValue);
-      }}
-/>
-
-
-
-
-      {/* <div>
-        <input
-          type="number"
-          name="rating"
-          placeholder="별점"
-          value={rating || ""}
-          onChange={handleRatingChange}
-          min="0"
-          max="5"
-          required
-        />
-      </div> */}
-      {/* <div>
-        <Rating onChange={(newRating) => setRating(newRating)} />
-      </div> */}
+          setRating(newValue);
+        }}
+      />
       <div>
         {showImage && (
           <div

@@ -18,8 +18,7 @@ const EditProfile = ({ userData, setpasswordCheckFalse, logoutHandler }) => {
   const handlePassword_RChange = (e) => setPw_r(e.target.value);
   const handleBirthdayChange = (e) => setBirthday(e.target.value);
 
-  useEffect(() => {
-  }, [gender]);
+  useEffect(() => {}, [gender]);
 
   const handleConfirm = (e) => {
     if (!name || !pw || !pw_r || !birthday) {
@@ -31,22 +30,25 @@ const EditProfile = ({ userData, setpasswordCheckFalse, logoutHandler }) => {
       return;
     }
     setpasswordCheckFalse();
-    axios.put("/members/edit",{
+    axios
+      .put(
+        "/members/edit",
+        {
           name: name,
           password: pw,
           gender: gender,
           birthday: birthday,
-        }, {
+        },
+        {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            // "Access-Control-Allow-Origin": `http://localhost:3000`,
-            // 'Access-Control-Allow-Credentials':"true",
           },
           withCredentials: true,
-      })
+        }
+      )
       .then((response) => {
         if (response.status === 200) {
-          console.log("userEdit")
+          console.log("userEdit");
           navigate("/mypage");
         }
       })
@@ -54,7 +56,9 @@ const EditProfile = ({ userData, setpasswordCheckFalse, logoutHandler }) => {
         if (error.response) {
           // 서버가 응답을 반환한 경우
           console.error("Fetch error", error.response.data);
-          alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
+          alert(
+            `에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`
+          );
         } else if (error.request) {
           // 서버가 응답하지 않은 경우
           console.error("No response was received", error.request);
@@ -62,41 +66,42 @@ const EditProfile = ({ userData, setpasswordCheckFalse, logoutHandler }) => {
           // 그 외의 에러 발생 시
           console.error("Error", error.message);
         }
-  
-    })
+      });
   };
 
   const handleGenderSelect = (gender) => {
     setGender(gender);
   };
 
-  useEffect(()=> {
-    axios.get('/members/auth', {
-      'Content-Type': 'application/json', withCredentials:true,
-    })
-    .then(response => {
-      if(!(response.status === 200)) {
-      sessionStorage.setItem('IsLogin', false);
-      navigate('/')
-      logoutHandler()
-      }
-  
-    })
-    .catch((error) => {
-      if (error.response) {
-        // 서버가 응답을 반환한 경우
-        console.error("Fetch error", error.response.data);
-        alert(`에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`);
-      } else if (error.request) {
-        // 서버가 응답하지 않은 경우
-        console.error("No response was received", error.request);
-      } else {
-        // 그 외의 에러 발생 시
-        console.error("Error", error.message);
-      }
-  
-  })
-  }, [])
+  useEffect(() => {
+    axios
+      .get("/members/auth", {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (!(response.status === 200)) {
+          sessionStorage.setItem("IsLogin", false);
+          navigate("/");
+          logoutHandler();
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          // 서버가 응답을 반환한 경우
+          console.error("Fetch error", error.response.data);
+          alert(
+            `에러 코드: ${error.response.data.errorCode}, 메시지: ${error.response.data.message}`
+          );
+        } else if (error.request) {
+          // 서버가 응답하지 않은 경우
+          console.error("No response was received", error.request);
+        } else {
+          // 그 외의 에러 발생 시
+          console.error("Error", error.message);
+        }
+      });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -141,16 +146,20 @@ const EditProfile = ({ userData, setpasswordCheckFalse, logoutHandler }) => {
 
           <div className={styles.genderSelectSection}>
             <button
-              className={`${styles.genderNotSelected} ${gender === 'MALE' ? styles.genderSelected : ''}`}
+              className={`${styles.genderNotSelected} ${
+                gender === "MALE" ? styles.genderSelected : ""
+              }`}
               onClick={() => {
-                console.log(gender)
+                console.log(gender);
                 handleGenderSelect("MALE");
               }}
             >
               남
             </button>
             <button
-              className={`${styles.genderNotSelected} ${gender === 'FEMALE' ? styles.genderSelected : ''}`}
+              className={`${styles.genderNotSelected} ${
+                gender === "FEMALE" ? styles.genderSelected : ""
+              }`}
               onClick={() => {
                 handleGenderSelect("FEMALE");
               }}
