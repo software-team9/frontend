@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./MoreStore.module.css";
-// import useReviewHook from "../../hooks/useReviewHook";
-// import useStoreHook from "../../hooks/useStoreHook";
-// import useWishHook from "../../hooks/useWishHook";
-
 import ReviewCard from "../../components/reviewcard/More_ReviewCard";
 import BadgeList from "../../components/badge/BadgeList";
 import {getStoreSeasonRank} from "../../hooks/useStoreHook"
@@ -36,7 +32,6 @@ const MoreStore = ({logoutHandler}) => {
   });
   const [histories, setHistories] = useState([ // 랭킹 히스토리 데이터
     {
-      
       storeName: "",
       storeId: 0,
       city: "",
@@ -47,6 +42,7 @@ const MoreStore = ({logoutHandler}) => {
   ]);
   const [storeReviews, setStoreReviews] = useState([
     {
+      storeName: "",
       content: "",
       ratingPoint: 0.0,
       img: "",
@@ -56,7 +52,7 @@ const MoreStore = ({logoutHandler}) => {
   ]);
 
   const [wishState, setWishState] = useState(false); // 찜하기 상태
-  const [season, setSeason] = useState("");
+  const [season, setSeason] = useState();
   const [seasons, setSeasons] = useState([]); 
   const [stores, setStores] = useState();
 
@@ -174,30 +170,26 @@ const MoreStore = ({logoutHandler}) => {
   }, [storeId]);
 
 
-    useEffect(() => {
-      // seasons 데이터 가져오기
-      fetch("http://15.165.26.32:8080/seasonRank/seasonName", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  useEffect(() => {
+    fetch("/seasonRank/now", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.text())
+      .then((text) => {
+        console.log("Raw Response:", text);
+        setSeason(text)
+        // console.log("season: ", season)
       })
-        .then((response) => response.json())
-        .then((json) => {
-          if (json && json.length > 0) {
-            // seasons 데이터 업데이트
-            // setSeasons(json.reverse());
-    
-            console.log(json);
-            setSeason(json[0]);
-          } else {
-            console.error("시즌 데이터가 올바르지 않습니다.");
-          }
-        })
-        .catch((error) => {
-          console.error("시즌 데이터 가져오기 오류:", error);
-        });
-    }, []);
+      .catch((error) => {
+        console.error("HTTP 요청 중 오류 발생:", error);
+      });
+  }, []);
+  
+  
+  
 
 
 
@@ -249,7 +241,7 @@ const MoreStore = ({logoutHandler}) => {
   useEffect(() => {
     console.log("season: ", season)
     fetch(
-      `http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=0&size=3`,
+      `/reviews/store/${storeId}?season=${season}&page=0&size=3`,
       {
         method: "GET",
         headers: {
@@ -261,7 +253,7 @@ const MoreStore = ({logoutHandler}) => {
       .then((json) => {
         if (json) {
           setStoreReviews(json);
-          console.log(json);
+          console.log("StoreREeviews: ", json);
         } else {
           console.error("리뷰 데이터가 올바르지 않습니다.");
         }

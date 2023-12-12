@@ -20,7 +20,7 @@ const MoreReview = ({logoutHandler}) => {
   const [currentReviews, setCurrentReviews] = useState([]);
   const navigate = useNavigate();
   const [store, setStore] = useState(null);
-  const [season, setSeason] = useState("2023-Winter")
+  const [season, setSeason] = useState()
   const [storeReviews, setStoreReviews] = useState([
     {
       content: '',
@@ -31,7 +31,7 @@ const MoreReview = ({logoutHandler}) => {
     }
   ]);
   const [seasons, setSeasons] = useState([]);
-
+  const [season_Now, setSeason_Now] = useState();
   useEffect(() => {
     fetch(`http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=${currentPage-1}`, {
       method: 'GET',
@@ -67,7 +67,6 @@ useEffect(() => {
         // seasons 데이터 업데이트
         setSeasons(json);
         console.log(json);
-        setSeason(json[0])
       } else {
         console.error("시즌 데이터가 올바르지 않습니다.");
       }
@@ -76,6 +75,27 @@ useEffect(() => {
       console.error("시즌 데이터 가져오기 오류:", error);
     });
 }, []);
+
+useEffect(() => {
+  fetch("/seasonRank/now", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.text())
+    .then((text) => {
+      console.log("Raw Response:", text);
+      setSeason_Now(text)
+      setSeason(text)
+      // console.log("season: ", season)
+    })
+    .catch((error) => {
+      console.error("HTTP 요청 중 오류 발생:", error);
+    });
+}, []);
+
+
 
 useEffect(()=> {
   axios.get('/members/auth', {
@@ -104,6 +124,9 @@ useEffect(()=> {
 
 })
 }, [])
+useEffect(()=> {
+  console.log("Season: ",season)
+}, [season])
 
 useEffect(() => {
   setTotalPages(Math.ceil(storeReviews.length / REVIEWS_PER_PAGE));
@@ -134,11 +157,17 @@ const handleSeasonChange = (event) => {
               onChange={handleSeasonChange}
               label="Season"
             >
-            {seasons.map((seasonValue) => (
-              <MenuItem key={seasonValue} value={seasonValue}>
-                {seasonValue}
+
+<MenuItem key={season_Now} value={season_Now}>
+                {season_Now}
               </MenuItem>
-            ))}
+
+              {seasons.slice().reverse().map((seasonValue) => (
+  <MenuItem key={seasonValue} value={seasonValue}>
+    {seasonValue}
+  </MenuItem>
+))}
+
             </Select>
           </FormControl>
       <section className={styles.reviewSection}></section>

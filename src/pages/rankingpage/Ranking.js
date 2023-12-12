@@ -160,7 +160,7 @@ const Ranking = () => {
         if (json && json.length > 0) {
           // seasons 데이터 업데이트
           // setSeasons(json.reverse());
-          setSeasons(json)
+          setSeasons(json.reverse())
           console.log(json);
           setSeason(json[0]);
         } else {
@@ -392,9 +392,9 @@ const Ranking = () => {
               {HallOfFame_currentStores.length > 0 ? (
                 HallOfFame_currentStores.map((hallOfFames, index) => (
                   <tr
-                    key={hallOfFames.storesId}
+                    key={hallOfFames.storeId}
                     className={styles.storeItem}
-                    onClick={() => handleStoreClick(hallOfFames.storesId)}
+                    onClick={() => handleStoreClick(hallOfFames.storeId)}
                   >
                     <td>
                       <FameCard
