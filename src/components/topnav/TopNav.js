@@ -16,14 +16,11 @@ const TopNav = () => {
   return (
     <div className={styles.topNav}>
       <button onClick={handleBack} className={styles.backButton}>
-        {/* 뒤로 가기 아이콘 이미지 경로
-        <img src={backarrow} alt="<" 
-          style={{ margin: "auto", maxWidth: "30%", maxHeight: "30%" }}
-         /> */}
          {"<"}
       </button>
       <div className={styles.logoContainer} onClick={handleLogoClick}>
         <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="로고" className={styles.logoImage} />
+        {/* 기존 로고 사용시 /logo.png */}
       </div>
       {/* 로고 정중앙 위치 유지를 위한 더미 요소 */}
       <div className={styles.dummy}></div>

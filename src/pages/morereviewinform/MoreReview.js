@@ -15,7 +15,7 @@ const MoreReview = ({ logoutHandler }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [currentReviews, setCurrentReviews] = useState([]);
   const navigate = useNavigate();
-  const [season, setSeason] = useState();
+  const [season, setSeason] = useState("2023-Winter");
   const [storeReviews, setStoreReviews] = useState([
     {
       content: "",
@@ -27,6 +27,27 @@ const MoreReview = ({ logoutHandler }) => {
   ]);
   const [seasons, setSeasons] = useState([]);
   const [season_Now, setSeason_Now] = useState();
+
+  useEffect(() => {
+    fetch("/seasonRank/now", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.text())
+      .then((text) => {
+        console.log("Raw Response:", text);
+        setSeason_Now(text);
+        setSeason(text);
+        // console.log("season: ", season)
+      })
+      .catch((error) => {
+        console.error("HTTP 요청 중 오류 발생:", error);
+      });
+  }, []);
+
+
   useEffect(() => {
     fetch(
       `http://15.165.26.32:8080/reviews/store/${storeId}?season=${season}&page=${
@@ -76,24 +97,7 @@ const MoreReview = ({ logoutHandler }) => {
       });
   }, []);
 
-  useEffect(() => {
-    fetch("/seasonRank/now", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.text())
-      .then((text) => {
-        console.log("Raw Response:", text);
-        setSeason_Now(text);
-        setSeason(text);
-        // console.log("season: ", season)
-      })
-      .catch((error) => {
-        console.error("HTTP 요청 중 오류 발생:", error);
-      });
-  }, []);
+
 
   useEffect(() => {
     axios
@@ -127,6 +131,10 @@ const MoreReview = ({ logoutHandler }) => {
   useEffect(() => {
     console.log("Season: ", season);
   }, [season]);
+
+  useEffect(() => {
+    setSeason(season_Now);
+  }, [season_Now]);
 
   useEffect(() => {
     setTotalPages(Math.ceil(storeReviews.length / REVIEWS_PER_PAGE));

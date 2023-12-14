@@ -15,6 +15,7 @@ import {
 import SnackMsg from './SnackMsg';
 
 const MoreStore = ({ logoutHandler }) => {
+  const [currentStoreReviews, setCurrentStoreReviews] = useState([]);
   const [like, setLike] = React.useState({});
   const [snackState, setSnackState] = React.useState({ open: false, msg: "" });
   const location = useLocation();
@@ -42,19 +43,32 @@ const MoreStore = ({ logoutHandler }) => {
       img: "",
     },
   ]);
-  const [storeReviews, setStoreReviews] = useState([
-    {
-      storeName: "",
-      content: "",
-      ratingPoint: 0.0,
-      img: "",
-      season: "",
-      reviewId: 0,
-    },
-  ]);
+  const [storeReviews, setStoreReviews] = useState([]);
 
   const [setWishState] = useState(false); // 찜하기 상태
   const [season, setSeason] = useState();
+
+
+  useEffect(() => {
+
+    fetch("/seasonRank/now", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.text())
+      .then((text) => {
+        console.log("Raw Response:", text);
+        setSeason(text);
+        // console.log("season: ", season)
+      })
+      .catch((error) => {
+        console.error("HTTP 요청 중 오류 발생:", error);
+      });
+
+    }, []);
+
 
   useEffect(() => {
     axios
@@ -87,9 +101,7 @@ const MoreStore = ({ logoutHandler }) => {
   }, []);
 
   useEffect(() => {
-    console.log(storeId);
-    console.log(("url"))
-    console.log(`${process.env.REACT_APP_SERVER_URL}`)
+
     fetch(`http://15.165.26.32:8080/store/${storeId}`, {
       method: "GET",
       headers: {
@@ -142,24 +154,6 @@ const MoreStore = ({ logoutHandler }) => {
   }, [storeId]);
 
   useEffect(() => {
-    fetch("/seasonRank/now", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.text())
-      .then((text) => {
-        console.log("Raw Response:", text);
-        setSeason(text);
-        // console.log("season: ", season)
-      })
-      .catch((error) => {
-        console.error("HTTP 요청 중 오류 발생:", error);
-      });
-  }, []);
-
-  useEffect(() => {
     fetch(`/wish/state/${storeId}`, {
       method: "GET",
       headers: {
@@ -178,8 +172,7 @@ const MoreStore = ({ logoutHandler }) => {
   }, [storeId]);
 
   useEffect(() => {
-    console.log("season: ", season);
-    fetch(`/reviews/store/${storeId}?season=${season}&page=0&size=3`, {
+    fetch(`/reviews/store/${storeId}?${season ? `season=${season}&` : ''}page=0&size=3`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -187,9 +180,11 @@ const MoreStore = ({ logoutHandler }) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json) {
-          setStoreReviews(json);
-          console.log("StoreREeviews: ", json);
+        if (json && Array.isArray(json)) {
+          // 현재 상태와 새로운 데이터를 합칩니다.
+          setStoreReviews((prevReviews) => [...prevReviews, ...json]);
+          setCurrentStoreReviews(json); // 새로운 데이터를 저장합니다.
+          console.log("StoreReviews: ", json);
         } else {
           console.error("리뷰 데이터가 올바르지 않습니다.");
         }
@@ -198,6 +193,9 @@ const MoreStore = ({ logoutHandler }) => {
         console.error("리뷰 데이터 가져오기 오류:", error);
       });
   }, [storeId, season]);
+
+
+
 
   const handleMoreReviews = () => {
     navigate(`/morereview?storeId=${storeId}`);
